@@ -30,6 +30,7 @@ public class App {
 
     private static int run(final String param) {
         if (param == null) return -1;
+        if (param.isBlank()) return 0;
         switch (param) {
             case HELP: return displayHelp();
             case VERSION: return displayVersion();
