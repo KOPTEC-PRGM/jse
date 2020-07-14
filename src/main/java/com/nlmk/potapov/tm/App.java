@@ -25,7 +25,7 @@ public class App {
         if (args.length < 1) return;
         final String param = args[0];
         final int result = run(param);
-        System.exit(result);
+        if (EXIT.equals(param)) System.exit(result);
     }
 
     private static int run(final String param) {
