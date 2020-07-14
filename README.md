@@ -4,12 +4,12 @@
 
 ## Требования к software
 
-* java openjdk version "11"
-* apache maven 3.6.1
+* Java OpenJDK version "11"
+* Apache Maven 3.6.1
 
 ## Описание стека технологий
 
-java SE + сборщик проектов apache maven
+Java SE + сборщик проектов Apache Maven
 
 ## Разработчик
 
@@ -17,6 +17,11 @@ java SE + сборщик проектов apache maven
 
 ## Команда для сборки приложения
 
+Очистка и удаление каталога `\target`
+```
+mvn clean
+```
+Создание каталога `\target` и сборка проекта
 ```
 mvn package
 ```
