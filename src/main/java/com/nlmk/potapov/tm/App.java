@@ -11,21 +11,25 @@ public class App {
         run(args);
         final Scanner scanner = new Scanner(System.in);
         String command = "";
-        while (!EXIT.equals(command)){
+        int result = 0;
+        while (!EXIT.equals(command) & result == 0){
             System.out.print("Task Manager> ");
             command = scanner.nextLine();
-            run(command);
+            result = run(command);
         }
+        System.exit(result);
     }
 
     private static void run(final String[] args) {
         if (args == null) return;
         if (args.length < 1) return;
         final String param = args[0];
-        run(param);
+        final int result = run(param);
+        System.exit(result);
     }
 
     private static int run(final String param) {
+        if (param == null) return -1;
         switch (param) {
             case HELP: return displayHelp();
             case VERSION: return displayVersion();
@@ -42,14 +46,14 @@ public class App {
         System.out.println(INDENT+"help - Вывод списка терминальных команд.");
         System.out.println(INDENT+"exit - Выход из приложения.");
         System.out.println(BLOCK_SEPARATOR);
-        return(0);
+        return 0;
     }
 
     private static int displayVersion() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println(INDENT+"1.0.0");
         System.out.println(BLOCK_SEPARATOR);
-        return(0);
+        return 0;
     }
 
     private static int displayAbout() {
@@ -57,21 +61,22 @@ public class App {
         System.out.println(INDENT+"Потапов Вадим");
         System.out.println(INDENT+"potapov_vs@nlmk.com");
         System.out.println(BLOCK_SEPARATOR);
-        return(0);
+        return 0;
     }
 
     private static int displayError() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println(INDENT+"Ошибка! Неизвестная терминальная команда...");
+        System.out.println(INDENT+"Приложение завершает работу...");
         System.out.println(BLOCK_SEPARATOR);
-        return(-1);
+        return -1;
     }
 
     private static int displayExit() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println(INDENT+"Завершение работы приложения...");
         System.out.println(INDENT+"Всего хорошего.");
-        return(0);
+        return 0;
     }
 
     private static void displayWelcome() {
