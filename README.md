@@ -2,6 +2,8 @@
 
 Учебный проект в рамках курса по программе JAVA SPRING.
 
+Зеркало: [JSE github.com](https://github.com/KOPTEC-PRGM/jse)
+
 ## Требования к software
 
 * Java OpenJDK version "11"
