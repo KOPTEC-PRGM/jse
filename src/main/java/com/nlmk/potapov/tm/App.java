@@ -13,7 +13,7 @@ public class App {
         String command = "";
         int result = 0;
         while (!EXIT.equals(command) & result == 0){
-            System.out.print("Task Manager> ");
+            System.out.print(INPUT_MESSAGE);
             command = scanner.nextLine();
             result = run(command);
         }
@@ -36,8 +36,53 @@ public class App {
             case VERSION: return displayVersion();
             case ABOUT: return displayAbout();
             case EXIT: return displayExit();
+
+            case PROJECT_CREATE: return createProject();
+            case PROJECT_CLEAR: return clearProject();
+            case PROJECT_LIST: return listProject();
+
+            case TASK_CREATE: return createTask();
+            case TASK_CLEAR: return clearTask();
+            case TASK_LIST: return listTask();
+
             default: return displayError();
         }
+    }
+
+    private static int listTask() {
+        System.out.println("[Список задач]");
+        System.out.println("[Готово]");
+        return 0;
+    }
+
+    private static int clearTask() {
+        System.out.println("[Очистка списка задач]");
+        System.out.println("[Готово]");
+        return 0;
+    }
+
+    private static int createTask() {
+        System.out.println("[Создание задачи]");
+        System.out.println("[Готово]");
+        return 0;
+    }
+
+    private static int listProject() {
+        System.out.println("[Список проектов]");
+        System.out.println("[Готово]");
+        return 0;
+    }
+
+    private static int clearProject() {
+        System.out.println("[Очистка списка проектов]");
+        System.out.println("[Готово]");
+        return 0;
+    }
+
+    private static int createProject() {
+        System.out.println("[Создание проекта]");
+        System.out.println("[Готово]");
+        return 0;
     }
 
     private static int displayHelp() {
@@ -46,6 +91,14 @@ public class App {
         System.out.println(INDENT+"about - Информация о разработчике.");
         System.out.println(INDENT+"help - Вывод списка терминальных команд.");
         System.out.println(INDENT+"exit - Выход из приложения.");
+        System.out.println();
+        System.out.println(INDENT+"project-create - Создание проекта.");
+        System.out.println(INDENT+"project-list - Список проектов.");
+        System.out.println(INDENT+"project-clear - Очистка списка проектов.");
+        System.out.println();
+        System.out.println(INDENT+"task-create - Создание задачи.");
+        System.out.println(INDENT+"task-list - Список задач.");
+        System.out.println(INDENT+"task-clear - Очистка списка задач.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
