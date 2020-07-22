@@ -1,15 +1,23 @@
 package com.nlmk.potapov.tm;
 
+import com.nlmk.potapov.tm.dao.ProjectDAO;
+import com.nlmk.potapov.tm.dao.TaskDAO;
+
 import java.util.Scanner;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class App {
 
+    private static final ProjectDAO projectDAO = new ProjectDAO();
+
+    private static final TaskDAO taskDAO = new TaskDAO();
+
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(final String[] args) {
         displayWelcome();
         run(args);
-        final Scanner scanner = new Scanner(System.in);
         String command = "";
         int result = 0;
         while (!EXIT.equals(command) & result == 0){
@@ -51,37 +59,47 @@ public class App {
 
     private static int listTask() {
         System.out.println("[Список задач]");
+        System.out.println(taskDAO.findAll());
         System.out.println("[Готово]");
         return 0;
     }
 
     private static int clearTask() {
         System.out.println("[Очистка списка задач]");
+        taskDAO.clear();
         System.out.println("[Готово]");
         return 0;
     }
 
     private static int createTask() {
         System.out.println("[Создание задачи]");
-        System.out.println("[Готово]");
+        System.out.print("Введите название задачи: ");
+        final String name = scanner.nextLine();
+        final Long id = taskDAO.create(name).getId();
+        System.out.println("[Готово. Задача \""+name+"\" добавлена в список. Id = "+id+"]");
         return 0;
     }
 
     private static int listProject() {
         System.out.println("[Список проектов]");
+        System.out.println(projectDAO.findAll());
         System.out.println("[Готово]");
         return 0;
     }
 
     private static int clearProject() {
         System.out.println("[Очистка списка проектов]");
+        projectDAO.clear();
         System.out.println("[Готово]");
         return 0;
     }
 
     private static int createProject() {
         System.out.println("[Создание проекта]");
-        System.out.println("[Готово]");
+        System.out.print("Введите название проекта: ");
+        final String name = scanner.nextLine();
+        final Long id = projectDAO.create(name).getId();
+        System.out.println("[Готово. Проект \""+name+"\" добавлен в список. Id = "+id+"]");
         return 0;
     }
 
