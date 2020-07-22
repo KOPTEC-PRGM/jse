@@ -20,7 +20,7 @@ public class App {
         run(args);
         String command = "";
         int result = 0;
-        while (!EXIT.equals(command) & result == 0){
+        while (!EXIT.equals(command)){
             System.out.print(INPUT_MESSAGE);
             command = scanner.nextLine();
             result = run(command);
@@ -58,48 +58,60 @@ public class App {
     }
 
     private static int listTask() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач]");
         System.out.println(taskDAO.findAll());
         System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
     private static int clearTask() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Очистка списка задач]");
         taskDAO.clear();
         System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
     private static int createTask() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Создание задачи]");
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
         final Long id = taskDAO.create(name).getId();
         System.out.println("[Готово. Задача \""+name+"\" добавлена в список. Id = "+id+"]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
     private static int listProject() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
         System.out.println(projectDAO.findAll());
         System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
     private static int clearProject() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Очистка списка проектов]");
         projectDAO.clear();
         System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
     private static int createProject() {
+        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Создание проекта]");
         System.out.print("Введите название проекта: ");
         final String name = scanner.nextLine();
         final Long id = projectDAO.create(name).getId();
         System.out.println("[Готово. Проект \""+name+"\" добавлен в список. Id = "+id+"]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
@@ -139,7 +151,7 @@ public class App {
     private static int displayError() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println(INDENT+"Ошибка! Неизвестная терминальная команда...");
-        System.out.println(INDENT+"Приложение завершает работу...");
+        System.out.println(INDENT+"Повторите ввод.");
         System.out.println(BLOCK_SEPARATOR);
         return -1;
     }
