@@ -353,10 +353,20 @@ public class App {
         System.out.println(INDENT+"project-create - Создание проекта.");
         System.out.println(INDENT+"project-list - Список проектов.");
         System.out.println(INDENT+"project-clear - Очистка списка проектов.");
+        System.out.println(INDENT+"project-view - Просмотр проекта по номеру.");
+        System.out.println(INDENT+"project-remove-by-name - Удаление проекта по имени.");
+        System.out.println(INDENT+"project-remove-by-id - Удаление проекта по ID.");
+        System.out.println(INDENT+"project-remove-by-index - Удаление проекта по номеру.");
+        System.out.println(INDENT+"project-update-by-index - Обновление проекта по номеру.");
         System.out.println();
         System.out.println(INDENT+"task-create - Создание задачи.");
         System.out.println(INDENT+"task-list - Список задач.");
         System.out.println(INDENT+"task-clear - Очистка списка задач.");
+        System.out.println(INDENT+"task-view - Просмотр задачи по номеру.");
+        System.out.println(INDENT+"task-remove-by-name - Удаление задачи по имени.");
+        System.out.println(INDENT+"task-remove-by-id - Удаление задачи по ID.");
+        System.out.println(INDENT+"task-remove-by-index - Удаление задачи по номеру.");
+        System.out.println(INDENT+"task-update-by-index - Обновление задачи по номеру.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
