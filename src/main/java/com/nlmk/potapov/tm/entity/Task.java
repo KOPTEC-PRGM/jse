@@ -2,7 +2,7 @@ package com.nlmk.potapov.tm.entity;
 
 public class Task {
 
-    private final Long id = System.nanoTime();
+    private Long id = System.nanoTime();
 
     private String name = "";
 
@@ -17,6 +17,10 @@ public class Task {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
