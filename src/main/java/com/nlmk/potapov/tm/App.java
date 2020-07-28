@@ -57,20 +57,24 @@ public class App {
             case PROJECT_CREATE: return createProject();
             case PROJECT_CLEAR: return clearProject();
             case PROJECT_LIST: return listProject();
-            case PROJECT_VIEW: return viewProjectByIndex();
+            case PROJECT_VIEW_BY_INDEX: return viewProjectByIndex();
+            case PROJECT_VIEW_BY_ID: return viewProjectById();
             case PROJECT_REMOVE_BY_INDEX: return removeProjectByIndex();
             case PROJECT_REMOVE_BY_NAME: return removeProjectByName();
             case PROJECT_REMOVE_BY_ID: return removeProjectById();
             case PROJECT_UPDATE_BY_INDEX: return updateProjectByIndex();
+            case PROJECT_UPDATE_BY_ID: return updateProjectById();
 
             case TASK_CREATE: return createTask();
             case TASK_CLEAR: return clearTask();
             case TASK_LIST: return listTask();
-            case TASK_VIEW: return viewTaskByIndex();
+            case TASK_VIEW_BY_INDEX: return viewTaskByIndex();
+            case TASK_VIEW_BY_ID: return viewTaskById();
             case TASK_REMOVE_BY_INDEX: return removeTaskByIndex();
             case TASK_REMOVE_BY_NAME: return removeTaskByName();
             case TASK_REMOVE_BY_ID: return removeTaskById();
             case TASK_UPDATE_BY_INDEX: return updateTaskByIndex();
+            case TASK_UPDATE_BY_ID: return updateTaskById();
 
             default: return displayError();
         }
@@ -98,6 +102,21 @@ public class App {
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
         final Task task = taskDAO.findByIndex(index);
+        if (task == null) System.out.println("[Задача не найдена]");
+        return viewTask(task);
+    }
+
+    private static int viewTaskById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.print("Введите ID задачи: ");
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final Long id = Long.parseLong(scanner.nextLine());
+        final Task task = taskDAO.findById(id);
         if (task == null) System.out.println("[Задача не найдена]");
         return viewTask(task);
     }
@@ -187,7 +206,7 @@ public class App {
 
     private static int updateTaskByIndex() {
         System.out.println(BLOCK_SEPARATOR);
-        System.out.println("[Обновление задачи]");
+        System.out.println("[Обновление задачи по номеру]");
         System.out.print("Введите номер задачи: ");
         if (!scanner.hasNextInt()) {
             final String error_value = scanner.nextLine();
@@ -203,6 +222,28 @@ public class App {
         final String description = scanner.nextLine();
         final Long id = taskDAO.update(task.getId(), name, description).getId();
         System.out.println("[Готово. Задача " + (index + 1) + " (ID = " + id + ") обновлена]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    private static int updateTaskById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Обновление задачи по ID]");
+        System.out.print("Введите ID задачи: ");
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка обновления задачи. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final Long id = Long.parseLong(scanner.nextLine());
+        final Task task = taskDAO.findById(id);
+        System.out.print("Введите название задачи: ");
+        final String name = scanner.nextLine();
+        System.out.print("Введите описание задачи: ");
+        final String description = scanner.nextLine();
+        taskDAO.update(task.getId(), name, description);
+        System.out.println("[Готово. Задача (ID = " + id + ") обновлена]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -229,6 +270,21 @@ public class App {
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
         final Project project = projectDAO.findByIndex(index);
+        if (project == null) System.out.println("[Проект не найден]");
+        return viewProject(project);
+    }
+
+    private static int viewProjectById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.print("Введите ID проекта: ");
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final Long id = Long.parseLong(scanner.nextLine());
+        final Project project = projectDAO.findById(id);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
     }
@@ -318,7 +374,7 @@ public class App {
 
     private static int updateProjectByIndex() {
         System.out.println(BLOCK_SEPARATOR);
-        System.out.println("[Обновление проекта]");
+        System.out.println("[Обновление проекта по номеру]");
         System.out.print("Введите номер проекта: ");
         if (!scanner.hasNextInt()) {
             final String error_value = scanner.nextLine();
@@ -339,6 +395,33 @@ public class App {
         final String description = scanner.nextLine();
         final Long id = projectDAO.update(project.getId(), name, description).getId();
         System.out.println("[Готово. Проект " + (index + 1) + " (ID = " + id + ") обновлен]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    private static int updateProjectById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Обновление проекта по ID]");
+        System.out.print("Введите ID проекта: ");
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final Long id = Long.parseLong(scanner.nextLine());
+        final Project project = projectDAO.findById(id);
+        if (project == null) {
+            System.out.println("[Ошибка обновления проекта. Проект не найден]");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.print("Введите название проекта: ");
+        final String name = scanner.nextLine();
+        System.out.print("Введите описание проекта: ");
+        final String description = scanner.nextLine();
+        projectDAO.update(project.getId(), name, description);
+        System.out.println("[Готово. Проект (ID = " + id + ") обновлен]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
