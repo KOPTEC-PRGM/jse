@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class App {
+public class Application {
 
     private static final ProjectDAO projectDAO = new ProjectDAO();
 

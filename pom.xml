@@ -42,7 +42,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.nlmk.potapov.tm.App</mainClass>
+                            <mainClass>com.nlmk.potapov.tm.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
