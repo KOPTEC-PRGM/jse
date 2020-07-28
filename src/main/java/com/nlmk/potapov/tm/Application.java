@@ -5,8 +5,6 @@ import com.nlmk.potapov.tm.controller.SystemController;
 import com.nlmk.potapov.tm.controller.TaskController;
 import com.nlmk.potapov.tm.dao.ProjectDAO;
 import com.nlmk.potapov.tm.dao.TaskDAO;
-import com.nlmk.potapov.tm.entity.Project;
-import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.Scanner;
 
