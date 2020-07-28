@@ -1,16 +1,17 @@
 package com.nlmk.potapov.tm.controller;
 
-import com.nlmk.potapov.tm.dao.ProjectDAO;
 import com.nlmk.potapov.tm.entity.Project;
+import com.nlmk.potapov.tm.service.ProjectService;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
+import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
 
 public class ProjectController extends AbstractController {
 
-    private final ProjectDAO projectDAO;
+    private final ProjectService projectService;
 
-    public ProjectController(ProjectDAO projectDAO) {
-        this.projectDAO = projectDAO;
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     public int viewProject(Project project) {
@@ -34,7 +35,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Project project = projectDAO.findByIndex(index);
+        final Project project = projectService.findByIndex(index);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
     }
@@ -49,7 +50,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Project project = projectDAO.findById(id);
+        final Project project = projectService.findById(id);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
     }
@@ -65,7 +66,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Project project = projectDAO.removeByIndex(index);
+        final Project project = projectService.removeByIndex(index);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -77,7 +78,7 @@ public class ProjectController extends AbstractController {
         System.out.println("[Удаление проекта по имени]");
         System.out.print("Введите название проекта: ");
         final String name = scanner.nextLine();
-        final Project project = projectDAO.removeByName(name);
+        final Project project = projectService.removeByName(name);
         if (project == null) System.out.println("[Ошибка удаления проекта]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -95,7 +96,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Project project = projectDAO.removeById(id);
+        final Project project = projectService.removeById(id);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -106,8 +107,8 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
         int index = 1;
-        for (final Project project: projectDAO.findAll()){
-            System.out.println(index + ". " + project.getId() + ": " + project.getName());
+        for (final Project project: projectService.findAll()){
+            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
             index++;
         }
         System.out.println("[Готово]");
@@ -118,7 +119,7 @@ public class ProjectController extends AbstractController {
     public int clearProject() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Очистка списка проектов]");
-        projectDAO.clear();
+        projectService.clear();
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -131,7 +132,7 @@ public class ProjectController extends AbstractController {
         final String name = scanner.nextLine();
         System.out.print("Введите описание проекта: ");
         final String description = scanner.nextLine();
-        final Long id = projectDAO.create(name, description).getId();
+        final Long id = projectService.create(name, description).getId();
         System.out.println("[Готово. Проект \""+name+"\" добавлен в список. Id = "+id+"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -148,7 +149,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Project project = projectDAO.findByIndex(index);
+        final Project project = projectService.findByIndex(index);
         if (project == null) {
             System.out.println("[Ошибка обновления проекта. Проект не найден]");
             System.out.println(BLOCK_SEPARATOR);
@@ -158,7 +159,7 @@ public class ProjectController extends AbstractController {
         final String name = scanner.nextLine();
         System.out.print("Введите описание проекта: ");
         final String description = scanner.nextLine();
-        final Long id = projectDAO.update(project.getId(), name, description).getId();
+        final Long id = projectService.update(project.getId(), name, description).getId();
         System.out.println("[Готово. Проект " + (index + 1) + " (ID = " + id + ") обновлен]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -175,7 +176,7 @@ public class ProjectController extends AbstractController {
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Project project = projectDAO.findById(id);
+        final Project project = projectService.findById(id);
         if (project == null) {
             System.out.println("[Ошибка обновления проекта. Проект не найден]");
             System.out.println(BLOCK_SEPARATOR);
@@ -185,7 +186,7 @@ public class ProjectController extends AbstractController {
         final String name = scanner.nextLine();
         System.out.print("Введите описание проекта: ");
         final String description = scanner.nextLine();
-        projectDAO.update(project.getId(), name, description);
+        projectService.update(project.getId(), name, description);
         System.out.println("[Готово. Проект (ID = " + id + ") обновлен]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;

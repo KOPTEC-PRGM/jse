@@ -1,11 +1,11 @@
-package com.nlmk.potapov.tm.dao;
+package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDAO {
+public class TaskRepository {
 
     private List<Task> tasks = new ArrayList<>();
 
@@ -37,12 +37,10 @@ public class TaskDAO {
     }
 
     public Task findByIndex(final int index) {
-        if (index < 0 || index > tasks.size() -1) return null;
         return tasks.get(index);
     }
 
     public Task findByName(final String name) {
-        if (name == null || name.isEmpty()) return null;
         for (final Task task: tasks){
             if (task.getName().equals(name)) return task;
         }
@@ -50,7 +48,6 @@ public class TaskDAO {
     }
 
     public Task findById(final Long id) {
-        if (id == null) return null;
         for (final Task task: tasks){
             if (task.getId().equals(id)) return task;
         }

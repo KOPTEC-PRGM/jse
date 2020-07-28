@@ -3,8 +3,10 @@ package com.nlmk.potapov.tm;
 import com.nlmk.potapov.tm.controller.ProjectController;
 import com.nlmk.potapov.tm.controller.SystemController;
 import com.nlmk.potapov.tm.controller.TaskController;
-import com.nlmk.potapov.tm.dao.ProjectDAO;
-import com.nlmk.potapov.tm.dao.TaskDAO;
+import com.nlmk.potapov.tm.repository.ProjectRepository;
+import com.nlmk.potapov.tm.repository.TaskRepository;
+import com.nlmk.potapov.tm.service.ProjectService;
+import com.nlmk.potapov.tm.service.TaskService;
 
 import java.util.Scanner;
 
@@ -12,21 +14,25 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class Application {
 
-    private final ProjectDAO projectDAO = new ProjectDAO();
+    private final ProjectRepository projectRepository = new ProjectRepository();
 
-    private final TaskDAO taskDAO = new TaskDAO();
+    private final TaskRepository taskRepository = new TaskRepository();
 
-    private final ProjectController projectController = new ProjectController(projectDAO);
+    private final ProjectService projectService = new ProjectService(projectRepository);
 
-    private final TaskController taskController = new TaskController(taskDAO);
+    private final TaskService taskService = new TaskService(taskRepository);
+
+    private final ProjectController projectController = new ProjectController(projectService);
+
+    private final TaskController taskController = new TaskController(taskService);
 
     private final SystemController systemController = new SystemController();
 
     {
-        projectDAO.create("Демонстрационный проект №1");
-        projectDAO.create("Демонстрационный проект №2");
-        taskDAO.create("Демонстрационное задание №1");
-        taskDAO.create("Демонстрационное задание №2");
+        projectRepository.create("Демонстрационный проект №1");
+        projectRepository.create("Демонстрационный проект №2");
+        taskRepository.create("Демонстрационное задание №1");
+        taskRepository.create("Демонстрационное задание №2");
     }
 
     public static void main(final String[] args) {

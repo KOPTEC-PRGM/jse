@@ -1,16 +1,17 @@
 package com.nlmk.potapov.tm.controller;
 
-import com.nlmk.potapov.tm.dao.TaskDAO;
 import com.nlmk.potapov.tm.entity.Task;
+import com.nlmk.potapov.tm.service.TaskService;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
+import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
 
 public class TaskController extends AbstractController{
 
-    private final TaskDAO taskDAO;
+    private final TaskService taskService;
 
-    public TaskController(TaskDAO taskDAO) {
-        this.taskDAO = taskDAO;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     public int viewTask(Task task) {
@@ -34,7 +35,7 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Task task = taskDAO.findByIndex(index);
+        final Task task = taskService.findByIndex(index);
         if (task == null) System.out.println("[Задача не найдена]");
         return viewTask(task);
     }
@@ -49,7 +50,7 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Task task = taskDAO.findById(id);
+        final Task task = taskService.findById(id);
         if (task == null) System.out.println("[Задача не найдена]");
         return viewTask(task);
     }
@@ -65,7 +66,7 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Task task = taskDAO.removeByIndex(index);
+        final Task task = taskService.removeByIndex(index);
         if (task == null) System.out.println("[Ошибка удаления задачи. Задача не найдена.]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -77,7 +78,7 @@ public class TaskController extends AbstractController{
         System.out.println("[Удаление задачи по имени]");
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
-        final Task task = taskDAO.removeByName(name);
+        final Task task = taskService.removeByName(name);
         if (task == null) System.out.println("[Ошибка удаления задачи]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -95,7 +96,7 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Task task = taskDAO.removeById(id);
+        final Task task = taskService.removeById(id);
         if (task == null) System.out.println("[Ошибка удаления задачи. Задача не найдена.]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -106,8 +107,8 @@ public class TaskController extends AbstractController{
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач]");
         int index = 1;
-        for (final Task task: taskDAO.findAll()){
-            System.out.println(index + ". " + task.getId() + ": " + task.getName());
+        for (final Task task: taskService.findAll()){
+            System.out.println(INDENT+index + ". " + task.getId() + ": " + task.getName());
             index++;
         }
         System.out.println("[Готово]");
@@ -118,7 +119,7 @@ public class TaskController extends AbstractController{
     public int clearTask() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Очистка списка задач]");
-        taskDAO.clear();
+        taskService.clear();
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -131,7 +132,7 @@ public class TaskController extends AbstractController{
         final String name = scanner.nextLine();
         System.out.print("Введите описание задачи: ");
         final String description = scanner.nextLine();
-        final Long id = taskDAO.create(name, description).getId();
+        final Long id = taskService.create(name, description).getId();
         System.out.println("[Готово. Задача \""+name+"\" добавлена в список. ID = "+id+"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -148,12 +149,12 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final int index = Integer.parseInt(scanner.nextLine()) -1;
-        final Task task = taskDAO.findByIndex(index);
+        final Task task = taskService.findByIndex(index);
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
         System.out.print("Введите описание задачи: ");
         final String description = scanner.nextLine();
-        final Long id = taskDAO.update(task.getId(), name, description).getId();
+        final Long id = taskService.update(task.getId(), name, description).getId();
         System.out.println("[Готово. Задача " + (index + 1) + " (ID = " + id + ") обновлена]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -170,12 +171,12 @@ public class TaskController extends AbstractController{
             return -1;
         }
         final Long id = Long.valueOf(scanner.nextLine());
-        final Task task = taskDAO.findById(id);
+        final Task task = taskService.findById(id);
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
         System.out.print("Введите описание задачи: ");
         final String description = scanner.nextLine();
-        taskDAO.update(task.getId(), name, description);
+        taskService.update(task.getId(), name, description);
         System.out.println("[Готово. Задача (ID = " + id + ") обновлена]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
