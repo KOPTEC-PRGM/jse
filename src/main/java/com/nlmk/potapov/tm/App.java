@@ -115,7 +115,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Task task = taskDAO.findById(id);
         if (task == null) System.out.println("[Задача не найдена]");
         return viewTask(task);
@@ -161,7 +161,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Task task = taskDAO.removeById(id);
         if (task == null) System.out.println("[Ошибка удаления задачи. Задача не найдена.]");
         else System.out.println("[Готово]");
@@ -236,7 +236,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Task task = taskDAO.findById(id);
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
@@ -283,7 +283,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Project project = projectDAO.findById(id);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
@@ -329,7 +329,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Project project = projectDAO.removeById(id);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
         else System.out.println("[Готово]");
@@ -409,7 +409,7 @@ public class App {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        final Long id = Long.parseLong(scanner.nextLine());
+        final Long id = Long.valueOf(scanner.nextLine());
         final Project project = projectDAO.findById(id);
         if (project == null) {
             System.out.println("[Ошибка обновления проекта. Проект не найден]");
