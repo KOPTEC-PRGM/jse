@@ -14,17 +14,15 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class Application {
 
-    private static final Scanner scanner = new Scanner(System.in);
-
     private final ProjectDAO projectDAO = new ProjectDAO();
 
     private final TaskDAO taskDAO = new TaskDAO();
 
-    protected final ProjectController projectController = new ProjectController(projectDAO);
+    private final ProjectController projectController = new ProjectController(projectDAO);
 
-    protected final TaskController taskController = new TaskController(taskDAO);
+    private final TaskController taskController = new TaskController(taskDAO);
 
-    protected final SystemController systemController = new SystemController();
+    private final SystemController systemController = new SystemController();
 
     {
         projectDAO.create("Демонстрационный проект №1");
@@ -34,6 +32,7 @@ public class Application {
     }
 
     public static void main(final String[] args) {
+        final Scanner scanner = new Scanner(System.in);
         Application application = new Application();
         application.systemController.displayWelcome();
         application.run(args);
