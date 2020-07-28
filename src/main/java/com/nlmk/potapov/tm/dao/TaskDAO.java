@@ -23,7 +23,6 @@ public class TaskDAO {
         return task;
     }
 
-
     public Task update(final Long id, final String name, final String description) {
         final Task task = findById(id);
         if (task == null) return null;
