@@ -54,7 +54,7 @@ public class TaskRepository {
         return null;
     }
 
-    public Task removeByIndex(final  int index) {
+    public Task removeByIndex(final int index) {
         final Task task = findByIndex(index);
         if (task == null) return null;
         tasks.remove(task);
@@ -77,6 +77,10 @@ public class TaskRepository {
 
     public List<Task> findAll() {
         return tasks;
+    }
+
+    public int size(){
+        return tasks.size();
     }
 
 }

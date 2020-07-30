@@ -79,4 +79,8 @@ public class ProjectRepository {
         return projects;
     }
 
+    public int size() {
+        return projects.size();
+    }
+
 }

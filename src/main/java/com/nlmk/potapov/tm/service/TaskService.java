@@ -36,7 +36,7 @@ public class TaskService {
     }
 
     public Task findByIndex(int index) {
-        if (index < 0 || index > findAll().size() -1) return null;
+        if (index < 0 || index > taskRepository.size() -1) return null;
         return taskRepository.findByIndex(index);
     }
 
@@ -51,7 +51,7 @@ public class TaskService {
     }
 
     public Task removeByIndex(int index) {
-        if (index < 0 || index > findAll().size() -1) return null;
+        if (index < 0 || index > taskRepository.size() -1) return null;
         return taskRepository.removeByIndex(index);
     }
 

@@ -36,7 +36,7 @@ public class ProjectService {
     }
 
     public Project findByIndex(int index) {
-        if (index < 0 || index > findAll().size() -1) return null;
+        if (index < 0 || index > projectRepository.size() -1) return null;
         return projectRepository.findByIndex(index);
     }
 
@@ -51,7 +51,7 @@ public class ProjectService {
     }
 
     public Project removeByIndex(int index) {
-        if (index < 0 || index > findAll().size() -1) return null;
+        if (index < 0 || index > projectRepository.size() -1) return null;
         return projectRepository.removeByIndex(index);
     }
 
