@@ -63,4 +63,8 @@ task-remove-by-id - Удаление задачи по ID
 task-remove-by-index - Удаление задачи по номеру
 task-update-by-index - Обновление задачи по номеру
 task-update-by-id - Обновление задачи по ID
+task-list-by-project-id - Список задач в проекте по ID проекта
+task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи
+task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи
+        
 ```
