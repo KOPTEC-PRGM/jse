@@ -28,13 +28,8 @@ public class ProjectController extends AbstractController {
     public int viewProjectByIndex() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите номер проекта: ");
-        if (!scanner.hasNextInt()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final int index = Integer.parseInt(scanner.nextLine()) -1;
+        final int index = getIndexFromScanner();
+        if (index < 0) return -1;
         final Project project = projectService.findByIndex(index);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
@@ -43,13 +38,8 @@ public class ProjectController extends AbstractController {
     public int viewProjectById() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите ID проекта: ");
-        if (!scanner.hasNextLong()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final Long id = Long.valueOf(scanner.nextLine());
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
         final Project project = projectService.findById(id);
         if (project == null) System.out.println("[Проект не найден]");
         return viewProject(project);
@@ -59,13 +49,8 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта по номеру]");
         System.out.print("Введите номер проекта: ");
-        if (!scanner.hasNextInt()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка удаления проекта. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final int index = Integer.parseInt(scanner.nextLine()) -1;
+        final int index = getIndexFromScanner();
+        if (index < 0) return -1;
         final Project project = projectService.removeByIndex(index);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
         else System.out.println("[Готово]");
@@ -89,13 +74,8 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта по ID]");
         System.out.print("Введите ID проекта: ");
-        if (!scanner.hasNextLong()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка удаления проекта. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final Long id = Long.valueOf(scanner.nextLine());
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
         final Project project = projectService.removeById(id);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
         else System.out.println("[Готово]");
@@ -142,13 +122,8 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление проекта по номеру]");
         System.out.print("Введите номер проекта: ");
-        if (!scanner.hasNextInt()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final int index = Integer.parseInt(scanner.nextLine()) -1;
+        final int index = getIndexFromScanner();
+        if (index < 0) return -1;
         final Project project = projectService.findByIndex(index);
         if (project == null) {
             System.out.println("[Ошибка обновления проекта. Проект не найден]");
@@ -169,13 +144,8 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление проекта по ID]");
         System.out.print("Введите ID проекта: ");
-        if (!scanner.hasNextLong()) {
-            final String error_value = scanner.nextLine();
-            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
-        final Long id = Long.valueOf(scanner.nextLine());
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
         final Project project = projectService.findById(id);
         if (project == null) {
             System.out.println("[Ошибка обновления проекта. Проект не найден]");
@@ -190,6 +160,26 @@ public class ProjectController extends AbstractController {
         System.out.println("[Готово. Проект (ID = " + id + ") обновлен]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
+    }
+
+    private Long getIdFromScanner(){
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return null;
+        }
+        return Long.valueOf(scanner.nextLine());
+    }
+
+    private int getIndexFromScanner(){
+        if (!scanner.hasNextInt()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        return Integer.parseInt(scanner.nextLine()) -1;
     }
 
 }

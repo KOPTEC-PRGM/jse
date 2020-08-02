@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TaskRepository {
 
-    private List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
 
     public Task create(final String name) {
         final Task task = new Task(name);
@@ -54,6 +54,16 @@ public class TaskRepository {
         return null;
     }
 
+    public Task findByProjectIdAndId(final Long projectId, final Long id) {
+        for (final Task task: tasks){
+            Long idProject = task.getProjectId();
+            if (idProject == null) continue;
+            if (!idProject.equals(projectId)) continue;
+            if (task.getId().equals(id)) return task;
+        }
+        return null;
+    }
+
     public Task removeByIndex(final int index) {
         final Task task = findByIndex(index);
         if (task == null) return null;
@@ -81,6 +91,16 @@ public class TaskRepository {
 
     public int size(){
         return tasks.size();
+    }
+
+    public List<Task> viewTasksFromProject (final Long projectId){
+        List<Task> result = new ArrayList<>();
+        for (Task task: findAll()){
+            if (task.getProjectId() == null) continue;
+            if (task.getProjectId().equals(projectId))
+                result.add(task);
+        }
+        return result;
     }
 
 }

@@ -32,5 +32,9 @@ public final class TerminalConst {
     public static final String TASK_REMOVE_BY_INDEX = "task-remove-by-index";
     public static final String TASK_UPDATE_BY_INDEX = "task-update-by-index";
     public static final String TASK_UPDATE_BY_ID = "task-update-by-id";
+    public static final String TASK_LIST_BY_PROJECT_ID = "task-list-by-project-id";
+    public static final String TASK_ADD_TO_PROJECT_BY_IDS = "task-add-to-project-by-ids";
+    public static final String TASK_REMOVE_FROM_PROJECT_BY_IDS = "task-remove-from-project-by-ids";
+
 
 }

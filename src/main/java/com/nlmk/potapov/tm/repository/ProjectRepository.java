@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ProjectRepository {
 
-    private List<Project> projects = new ArrayList<>();
+    private final List<Project> projects = new ArrayList<>();
 
     public Project create(final String name) {
         final Project project = new Project(name);

@@ -6,6 +6,7 @@ import com.nlmk.potapov.tm.controller.TaskController;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.service.ProjectService;
+import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 
 import java.util.Scanner;
@@ -22,9 +23,11 @@ public class Application {
 
     private final TaskService taskService = new TaskService(taskRepository);
 
+    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
+
     private final ProjectController projectController = new ProjectController(projectService);
 
-    private final TaskController taskController = new TaskController(taskService);
+    private final TaskController taskController = new TaskController(taskService, projectTaskService);
 
     private final SystemController systemController = new SystemController();
 
@@ -88,6 +91,9 @@ public class Application {
             case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
             case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
             case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
+            case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
+            case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
+            case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
 
             default: return systemController.displayError();
         }

@@ -8,6 +8,8 @@ public class Task {
 
     private String description = "";
 
+    private Long projectId = null;
+
     public Task() {
     }
 
@@ -37,6 +39,14 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     @Override
