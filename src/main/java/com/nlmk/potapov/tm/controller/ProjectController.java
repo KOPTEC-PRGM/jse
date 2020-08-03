@@ -57,7 +57,7 @@ public class ProjectController extends AbstractController {
         if (index < 0) return -1;
         final Project project = projectService.removeByIndex(index);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
-        else System.out.println("[Готово]");
+        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -69,7 +69,7 @@ public class ProjectController extends AbstractController {
         final String name = scanner.nextLine();
         final Project project = projectService.removeByName(name);
         if (project == null) System.out.println("[Ошибка удаления проекта]");
-        else System.out.println("[Готово]");
+        else System.out.println("[Готово. Проект " + project.getName() + " удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -82,7 +82,7 @@ public class ProjectController extends AbstractController {
         if (id == null) return -1;
         final Project project = projectService.removeById(id);
         if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
-        else System.out.println("[Готово]");
+        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -173,8 +173,8 @@ public class ProjectController extends AbstractController {
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Project project = projectTaskService.removeProjectWithTasks(id);
-        if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
-        else System.out.println("[Готово]");
+        if (project == null) System.out.println("[Ошибка удаления проекта. Проект (ID = " + id + ") не найден.]");
+        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
