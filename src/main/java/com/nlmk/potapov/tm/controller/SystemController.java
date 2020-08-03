@@ -20,6 +20,7 @@ public class SystemController {
         System.out.println(INDENT+"project-remove-by-name - Удаление проекта по имени.");
         System.out.println(INDENT+"project-remove-by-id - Удаление проекта по ID.");
         System.out.println(INDENT+"project-remove-by-index - Удаление проекта по номеру.");
+        System.out.println(INDENT+"project-remove-with-tasks-by-id - Удаление проекта с его задачами по ID проекта.");
         System.out.println(INDENT+"project-update-by-index - Обновление проекта по номеру.");
         System.out.println(INDENT+"project-update-by-id - Обновление проекта по ID.");
         System.out.println();

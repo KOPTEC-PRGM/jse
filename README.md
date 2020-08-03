@@ -50,6 +50,7 @@ project-view-by-id - Просмотр проекта по ID
 project-remove-by-name - Удаление проекта по имени
 project-remove-by-id - Удаление проекта по ID
 project-remove-by-index - Удаление проекта по номеру
+project-remove-with-tasks-by-id - Удаление проекта с его задачами по ID проекта.
 project-update-by-index - Обновление проекта по номеру
 project-update-by-id - Обновление проекта по ID
 
