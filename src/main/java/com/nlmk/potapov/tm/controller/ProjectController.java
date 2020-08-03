@@ -2,6 +2,7 @@ package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.service.ProjectService;
+import com.nlmk.potapov.tm.service.ProjectTaskService;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
 import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
@@ -10,8 +11,11 @@ public class ProjectController extends AbstractController {
 
     private final ProjectService projectService;
 
-    public ProjectController(ProjectService projectService) {
+    private final ProjectTaskService projectTaskService;
+
+    public ProjectController(ProjectService projectService, ProjectTaskService projectTaskService) {
         this.projectService = projectService;
+        this.projectTaskService = projectTaskService;
     }
 
     public int viewProject(Project project) {
@@ -158,6 +162,19 @@ public class ProjectController extends AbstractController {
         final String description = scanner.nextLine();
         projectService.update(project.getId(), name, description);
         System.out.println("[Готово. Проект (ID = " + id + ") обновлен]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    public int removeProjectWithTasksById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Удаление проекта с задачами по ID]");
+        System.out.print("Введите ID проекта: ");
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
+        final Project project = projectTaskService.removeProjectWithTasks(id);
+        if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
+        else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

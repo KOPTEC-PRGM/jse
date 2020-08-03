@@ -25,7 +25,7 @@ public class Application {
 
     private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
-    private final ProjectController projectController = new ProjectController(projectService);
+    private final ProjectController projectController = new ProjectController(projectService, projectTaskService);
 
     private final TaskController taskController = new TaskController(taskService, projectTaskService);
 
@@ -80,6 +80,7 @@ public class Application {
             case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById();
             case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
             case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
+            case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
 
             case TASK_CREATE: return taskController.createTask();
             case TASK_CLEAR: return taskController.clearTask();

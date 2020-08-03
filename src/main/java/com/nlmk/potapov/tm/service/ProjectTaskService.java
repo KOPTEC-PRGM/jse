@@ -44,4 +44,15 @@ public class ProjectTaskService {
         if (projectRepository.findById(projectId) == null) return Collections.emptyList();
         return taskRepository.viewTasksFromProject(projectId);
     }
+
+    public Project removeProjectWithTasks(final Long projectId) {
+        if (projectId == null) return null;
+        if (projectRepository.findById(projectId) == null) return null;
+        List<Task> tasks = taskRepository.viewTasksFromProject(projectId);
+        for (Task task: tasks){
+            taskRepository.removeById(task.getId());
+        }
+        return projectRepository.removeById(projectId);
+    }
+
 }
