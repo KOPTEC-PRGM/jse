@@ -37,6 +37,9 @@ public class SystemController {
         System.out.println(INDENT+"task-list-by-project-id - Список задач в проекте по ID проекта.");
         System.out.println(INDENT+"task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи");
         System.out.println(INDENT+"task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи.");
+        System.out.println();
+        System.out.println(INDENT+"user-create - Добавление нового пользователя.");
+        System.out.println(INDENT+"user-list - Список пользователей.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
