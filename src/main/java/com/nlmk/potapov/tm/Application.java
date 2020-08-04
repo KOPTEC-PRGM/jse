@@ -1,13 +1,18 @@
 package com.nlmk.potapov.tm;
 
+import com.nlmk.potapov.tm.constant.RoleType;
 import com.nlmk.potapov.tm.controller.ProjectController;
 import com.nlmk.potapov.tm.controller.SystemController;
 import com.nlmk.potapov.tm.controller.TaskController;
+import com.nlmk.potapov.tm.controller.UserController;
+import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
+import com.nlmk.potapov.tm.repository.UserRepository;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
+import com.nlmk.potapov.tm.service.UserService;
 
 import java.util.Scanner;
 
@@ -19,15 +24,21 @@ public class Application {
 
     private final TaskRepository taskRepository = new TaskRepository();
 
+    private final UserRepository userRepository = new UserRepository();
+
     private final ProjectService projectService = new ProjectService(projectRepository);
 
     private final TaskService taskService = new TaskService(taskRepository);
 
     private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
+    private final UserService userService = new UserService(userRepository);
+
     private final ProjectController projectController = new ProjectController(projectService, projectTaskService);
 
     private final TaskController taskController = new TaskController(taskService, projectTaskService);
+
+    private final UserController userController = new UserController(userService);
 
     private final SystemController systemController = new SystemController();
 
@@ -36,6 +47,10 @@ public class Application {
         projectRepository.create("Демонстрационный проект №2");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");
+        userService.create("Новый пользователь 1", "Надежный пароль",
+                        "Иван", "Васильевич", "Бунша", RoleType.USER);
+        userService.create("Главный администратор", "Очень надежный пароль",
+                        "Семен", "Семенович", "Горбунков", RoleType.ADMIN);
     }
 
     public static void main(final String[] args) {
@@ -95,6 +110,9 @@ public class Application {
             case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
             case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
             case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
+
+            case USER_CREATE: return userController.addUser();
+            case USER_LIST: return userController.listUser();
 
             default: return systemController.displayError();
         }
