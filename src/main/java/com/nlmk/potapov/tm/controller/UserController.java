@@ -1,6 +1,5 @@
 package com.nlmk.potapov.tm.controller;
 
-import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.service.UserService;
 

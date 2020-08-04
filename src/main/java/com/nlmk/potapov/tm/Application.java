@@ -5,7 +5,6 @@ import com.nlmk.potapov.tm.controller.ProjectController;
 import com.nlmk.potapov.tm.controller.SystemController;
 import com.nlmk.potapov.tm.controller.TaskController;
 import com.nlmk.potapov.tm.controller.UserController;
-import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.repository.UserRepository;
@@ -47,10 +46,8 @@ public class Application {
         projectRepository.create("Демонстрационный проект №2");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");
-        userService.create("Новый пользователь 1", "Надежный пароль",
-                        "Иван", "Васильевич", "Бунша", RoleType.USER);
-        userService.create("Главный администратор", "Очень надежный пароль",
-                        "Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
+        userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
     }
 
     public static void main(final String[] args) {
