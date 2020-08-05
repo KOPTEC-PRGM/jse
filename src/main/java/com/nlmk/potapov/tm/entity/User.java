@@ -1,6 +1,6 @@
 package com.nlmk.potapov.tm.entity;
 
-import com.nlmk.potapov.tm.constant.RoleType;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 
 public class User {
 

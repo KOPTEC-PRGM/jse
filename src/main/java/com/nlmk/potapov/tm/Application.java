@@ -1,6 +1,6 @@
 package com.nlmk.potapov.tm;
 
-import com.nlmk.potapov.tm.constant.RoleType;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.controller.ProjectController;
 import com.nlmk.potapov.tm.controller.SystemController;
 import com.nlmk.potapov.tm.controller.TaskController;

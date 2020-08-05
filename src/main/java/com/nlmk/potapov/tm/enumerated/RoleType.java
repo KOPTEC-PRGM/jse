@@ -1,4 +1,4 @@
-package com.nlmk.potapov.tm.constant;
+package com.nlmk.potapov.tm.enumerated;
 
 public enum RoleType {
 
