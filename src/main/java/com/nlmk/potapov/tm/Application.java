@@ -110,6 +110,7 @@ public class Application {
 
             case USER_CREATE: return userController.addUser();
             case USER_LIST: return userController.listUser();
+            case USER_REMOVE_BY_LOGIN: return userController.deleteUserByLogin();
 
             default: return systemController.displayError();
         }

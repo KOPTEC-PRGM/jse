@@ -39,5 +39,6 @@ public final class TerminalConst {
 
     public static final String USER_CREATE = "user-create";
     public static final String USER_LIST = "user-list";
+    public static final String USER_REMOVE_BY_LOGIN = "user-remove-by-login";
 
 }

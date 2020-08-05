@@ -52,6 +52,22 @@ public class UserController extends AbstractController{
         return 0;
     }
 
+    public int deleteUserByLogin() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Удаление пользователя]");
+        System.out.print("Введите логин: ");
+        final String login = scanner.nextLine();
+        if (userService.findByLogin(login) == null) {
+            System.out.println("[Ошибка. Такого пользователя не существует]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        User user = userService.removeByLogin(login);
+        System.out.println("[Готово. Пользователь " + login + " удален]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
     public int listUser() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список пользователей]");
