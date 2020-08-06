@@ -4,9 +4,11 @@ import com.nlmk.potapov.tm.enumerated.RoleType;
 
 public class User {
 
-    private String login = "";
+    private Long id = System.nanoTime();
 
-    private String password = "";
+    private String login;
+
+    private String password;
 
     private String firstName = "";
 
@@ -34,6 +36,14 @@ public class User {
         this.middleName = middleName;
         this.lastName = lastName;
         this.roleType = roleType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -86,7 +96,7 @@ public class User {
 
     @Override
     public String toString() {
-        return login + ": " + firstName + ' ' + middleName + ' ' + lastName + ". " + roleType+ '.';
+        return id + ": " + login + " - " + firstName + ' ' + middleName + ' ' + lastName + " - " + roleType+ '.';
     }
 
 }

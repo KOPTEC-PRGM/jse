@@ -34,6 +34,16 @@ public class UserRepository {
         return user;
     }
 
+    public User update(final String login, final String firstName, final String middleName, final String lastName) {
+        final User user = findByLogin(login);
+        if (user == null) return null;
+        user.setLogin(login);
+        user.setFirstName(firstName);
+        user.setMiddleName(middleName);
+        user.setLastName(lastName);
+        return user;
+    }
+
     public void clear() {
         users.clear();
     }
@@ -45,6 +55,10 @@ public class UserRepository {
         return null;
     }
 
+    public User findByIndex(final int index) {
+        return users.get(index);
+    }
+
     public User removeByLogin(final String login) {
         final User user = findByLogin(login);
         if (user == null) return null;
@@ -52,8 +66,19 @@ public class UserRepository {
         return user;
     }
 
+    public User removeByIndex(final int index) {
+        final User user = findByIndex(index);
+        if (user == null) return null;
+        users.remove(user);
+        return user;
+    }
+
     public List<User> findAll() {
         return users;
+    }
+
+    public int size() {
+        return users.size();
     }
 
 }

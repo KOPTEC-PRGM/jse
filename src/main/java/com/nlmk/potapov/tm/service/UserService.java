@@ -15,7 +15,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User create(String login, String password, String firstName, String middleName, String lastName) {
+    public User create(final String login, final String password,
+                       final String firstName, final String middleName, final String lastName
+    ) {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
         if (firstName == null || firstName.isEmpty()) return null;
@@ -24,7 +26,10 @@ public class UserService {
         return userRepository.create(login, Hash.generateMD5(password), firstName, middleName, lastName);
     }
 
-    public User create(String login, String password, String firstName, String middleName, String lastName, RoleType roleType) {
+    public User create(final String login, final String password,
+                       final String firstName, final String middleName, final String lastName,
+                       final RoleType roleType
+    ) {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
         if (firstName == null || firstName.isEmpty()) return null;
@@ -34,7 +39,22 @@ public class UserService {
         return userRepository.create(login, Hash.generateMD5(password), firstName, middleName, lastName, roleType);
     }
 
-    public User update(String login, String password, String firstName, String middleName, String lastName, RoleType roleType) {
+    public User update(
+            final String login,
+            final String firstName, final String middleName, final String lastName
+    ) {
+        if (login == null || login.isEmpty()) return null;
+        if (firstName == null || firstName.isEmpty()) return null;
+        if (middleName == null || middleName.isEmpty()) return null;
+        if (lastName == null || lastName.isEmpty()) return null;
+        return userRepository.update(login,  firstName, middleName, lastName);
+    }
+
+    public User update(
+            final String login, final String password,
+            final String firstName, final String middleName, final String lastName,
+            final RoleType roleType
+    ) {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
         if (firstName == null || firstName.isEmpty()) return null;
@@ -48,14 +68,24 @@ public class UserService {
         userRepository.clear();
     }
 
-    public User findByLogin(String login) {
+    public User findByLogin(final String login) {
         if (login == null || login.isEmpty()) return null;
         return userRepository.findByLogin(login);
     }
 
-    public User removeByLogin(String login) {
+    public User findByIndex(final int index) {
+        if (index < 0 || index > userRepository.size() -1) return null;
+        return userRepository.findByIndex(index);
+    }
+
+    public User removeByLogin(final String login) {
         if (login == null || login.isEmpty()) return null;
         return userRepository.removeByLogin(login);
+    }
+
+    public User removeByIndex(final int index) {
+        if (index < 0 || index > userRepository.size() -1) return null;
+        return userRepository.removeByIndex(index);
     }
 
     public List<User> findAll() {

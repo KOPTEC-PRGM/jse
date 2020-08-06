@@ -109,8 +109,14 @@ public class Application {
             case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
 
             case USER_CREATE: return userController.addUser();
+            case USER_CLEAR: return userController.clearUser();
             case USER_LIST: return userController.listUser();
+            case USER_VIEW_BY_INDEX: return userController.viewUserByIndex();
+            case USER_VIEW_BY_LOGIN: return userController.viewUserByLogin();
+            case USER_REMOVE_BY_INDEX: return userController.deleteUserByIndex();
             case USER_REMOVE_BY_LOGIN: return userController.deleteUserByLogin();
+            case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
+            case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
 
             default: return systemController.displayError();
         }
