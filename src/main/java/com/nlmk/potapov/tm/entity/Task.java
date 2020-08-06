@@ -10,6 +10,8 @@ public class Task {
 
     private Long projectId = null;
 
+    private Long userId;
+
     public Task() {
     }
 
@@ -47,6 +49,14 @@ public class Task {
 
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

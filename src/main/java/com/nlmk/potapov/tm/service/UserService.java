@@ -40,6 +40,14 @@ public class UserService {
     }
 
     public User update(
+            final String login, final String password
+    ) {
+        if (login == null || login.isEmpty()) return null;
+        if (password == null || password.isEmpty()) return null;
+        return userRepository.update(login, Hash.generateMD5(password));
+    }
+
+    public User update(
             final String login,
             final String firstName, final String middleName, final String lastName
     ) {
@@ -78,6 +86,11 @@ public class UserService {
         return userRepository.findByIndex(index);
     }
 
+    public User findById(final Long id) {
+        if (id == null) return null;
+        return userRepository.findById(id);
+    }
+
     public User removeByLogin(final String login) {
         if (login == null || login.isEmpty()) return null;
         return userRepository.removeByLogin(login);
@@ -86,6 +99,13 @@ public class UserService {
     public User removeByIndex(final int index) {
         if (index < 0 || index > userRepository.size() -1) return null;
         return userRepository.removeByIndex(index);
+    }
+
+    public boolean checkPassword(final String login, final String password){
+        if (login == null || login.isEmpty()) return false;
+        if (password == null || password.isEmpty()) return false;
+        User user = userRepository.findByLogin(login);
+        return user.getPassword().equals(Hash.generateMD5(password));
     }
 
     public List<User> findAll() {

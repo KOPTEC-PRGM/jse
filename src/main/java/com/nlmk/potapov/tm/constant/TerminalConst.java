@@ -6,6 +6,8 @@ public final class TerminalConst {
     public static final String VERSION = "version";
     public static final String ABOUT = "about";
     public static final String EXIT = "exit";
+    public static final String LOGIN = "login";
+    public static final String LOGOUT = "logout";
 
     public static final String BLOCK_SEPARATOR = "-----------------------------------------------";
     public static final String INDENT = "   ";
@@ -46,5 +48,8 @@ public final class TerminalConst {
     public static final String USER_REMOVE_BY_LOGIN = "user-remove-by-login";
     public static final String USER_UPDATE_BY_INDEX = "user-update-by-index";
     public static final String USER_UPDATE_BY_LOGIN = "user-update-by-login";
+    public static final String USER_UPDATE_PASSWORD = "user-update-password";
+    public static final String USER_VIEW_CURRENT = "user-view-current";
+    public static final String USER_UPDATE_CURRENT = "user-update-current";
 
 }

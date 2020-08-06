@@ -44,6 +44,14 @@ public class UserRepository {
         return user;
     }
 
+    public User update(final String login, final String password) {
+        final User user = findByLogin(login);
+        if (user == null) return null;
+        user.setLogin(login);
+        user.setPassword(password);
+        return user;
+    }
+
     public void clear() {
         users.clear();
     }
@@ -51,6 +59,13 @@ public class UserRepository {
     public User findByLogin(final String login) {
         for (final User user: users){
             if (user.getLogin().equals(login)) return user;
+        }
+        return null;
+    }
+
+    public User findById(final Long id) {
+        for (final User user: users){
+            if (user.getId().equals(id)) return user;
         }
         return null;
     }

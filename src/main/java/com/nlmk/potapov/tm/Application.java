@@ -1,10 +1,7 @@
 package com.nlmk.potapov.tm;
 
+import com.nlmk.potapov.tm.controller.*;
 import com.nlmk.potapov.tm.enumerated.RoleType;
-import com.nlmk.potapov.tm.controller.ProjectController;
-import com.nlmk.potapov.tm.controller.SystemController;
-import com.nlmk.potapov.tm.controller.TaskController;
-import com.nlmk.potapov.tm.controller.UserController;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.repository.UserRepository;
@@ -39,13 +36,20 @@ public class Application {
 
     private final UserController userController = new UserController(userService);
 
-    private final SystemController systemController = new SystemController();
+    private final SystemController systemController = new SystemController(this, userService);
+
+    private Long currentUserId = null;
+
+    private String currentUserName = null;
 
     {
         projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №2");
+        projectRepository.create("Демонстрационный проект №3");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");
+        taskRepository.create("Демонстрационное задание №3");
+        taskRepository.create("Демонстрационное задание №4");
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
     }
@@ -65,6 +69,22 @@ public class Application {
         System.exit(result);
     }
 
+    public Long getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(Long currentUserId) {
+        this.currentUserId = currentUserId;
+    }
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
+    public void setCurrentUserName(String currentUserName) {
+        this.currentUserName = currentUserName;
+    }
+
     public void run(final String[] args) {
         if (args == null) return;
         if (args.length < 1) return;
@@ -81,6 +101,9 @@ public class Application {
             case VERSION: return systemController.displayVersion();
             case ABOUT: return systemController.displayAbout();
             case EXIT: return systemController.displayExit();
+
+            case LOGIN: return systemController.login();
+            case LOGOUT: return systemController.logout();
 
             case PROJECT_CREATE: return projectController.createProject();
             case PROJECT_CLEAR: return projectController.clearProject();
@@ -117,6 +140,9 @@ public class Application {
             case USER_REMOVE_BY_LOGIN: return userController.deleteUserByLogin();
             case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
             case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
+            case USER_UPDATE_PASSWORD: return userController.changeUserPassword();
+            case USER_VIEW_CURRENT: return userController.viewCurrent(getCurrentUserId());
+            case USER_UPDATE_CURRENT: return userController.changeCurrent(getCurrentUserId());
 
             default: return systemController.displayError();
         }

@@ -8,6 +8,8 @@ public class Project {
 
     private String description = "";
 
+    private Long userId;
+
     public Project() {
     }
 
@@ -37,6 +39,14 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override

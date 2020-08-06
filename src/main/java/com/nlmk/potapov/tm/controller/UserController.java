@@ -1,5 +1,6 @@
 package com.nlmk.potapov.tm.controller;
 
+import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.service.UserService;
 
@@ -29,8 +30,8 @@ public class UserController extends AbstractController{
         System.out.print("Введите пароль: ");
         final String password = scanner.nextLine();
         System.out.print("Подтвердите пароль: ");
-        final String checkPassword = scanner.nextLine();
-        if (!password.equals(checkPassword)) {
+        final String commitPassword = scanner.nextLine();
+        if (!password.equals(commitPassword)) {
             System.out.println("[Ошибка. Пароли не совпадают]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
@@ -176,6 +177,34 @@ public class UserController extends AbstractController{
         return 0;
     }
 
+    private int updateUserPassword(final User user) {
+        if (user == null) {
+            System.out.println("[Ошибка. Пользователь не найден]");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.print("Введите пароль: ");
+        final String password = scanner.nextLine();
+        if (!userService.checkPassword(user.getLogin(), password)){
+            System.out.println("[Ошибка. Неверный логин или пароль]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.print("Введите новый пароль: ");
+        final String newPassword = scanner.nextLine();
+        System.out.print("Подтвердите новый пароль: ");
+        final String commitNewPassword = scanner.nextLine();
+        if (!newPassword.equals(commitNewPassword)) {
+            System.out.println("[Ошибка. Пароли не совпадают]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        userService.update(user.getLogin(),newPassword);
+        System.out.println("[Готово. Пароль пользователя \"" + user.getLogin() + "\" изменен]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
     public int updateUserByIndex() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление пользователя по номеру]");
@@ -197,6 +226,34 @@ public class UserController extends AbstractController{
             return -1;
         }
         final User user = userService.findByLogin(login);
+        return updateUser(user);
+    }
+
+    public int changeUserPassword() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Смена пароля]");
+        System.out.print("Введите логин пользователя: ");
+        final String login = scanner.nextLine();
+        if (login == null || login.isEmpty()) {
+            System.out.println("[Ошибка. Введен пустой логин]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final User user = userService.findByLogin(login);
+        return updateUserPassword(user);
+    }
+
+    public int viewCurrent(final Long id) {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Информация пользователя]");
+        User user = userService.findById(id);
+        return viewUser(user);
+    }
+
+    public int changeCurrent(final Long id) {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Изменение данных пользователя]");
+        User user = userService.findById(id);
         return updateUser(user);
     }
 

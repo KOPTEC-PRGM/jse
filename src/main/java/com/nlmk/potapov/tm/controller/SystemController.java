@@ -1,9 +1,22 @@
 package com.nlmk.potapov.tm.controller;
 
+import com.nlmk.potapov.tm.Application;
+import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.service.UserService;
+
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
 import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
 
-public class SystemController {
+public class SystemController extends AbstractController{
+
+    private final Application app;
+
+    private final UserService userService;
+
+    public SystemController(Application app, UserService userService) {
+        this.app = app;
+        this.userService = userService;
+    }
 
     public int displayHelp() {
         System.out.println(BLOCK_SEPARATOR);
@@ -84,6 +97,44 @@ public class SystemController {
     public void displayWelcome() {
         System.out.println("** ДОБРО ПОЖАЛОВАТЬ В TASK MANAGER **");
         System.out.println(BLOCK_SEPARATOR);
+    }
+
+    public int login() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Вход в систему]");
+        System.out.print("Введите логин: ");
+        final String login = scanner.nextLine();
+        if (login == null || login.isEmpty()) {
+            System.out.println("[Ошибка. Введен пустой логин]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.print("Введите пароль: ");
+        final String password = scanner.nextLine();
+        if (password == null || password.isEmpty()) {
+            System.out.println("[Ошибка. Введен пустой пароль]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final User user = userService.findByLogin(login);
+        if (user == null) return -1;
+        if (userService.checkPassword(login,password)){
+            app.setCurrentUserId(user.getId());
+            app.setCurrentUserName(user.getLogin());
+        }
+        System.out.println("[Готово. Добро пожаловать \"" + user.getLogin() + "\"]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    public int logout() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Выход из системы]");
+        app.setCurrentUserId(null);
+        app.setCurrentUserName(null);
+        System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
     }
 
 }
