@@ -39,8 +39,14 @@ public class SystemController {
         System.out.println(INDENT+"task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи.");
         System.out.println();
         System.out.println(INDENT+"user-create - Добавление нового пользователя.");
-        System.out.println(INDENT+"user-remove-by-login - Удаление пользователя.");
         System.out.println(INDENT+"user-list - Список пользователей.");
+        System.out.println(INDENT+"user-clear - Очистка списка пользователей.");
+        System.out.println(INDENT+"user-view-by-index - Просмтор пользователя по номеру.");
+        System.out.println(INDENT+"user-view-by-login - Просмтор пользователя по логину.");
+        System.out.println(INDENT+"user-remove-by-index - Удаление пользователя по номеру.");
+        System.out.println(INDENT+"user-remove-by-login - Удаление пользователя по логину.");
+        System.out.println(INDENT+"user-update-by-index - Обновление пользователя по номеру.");
+        System.out.println(INDENT+"user-update-by-login - Обновление пользователя по логину.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
