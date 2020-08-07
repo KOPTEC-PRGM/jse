@@ -65,8 +65,25 @@ public class ProjectService {
         return projectRepository.removeById(id);
     }
 
+    public Project assertUserIdById(Long id, Long userId) {
+        if (userId == null ) return null;
+        if (id == null ) return null;
+        return projectRepository.assertUserIdById(id, userId);
+    }
+
+    public Project assertUserIdByName(String name, Long userId) {
+        if (name == null || name.isEmpty()) return null;
+        if (userId == null ) return null;
+        return projectRepository.assertUserIdByName(name, userId);
+    }
+
     public List<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    public List<Project> findAllByUserId(Long userId) {
+        if (userId == null) return null;
+        return projectRepository.findAllByUserId(userId);
     }
 
 }

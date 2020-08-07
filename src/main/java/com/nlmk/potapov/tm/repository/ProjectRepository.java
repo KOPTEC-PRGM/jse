@@ -1,6 +1,7 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
+import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,8 +80,27 @@ public class ProjectRepository {
         return projects;
     }
 
+    public List<Project> findAllByUserId(final Long userId) {
+        List<Project> userProjects = new ArrayList<>();
+        for (Project project: findAll())
+            if (userId.equals(project.getUserId())) userProjects.add(project);
+        return userProjects;
+    }
+
     public int size() {
         return projects.size();
+    }
+
+    public Project assertUserIdById(final Long id, final Long userId) {
+        Project project = findById(id);
+        project.setUserId(userId);
+        return project;
+    }
+
+    public Project assertUserIdByName(final String name, final Long userId) {
+        Project project = findByName(name);
+        project.setUserId(userId);
+        return project;
     }
 
 }

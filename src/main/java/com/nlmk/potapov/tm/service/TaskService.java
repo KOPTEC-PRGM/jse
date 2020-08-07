@@ -65,8 +65,42 @@ public class TaskService {
         return taskRepository.removeById(id);
     }
 
+    public Task assertUserIdById(Long id, Long userId) {
+        if (userId == null ) return null;
+        if (id == null ) return null;
+        return taskRepository.assertUserIdById(id, userId);
+    }
+
+    public Task assertUserIdByName(String name, Long userId) {
+        if (name == null || name.isEmpty()) return null;
+        if (userId == null ) return null;
+        return taskRepository.assertUserIdByName(name, userId);
+    }
+
     public List<Task> findAll() {
         return taskRepository.findAll();
+    }
+
+    public List<Task> findAllByUserId(Long userId) {
+        if (userId == null) return null;
+        return taskRepository.findAllByUserId(userId);
+    }
+
+    public Task assertProjectId(final Long id, final Long projectId) {
+        if (id == null ) return null;
+        if (projectId == null ) return null;
+        return taskRepository.assertProjectId(id, projectId);
+    }
+
+    public Task findByProjectIdAndId(Long projectId, Long id) {
+        if (projectId == null ) return null;
+        if (id == null ) return null;
+        return taskRepository.findByProjectIdAndId(projectId, id);
+    }
+
+    public List<Task> viewTasksFromProject(Long projectId) {
+        if (projectId == null ) return null;
+        return taskRepository.viewTasksFromProject(projectId);
     }
 
 }

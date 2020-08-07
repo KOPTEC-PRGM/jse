@@ -16,6 +16,7 @@ public final class TerminalConst {
     public static final String PROJECT_CREATE = "project-create";
     public static final String PROJECT_CLEAR = "project-clear";
     public static final String PROJECT_LIST = "project-list";
+    public static final String PROJECT_LIST_WITH_TASK = "project-list-with-task";
     public static final String PROJECT_VIEW_BY_INDEX = "project-view-by-index";
     public static final String PROJECT_VIEW_BY_ID = "project-view-by-id";
     public static final String PROJECT_REMOVE_BY_NAME = "project-remove-by-name";

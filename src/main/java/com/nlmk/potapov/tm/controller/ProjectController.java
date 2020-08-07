@@ -1,8 +1,11 @@
 package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Project;
+import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
+
+import java.util.List;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
 import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
@@ -87,17 +90,52 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int listProject() {
+    public int listProject(final Long userId) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
-        int index = 1;
-        for (final Project project: projectService.findAll()){
-            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
-            index++;
-        }
+        List<Project> projectList;
+        if (userId == null) projectList = projectService.findAll();
+        else projectList = projectService.findAllByUserId(userId);
+        viewProject(projectList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
+    }
+
+    private void viewProject(List<Project> projects) {
+        if (projects == null || projects.isEmpty()) return;
+        int index = 1;
+        for (final Project project: projects){
+            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
+            index++;
+        }
+    }
+
+    public int listProjectWithTasks(final Long userId) {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Список проектов с подзадачами]");
+        List<Project> projectList;
+        if (userId == null) projectList = projectService.findAll();
+        else projectList = projectService.findAllByUserId(userId);
+        viewProjectWithTasks(projectList);
+        System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    private void viewProjectWithTasks(List<Project> projects) {
+        if (projects == null || projects.isEmpty()) return;
+        int index = 1;
+        for (final Project project: projects){
+            int indexTask = 1;
+            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
+                for (final Task task: projectTaskService.viewTasksFromProject(project.getId())){
+                    System.out.println(INDENT+INDENT+indexTask + ". " + task.getId() + ": " + task.getName());
+                    indexTask++;
+                }
+            System.out.println();
+            index++;
+        }
     }
 
     public int clearProject() {

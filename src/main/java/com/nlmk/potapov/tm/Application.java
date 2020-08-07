@@ -50,8 +50,19 @@ public class Application {
         taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №3");
         taskRepository.create("Демонстрационное задание №4");
+        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №1").getId(), projectService.findByName("Демонстрационный проект №1").getId());
+        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №2").getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №3").getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №4").getId(), projectService.findByName("Демонстрационный проект №3").getId());
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        projectService.assertUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId());
+        projectService.assertUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId());
+        projectService.assertUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assertUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assertUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId());
+        taskService.assertUserIdByName("Демонстрационное задание №3", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assertUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId());
     }
 
     public static void main(final String[] args) {
@@ -101,13 +112,13 @@ public class Application {
             case VERSION: return systemController.displayVersion();
             case ABOUT: return systemController.displayAbout();
             case EXIT: return systemController.displayExit();
-
             case LOGIN: return systemController.login();
             case LOGOUT: return systemController.logout();
 
             case PROJECT_CREATE: return projectController.createProject();
             case PROJECT_CLEAR: return projectController.clearProject();
-            case PROJECT_LIST: return projectController.listProject();
+            case PROJECT_LIST: return projectController.listProject(getCurrentUserId());
+            case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
             case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex();
             case PROJECT_VIEW_BY_ID: return projectController.viewProjectById();
             case PROJECT_REMOVE_BY_INDEX: return projectController.removeProjectByIndex();
@@ -119,7 +130,7 @@ public class Application {
 
             case TASK_CREATE: return taskController.createTask();
             case TASK_CLEAR: return taskController.clearTask();
-            case TASK_LIST: return taskController.listTask();
+            case TASK_LIST: return taskController.listTask(getCurrentUserId());
             case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
             case TASK_VIEW_BY_ID: return taskController.viewTaskById();
             case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();

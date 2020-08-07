@@ -24,9 +24,12 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"about - Информация о разработчике.");
         System.out.println(INDENT+"help - Вывод списка терминальных команд.");
         System.out.println(INDENT+"exit - Выход из приложения.");
+        System.out.println(INDENT+"login - Аутентификация пользователя.");
+        System.out.println(INDENT+"logout - Завершение сеанса пользователя.");
         System.out.println();
         System.out.println(INDENT+"project-create - Создание проекта.");
         System.out.println(INDENT+"project-list - Список проектов.");
+        System.out.println(INDENT+"project-list-with-task - Список проектов с подзадачами.");
         System.out.println(INDENT+"project-clear - Очистка списка проектов.");
         System.out.println(INDENT+"project-view-by-index - Просмотр проекта по номеру.");
         System.out.println(INDENT+"project-view-by-id - Просмотр проекта по ID.");
@@ -60,6 +63,9 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"user-remove-by-login - Удаление пользователя по логину.");
         System.out.println(INDENT+"user-update-by-index - Обновление пользователя по номеру.");
         System.out.println(INDENT+"user-update-by-login - Обновление пользователя по логину.");
+        System.out.println(INDENT+"user-update-password - Обновление пароля пользователя.");
+        System.out.println(INDENT+"user-view-current - Просмотр данных текущего пользователя.");
+        System.out.println(INDENT+"user-update-current - Обновление данных текущего пользователя.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

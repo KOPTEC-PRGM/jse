@@ -2,6 +2,7 @@ package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.service.UserService;
 
 import java.util.List;

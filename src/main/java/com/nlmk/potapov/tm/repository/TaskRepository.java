@@ -89,6 +89,13 @@ public class TaskRepository {
         return tasks;
     }
 
+    public List<Task> findAllByUserId(final Long userId) {
+        List<Task> userTasks = new ArrayList<>();
+        for (Task task: findAll())
+            if (userId.equals(task.getUserId())) userTasks.add(task);
+        return userTasks;
+    }
+
     public int size(){
         return tasks.size();
     }
@@ -101,6 +108,24 @@ public class TaskRepository {
                 result.add(task);
         }
         return result;
+    }
+
+    public Task assertUserIdById(final Long id, final Long userId) {
+        Task task = findById(id);
+        task.setUserId(userId);
+        return task;
+    }
+
+    public Task assertUserIdByName(final String name, final Long userId) {
+        Task task = findByName(name);
+        task.setUserId(userId);
+        return task;
+    }
+
+    public Task assertProjectId(final Long id, final Long projectId) {
+        Task task = findById(id);
+        task.setProjectId(projectId);
+        return task;
     }
 
 }
