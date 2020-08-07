@@ -1,6 +1,6 @@
 package com.nlmk.potapov.tm.util;
 
-public class Hash {
+public class HashUtil {
 
     public static String generateMD5(String md5) {
         try {

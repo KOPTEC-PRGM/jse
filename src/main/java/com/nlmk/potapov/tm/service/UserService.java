@@ -3,7 +3,7 @@ package com.nlmk.potapov.tm.service;
 import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.repository.UserRepository;
-import com.nlmk.potapov.tm.util.Hash;
+import com.nlmk.potapov.tm.util.HashUtil;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class UserService {
         if (firstName == null || firstName.isEmpty()) return null;
         if (middleName == null || middleName.isEmpty()) return null;
         if (lastName == null || lastName.isEmpty()) return null;
-        return userRepository.create(login, Hash.generateMD5(password), firstName, middleName, lastName);
+        return userRepository.create(login, HashUtil.generateMD5(password), firstName, middleName, lastName);
     }
 
     public User create(final String login, final String password,
@@ -36,7 +36,7 @@ public class UserService {
         if (middleName == null || middleName.isEmpty()) return null;
         if (lastName == null || lastName.isEmpty()) return null;
         if (roleType == null) return null;
-        return userRepository.create(login, Hash.generateMD5(password), firstName, middleName, lastName, roleType);
+        return userRepository.create(login, HashUtil.generateMD5(password), firstName, middleName, lastName, roleType);
     }
 
     public User update(
@@ -44,7 +44,7 @@ public class UserService {
     ) {
         if (login == null || login.isEmpty()) return null;
         if (password == null || password.isEmpty()) return null;
-        return userRepository.update(login, Hash.generateMD5(password));
+        return userRepository.update(login, HashUtil.generateMD5(password));
     }
 
     public User update(
@@ -69,7 +69,7 @@ public class UserService {
         if (middleName == null || middleName.isEmpty()) return null;
         if (lastName == null || lastName.isEmpty()) return null;
         if (roleType == null) return null;
-        return userRepository.update(login, Hash.generateMD5(password), firstName, middleName, lastName, roleType);
+        return userRepository.update(login, HashUtil.generateMD5(password), firstName, middleName, lastName, roleType);
     }
 
     public void clear() {
@@ -105,7 +105,7 @@ public class UserService {
         if (login == null || login.isEmpty()) return false;
         if (password == null || password.isEmpty()) return false;
         User user = userRepository.findByLogin(login);
-        return user.getPassword().equals(Hash.generateMD5(password));
+        return user.getPassword().equals(HashUtil.generateMD5(password));
     }
 
     public List<User> findAll() {
