@@ -88,6 +88,13 @@ public class UserRepository {
         return user;
     }
 
+    public User removeById(final Long id) {
+        final User user = findById(id);
+        if (user == null) return null;
+        users.remove(user);
+        return user;
+    }
+
     public List<User> findAll() {
         return users;
     }

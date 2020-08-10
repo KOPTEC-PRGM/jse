@@ -52,6 +52,23 @@ public class UserController extends AbstractController{
         return 0;
     }
 
+    public int deleteUserById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Удаление пользователя по ID]");
+        System.out.print("Введите ID пользователя: ");
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
+        if (userService.findById(id) == null) {
+            System.out.println("[Ошибка. Пользователь не найден]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        User user = userService.removeById(id);
+        System.out.println("[Готово. Пользователь \"" + user.getLogin() + "\" удален]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
     public int deleteUserByIndex() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление пользователя по номеру]");
@@ -123,6 +140,16 @@ public class UserController extends AbstractController{
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
         User user = userService.findByIndex(index);
+        return viewUser(user);
+    }
+
+    public int viewUserById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Просмтор пользователя по ID]");
+        System.out.print("Введите ID пользователя: ");
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
+        User user = userService.findById(id);
         return viewUser(user);
     }
 
@@ -204,6 +231,16 @@ public class UserController extends AbstractController{
         return 0;
     }
 
+    public int updateUserById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Обновление пользователя по ID]");
+        System.out.print("Введите ID пользователя: ");
+        final Long id = getIdFromScanner();
+        if (id == null) return -1;
+        final User user = userService.findById(id);
+        return updateUser(user);
+    }
+
     public int updateUserByIndex() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление пользователя по номеру]");
@@ -254,6 +291,16 @@ public class UserController extends AbstractController{
         System.out.println("[Изменение данных пользователя]");
         User user = userService.findById(id);
         return updateUser(user);
+    }
+
+    private Long getIdFromScanner(){
+        if (!scanner.hasNextLong()) {
+            final String error_value = scanner.nextLine();
+            System.out.println("[Ошибка. Введено некорректное значение: \"" + error_value + "\"]");
+            System.out.println(BLOCK_SEPARATOR);
+            return null;
+        }
+        return Long.valueOf(scanner.nextLine());
     }
 
     private int getIndexFromScanner(){

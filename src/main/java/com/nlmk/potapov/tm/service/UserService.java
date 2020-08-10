@@ -101,6 +101,11 @@ public class UserService {
         return userRepository.removeByIndex(index);
     }
 
+    public User removeById(final Long id) {
+        if (id == null) return null;
+        return userRepository.removeById(id);
+    }
+
     public boolean checkPassword(final String login, final String password){
         if (login == null || login.isEmpty()) return false;
         if (password == null || password.isEmpty()) return false;
