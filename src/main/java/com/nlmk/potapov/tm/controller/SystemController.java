@@ -57,10 +57,13 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"user-create - Добавление нового пользователя.");
         System.out.println(INDENT+"user-list - Список пользователей.");
         System.out.println(INDENT+"user-clear - Очистка списка пользователей.");
+        System.out.println(INDENT+"user-view-by-id - Просмтор пользователя по ID.");
         System.out.println(INDENT+"user-view-by-index - Просмтор пользователя по номеру.");
         System.out.println(INDENT+"user-view-by-login - Просмтор пользователя по логину.");
+        System.out.println(INDENT+"user-remove-by-id - Удаление пользователя по ID.");
         System.out.println(INDENT+"user-remove-by-index - Удаление пользователя по номеру.");
         System.out.println(INDENT+"user-remove-by-login - Удаление пользователя по логину.");
+        System.out.println(INDENT+"user-update-by-id - Обновление пользователя по ID.");
         System.out.println(INDENT+"user-update-by-index - Обновление пользователя по номеру.");
         System.out.println(INDENT+"user-update-by-login - Обновление пользователя по логину.");
         System.out.println(INDENT+"user-update-password - Обновление пароля пользователя.");
