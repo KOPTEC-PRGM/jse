@@ -115,7 +115,7 @@ public class Application {
             case LOGIN: return systemController.login();
             case LOGOUT: return systemController.logout();
 
-            case PROJECT_CREATE: return projectController.createProject();
+            case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
             case PROJECT_CLEAR: return projectController.clearProject();
             case PROJECT_LIST: return projectController.listProject(getCurrentUserId());
             case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
@@ -128,7 +128,7 @@ public class Application {
             case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
             case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
 
-            case TASK_CREATE: return taskController.createTask();
+            case TASK_CREATE: return taskController.createTask(getCurrentUserId());
             case TASK_CLEAR: return taskController.clearTask();
             case TASK_LIST: return taskController.listTask(getCurrentUserId());
             case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();

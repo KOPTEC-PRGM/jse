@@ -15,10 +15,11 @@ public class ProjectRepository {
         return project;
     }
 
-    public Project create(final String name, final String description) {
+    public Project create(final String name, final String description, final Long userId) {
         final Project project = new Project();
         project.setName(name);
         project.setDescription(description);
+        project.setUserId(userId);
         projects.add(project);
         return project;
     }

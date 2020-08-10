@@ -13,18 +13,18 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public Project create(String name) {
+    public Project create(final String name) {
         if (name == null || name.isEmpty()) return null;
         return projectRepository.create(name);
     }
 
-    public Project create(String name, String description) {
+    public Project create(final String name, final String description, final Long userId) {
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
-        return projectRepository.create(name, description);
+        return projectRepository.create(name, description, userId);
     }
 
-    public Project update(Long id, String name, String description) {
+    public Project update(final Long id, final String name, final String description) {
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
@@ -35,43 +35,43 @@ public class ProjectService {
         projectRepository.clear();
     }
 
-    public Project findByIndex(int index) {
+    public Project findByIndex(final int index) {
         if (index < 0 || index > projectRepository.size() -1) return null;
         return projectRepository.findByIndex(index);
     }
 
-    public Project findByName(String name) {
+    public Project findByName(final String name) {
         if (name == null || name.isEmpty()) return null;
         return projectRepository.findByName(name);
     }
 
-    public Project findById(Long id) {
+    public Project findById(final Long id) {
         if (id == null ) return null;
         return projectRepository.findById(id);
     }
 
-    public Project removeByIndex(int index) {
+    public Project removeByIndex(final int index) {
         if (index < 0 || index > projectRepository.size() -1) return null;
         return projectRepository.removeByIndex(index);
     }
 
-    public Project removeByName(String name) {
+    public Project removeByName(final String name) {
         if (name == null || name.isEmpty()) return null;
         return projectRepository.removeByName(name);
     }
 
-    public Project removeById(Long id) {
+    public Project removeById(final Long id) {
         if (id == null ) return null;
         return projectRepository.removeById(id);
     }
 
-    public Project assertUserIdById(Long id, Long userId) {
+    public Project assertUserIdById(final Long id, final Long userId) {
         if (userId == null ) return null;
         if (id == null ) return null;
         return projectRepository.assertUserIdById(id, userId);
     }
 
-    public Project assertUserIdByName(String name, Long userId) {
+    public Project assertUserIdByName(final String name, final Long userId) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return projectRepository.assertUserIdByName(name, userId);
@@ -81,7 +81,7 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public List<Project> findAllByUserId(Long userId) {
+    public List<Project> findAllByUserId(final Long userId) {
         if (userId == null) return null;
         return projectRepository.findAllByUserId(userId);
     }

@@ -130,14 +130,14 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int createTask() {
+    public int createTask(final Long userId) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Создание задачи]");
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
         System.out.print("Введите описание задачи: ");
         final String description = scanner.nextLine();
-        final Long id = taskService.create(name, description).getId();
+        final Long id = taskService.create(name, description,userId).getId();
         System.out.println("[Готово. Задача \""+name+"\" добавлена в список. ID = "+id+"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;

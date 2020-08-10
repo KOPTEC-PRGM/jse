@@ -15,10 +15,11 @@ public class TaskRepository {
         return task;
     }
 
-    public Task create(final String name, final String description) {
+    public Task create(final String name, final String description, final Long userId) {
         final Task task = new Task();
         task.setName(name);
         task.setDescription(description);
+        task.setUserId(userId);
         tasks.add(task);
         return task;
     }

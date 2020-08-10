@@ -147,14 +147,14 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int createProject() {
+    public int createProject(final Long userId) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Создание проекта]");
         System.out.print("Введите название проекта: ");
         final String name = scanner.nextLine();
         System.out.print("Введите описание проекта: ");
         final String description = scanner.nextLine();
-        final Long id = projectService.create(name, description).getId();
+        final Long id = projectService.create(name, description, userId).getId();
         System.out.println("[Готово. Проект \""+name+"\" добавлен в список. Id = "+id+"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
