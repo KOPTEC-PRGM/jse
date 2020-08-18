@@ -8,6 +8,7 @@ public final class TerminalConst {
     public static final String EXIT = "exit";
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";
+    public static final String COMMAND_HISTORY = "command-history";
 
     public static final String BLOCK_SEPARATOR = "-----------------------------------------------";
     public static final String INDENT = "   ";

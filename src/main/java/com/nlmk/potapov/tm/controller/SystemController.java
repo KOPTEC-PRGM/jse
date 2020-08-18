@@ -4,6 +4,9 @@ import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.service.UserService;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
 import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
 
@@ -146,6 +149,19 @@ public class SystemController extends AbstractController{
         System.out.println("[Выход из системы]");
         app.setCurrentUserId(null);
         app.setCurrentUserRole(null);
+        System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    public int displayCommandHistory() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Список введеных команд]");
+        int indexCommand = 1;
+        for (String command: getCommandHistory()){
+            System.out.println(INDENT+INDENT+indexCommand + ". " + command);
+            indexCommand++;
+        }
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;

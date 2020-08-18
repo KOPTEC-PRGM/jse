@@ -75,6 +75,7 @@ public class Application {
         while (!EXIT.equals(command)){
             System.out.print(INPUT_MESSAGE);
             command = scanner.nextLine();
+            AbstractController.roundAdd(command);
             result = application.run(command);
         }
         System.exit(result);
@@ -100,6 +101,7 @@ public class Application {
         if (args == null) return;
         if (args.length < 1) return;
         final String param = args[0];
+        AbstractController.roundAdd(param);
         final int result = run(param);
         if (EXIT.equals(param)) System.exit(result);
     }
@@ -114,6 +116,7 @@ public class Application {
             case EXIT: return systemController.displayExit();
             case LOGIN: return systemController.login();
             case LOGOUT: return systemController.logout();
+            case COMMAND_HISTORY: return systemController.displayCommandHistory();
 
             case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
             case PROJECT_CLEAR: return projectController.clearProject();
