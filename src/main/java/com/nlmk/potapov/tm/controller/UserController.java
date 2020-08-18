@@ -205,7 +205,11 @@ public class UserController extends AbstractController{
     }
 
     private int updateUserPassword(final User user, final User currentUser) {
-        if (!currentUser.equals(user) && !currentUser.getRoleType().equals(RoleType.ADMIN)) return -1;
+        if (!currentUser.equals(user) && !currentUser.getRoleType().equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для смены пароля другого пользователя]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         if (currentUser.equals(user)) System.out.print("Введите пароль: ");
         else System.out.print("Введите пароль Администратора: ");
         final String password = scanner.nextLine();
@@ -287,11 +291,6 @@ public class UserController extends AbstractController{
             return 0;
         }
         User currentUser = userService.findById(id);
-        if (!user.getId().equals(id) && !currentUser.getRoleType().equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий для смены пароля другого пользователя]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
         return updateUserPassword(user, currentUser);
     }
 
