@@ -51,9 +51,9 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"task-remove-by-index - Удаление задачи по номеру.");
         System.out.println(INDENT+"task-update-by-index - Обновление задачи по номеру.");
         System.out.println(INDENT+"task-update-by-id - Обновление задачи по ID.");
-        System.out.println(INDENT+"project-assign-by-name-to-user-by-id - Обновление задачи по ID.");
         System.out.println(INDENT+"task-list-by-project-id - Список задач в проекте по ID проекта.");
-        System.out.println(INDENT+"task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи");
+        System.out.println(INDENT+"task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи.");
+        System.out.println(INDENT+"task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи.");
         System.out.println(INDENT+"task-assign-by-name-to-user-by-id - Назначение задачи по имени пользователю по ID.");
         System.out.println();
         System.out.println(INDENT+"user-create - Добавление нового пользователя.");

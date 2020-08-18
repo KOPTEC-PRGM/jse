@@ -56,6 +56,7 @@ project-remove-by-index - Удаление проекта по номеру
 project-remove-with-tasks-by-id - Удаление проекта с его задачами по ID проекта.
 project-update-by-index - Обновление проекта по номеру
 project-update-by-id - Обновление проекта по ID
+project-assign-by-name-to-user-by-id - Назначение проекта по имени пользователю по ID
 
 task-create - Создание задачи
 task-list - Вывод списка задач
@@ -70,6 +71,7 @@ task-update-by-id - Обновление задачи по ID
 task-list-by-project-id - Список задач в проекте по ID проекта
 task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи
 task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи
+task-assign-by-name-to-user-by-id - Назначение задачи по имени пользователю по ID
 
 user-create - Добавление нового пользователя
 user-list - Список пользователей
