@@ -155,7 +155,6 @@ public class Application {
             case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
             case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
             case USER_UPDATE_PASSWORD: return userController.changeUserPassword(getCurrentUserId());
-            //case USER_UPDATE_PASSWORD_BY_ID: return userController.changeUserPasswordById();
             case USER_VIEW_CURRENT: return userController.viewCurrent(getCurrentUserId());
             case USER_UPDATE_CURRENT: return userController.changeCurrent(getCurrentUserId());
 

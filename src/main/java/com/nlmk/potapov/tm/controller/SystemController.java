@@ -67,7 +67,6 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"user-update-by-index - Обновление пользователя по номеру.");
         System.out.println(INDENT+"user-update-by-login - Обновление пользователя по логину.");
         System.out.println(INDENT+"user-update-password - Обновление пароля пользователя.");
-        System.out.println(INDENT+"user-update-password-by-id - Обновление пароля пользователя по ID.");
         System.out.println(INDENT+"user-view-current - Просмотр данных текущего пользователя.");
         System.out.println(INDENT+"user-update-current - Обновление данных текущего пользователя.");
         System.out.println(BLOCK_SEPARATOR);
