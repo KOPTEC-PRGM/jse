@@ -1,6 +1,7 @@
 package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.service.UserService;
 
 import java.util.List;
@@ -203,19 +204,23 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    private int updateUserPassword(final User user) {
-        if (user == null) {
-            System.out.println("[Ошибка. Пользователь не найден]");
-            System.out.println(BLOCK_SEPARATOR);
-            return 0;
-        }
-        System.out.print("Введите пароль: ");
+    private int updateUserPassword(final User user, final User currentUser) {
+        if (!currentUser.equals(user) && !currentUser.getRoleType().equals(RoleType.ADMIN)) return -1;
+        if (currentUser.equals(user)) System.out.print("Введите пароль: ");
+        else System.out.print("Введите пароль Администратора: ");
         final String password = scanner.nextLine();
-        if (!userService.checkPassword(user.getLogin(), password)){
-            System.out.println("[Ошибка. Неверный логин или пароль]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
+        if (currentUser.equals(user))
+            if (!userService.checkPassword(user.getLogin(), password)) {
+                System.out.println("[Ошибка. Неверный логин или пароль]");
+                System.out.println(BLOCK_SEPARATOR);
+                return -1;
+            }
+        else
+            if (!userService.checkPassword(currentUser.getLogin(), password)) {
+                System.out.println("[Ошибка. Неверный пароль]");
+                System.out.println(BLOCK_SEPARATOR);
+                return -1;
+            }
         System.out.print("Введите новый пароль: ");
         final String newPassword = scanner.nextLine();
         System.out.print("Подтвердите новый пароль: ");
@@ -265,7 +270,7 @@ public class UserController extends AbstractController{
         return updateUser(user);
     }
 
-    public int changeUserPassword() {
+    public int changeUserPassword(final Long id) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Смена пароля]");
         System.out.print("Введите логин пользователя: ");
@@ -276,7 +281,18 @@ public class UserController extends AbstractController{
             return -1;
         }
         final User user = userService.findByLogin(login);
-        return updateUserPassword(user);
+        if (user == null) {
+            System.out.println("[Ошибка. Пользователь не найден]");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        User currentUser = userService.findById(id);
+        if (!user.getId().equals(id) && !currentUser.getRoleType().equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для смены пароля другого пользователя]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        return updateUserPassword(user, currentUser);
     }
 
     public int viewCurrent(final Long id) {

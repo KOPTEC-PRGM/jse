@@ -67,6 +67,7 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"user-update-by-index - Обновление пользователя по номеру.");
         System.out.println(INDENT+"user-update-by-login - Обновление пользователя по логину.");
         System.out.println(INDENT+"user-update-password - Обновление пароля пользователя.");
+        System.out.println(INDENT+"user-update-password-by-id - Обновление пароля пользователя по ID.");
         System.out.println(INDENT+"user-view-current - Просмотр данных текущего пользователя.");
         System.out.println(INDENT+"user-update-current - Обновление данных текущего пользователя.");
         System.out.println(BLOCK_SEPARATOR);
@@ -127,10 +128,13 @@ public class SystemController extends AbstractController{
         }
         final User user = userService.findByLogin(login);
         if (user == null) return -1;
-        if (userService.checkPassword(login,password)){
-            app.setCurrentUserId(user.getId());
-            app.setCurrentUserName(user.getLogin());
+        if (!userService.checkPassword(login,password)){
+            System.out.println("[Ошибка. Введен неверный пользователь или пароль]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
         }
+        app.setCurrentUserId(user.getId());
+        app.setCurrentUserName(user.getLogin());
         System.out.println("[Готово. Добро пожаловать \"" + user.getLogin() + "\"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;

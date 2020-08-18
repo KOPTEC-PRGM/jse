@@ -84,8 +84,8 @@ public class Application {
         return currentUserId;
     }
 
-    public void setCurrentUserId(Long currentUserId) {
-        this.currentUserId = currentUserId;
+    public void setCurrentUserId(Long userId) {
+        this.currentUserId = userId;
     }
 
     public String getCurrentUserName() {
@@ -154,7 +154,8 @@ public class Application {
             case USER_UPDATE_BY_ID: return userController.updateUserById();
             case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
             case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
-            case USER_UPDATE_PASSWORD: return userController.changeUserPassword();
+            case USER_UPDATE_PASSWORD: return userController.changeUserPassword(getCurrentUserId());
+            //case USER_UPDATE_PASSWORD_BY_ID: return userController.changeUserPasswordById();
             case USER_VIEW_CURRENT: return userController.viewCurrent(getCurrentUserId());
             case USER_UPDATE_CURRENT: return userController.changeCurrent(getCurrentUserId());
 
