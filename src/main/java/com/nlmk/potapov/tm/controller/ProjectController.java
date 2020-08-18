@@ -2,6 +2,8 @@ package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
+import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 
@@ -90,11 +92,12 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int listProject(final Long userId) {
+    public int listProject(final Long userId, final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
         List<Project> projectList;
-        if (userId == null) projectList = projectService.findAll();
+        if (userId == null) projectList = null;
+        else if (roleType.equals(RoleType.ADMIN)) projectList = projectService.findAll();
         else projectList = projectService.findAllByUserId(userId);
         viewProject(projectList);
         System.out.println("[Готово]");

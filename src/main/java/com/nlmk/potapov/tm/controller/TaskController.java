@@ -1,6 +1,7 @@
 package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Task;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 
@@ -89,26 +90,16 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int listTask(final Long userId) {
-        if (userId == null) return listAllTask();
-        return listUserTask(userId);
-    }
-
-    public int listAllTask() {
+    public int listTask(final Long userId, final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач]");
-        viewTask(taskService.findAll());
+        List<Task> taskList;
+        if (userId == null) taskList = null;
+        else if (roleType.equals(RoleType.ADMIN)) taskList = taskService.findAll();
+        else taskList = taskService.findAllByUserId(userId);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
-        return 0;
-    }
-
-    public int listUserTask(final Long userId) {
-        System.out.println(BLOCK_SEPARATOR);
-        System.out.println("[Список задач]");
-        viewTask(taskService.findAllByUserId(userId));
-        System.out.println("[Готово]");
-        System.out.println(BLOCK_SEPARATOR);
+        viewTask(taskList);
         return 0;
     }
 

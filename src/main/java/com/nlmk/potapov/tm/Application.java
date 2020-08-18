@@ -40,7 +40,7 @@ public class Application {
 
     private Long currentUserId = null;
 
-    private String currentUserName = null;
+    private RoleType currentUserRole = null;
 
     {
         projectRepository.create("Демонстрационный проект №1");
@@ -88,12 +88,12 @@ public class Application {
         this.currentUserId = userId;
     }
 
-    public String getCurrentUserName() {
-        return currentUserName;
+    public RoleType getCurrentUserRole() {
+        return currentUserRole;
     }
 
-    public void setCurrentUserName(String currentUserName) {
-        this.currentUserName = currentUserName;
+    public void setCurrentUserRole(RoleType currentUserRole) {
+        this.currentUserRole = currentUserRole;
     }
 
     public void run(final String[] args) {
@@ -117,7 +117,7 @@ public class Application {
 
             case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
             case PROJECT_CLEAR: return projectController.clearProject();
-            case PROJECT_LIST: return projectController.listProject(getCurrentUserId());
+            case PROJECT_LIST: return projectController.listProject(getCurrentUserId(), getCurrentUserRole());
             case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
             case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex();
             case PROJECT_VIEW_BY_ID: return projectController.viewProjectById();
@@ -130,7 +130,7 @@ public class Application {
 
             case TASK_CREATE: return taskController.createTask(getCurrentUserId());
             case TASK_CLEAR: return taskController.clearTask();
-            case TASK_LIST: return taskController.listTask(getCurrentUserId());
+            case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
             case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
             case TASK_VIEW_BY_ID: return taskController.viewTaskById();
             case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();

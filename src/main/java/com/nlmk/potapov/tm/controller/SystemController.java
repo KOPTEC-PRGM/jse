@@ -133,7 +133,7 @@ public class SystemController extends AbstractController{
             return -1;
         }
         app.setCurrentUserId(user.getId());
-        app.setCurrentUserName(user.getLogin());
+        app.setCurrentUserRole(user.getRoleType());
         System.out.println("[Готово. Добро пожаловать \"" + user.getLogin() + "\"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -143,7 +143,7 @@ public class SystemController extends AbstractController{
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Выход из системы]");
         app.setCurrentUserId(null);
-        app.setCurrentUserName(null);
+        app.setCurrentUserRole(null);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
