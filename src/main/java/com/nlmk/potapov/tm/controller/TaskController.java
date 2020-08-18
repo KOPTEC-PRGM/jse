@@ -168,6 +168,29 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
+    public int assignTaskByNameToUserById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Назначение пользователя по ID к задаче по имени]");
+        System.out.print("Введите название задачи: ");
+        final String name = scanner.nextLine();
+        if (name == null) {
+            System.out.println("[Ошибка. Введено пустое название задачи]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.print("Введите ID пользователя: ");
+        final Long id = getIdFromScanner();
+        if (id == null) {
+            System.out.println("[Ошибка. Введен пустой ID]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        taskService.assignUserIdByName(name,id);
+        System.out.println("[Готово]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
     public int listTasksByProjectId(){
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач в проекте]");

@@ -111,13 +111,13 @@ public class TaskRepository {
         return result;
     }
 
-    public Task assertUserIdById(final Long id, final Long userId) {
+    public Task assignUserIdById(final Long id, final Long userId) {
         Task task = findById(id);
         task.setUserId(userId);
         return task;
     }
 
-    public Task assertUserIdByName(final String name, final Long userId) {
+    public Task assignUserIdByName(final String name, final Long userId) {
         Task task = findByName(name);
         task.setUserId(userId);
         return task;

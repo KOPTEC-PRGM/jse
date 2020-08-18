@@ -50,19 +50,19 @@ public class Application {
         taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №3");
         taskRepository.create("Демонстрационное задание №4");
-        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №1").getId(), projectService.findByName("Демонстрационный проект №1").getId());
-        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №2").getId(), projectService.findByName("Демонстрационный проект №2").getId());
-        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №3").getId(), projectService.findByName("Демонстрационный проект №2").getId());
-        taskService.assertProjectId(taskService.findByName("Демонстрационное задание №4").getId(), projectService.findByName("Демонстрационный проект №3").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1").getId(), projectService.findByName("Демонстрационный проект №1").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2").getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №3").getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4").getId(), projectService.findByName("Демонстрационный проект №3").getId());
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
-        projectService.assertUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId());
-        projectService.assertUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId());
-        projectService.assertUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assertUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assertUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId());
-        taskService.assertUserIdByName("Демонстрационное задание №3", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assertUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId());
+        projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId());
+        projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId());
+        projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId());
+        taskService.assignUserIdByName("Демонстрационное задание №3", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId());
     }
 
     public static void main(final String[] args) {
@@ -126,6 +126,7 @@ public class Application {
             case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById();
             case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
             case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
+            case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID: return projectController.assignProjectByNameToUserById();
             case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
 
             case TASK_CREATE: return taskController.createTask(getCurrentUserId());
@@ -138,6 +139,7 @@ public class Application {
             case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
             case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
             case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
+            case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById();
             case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
             case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
             case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();

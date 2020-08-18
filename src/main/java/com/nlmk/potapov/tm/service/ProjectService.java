@@ -65,13 +65,13 @@ public class ProjectService {
         return projectRepository.removeById(id);
     }
 
-    public Project assertUserIdById(final Long id, final Long userId) {
+    public Project assignUserIdById(final Long id, final Long userId) {
         if (userId == null ) return null;
         if (id == null ) return null;
         return projectRepository.assertUserIdById(id, userId);
     }
 
-    public Project assertUserIdByName(final String name, final Long userId) {
+    public Project assignUserIdByName(final String name, final Long userId) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return projectRepository.assertUserIdByName(name, userId);

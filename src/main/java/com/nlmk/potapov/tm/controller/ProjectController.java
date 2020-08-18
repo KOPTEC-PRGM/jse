@@ -2,7 +2,6 @@ package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
-import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
@@ -203,6 +202,30 @@ public class ProjectController extends AbstractController {
         final String description = scanner.nextLine();
         projectService.update(project.getId(), name, description);
         System.out.println("[Готово. Проект (ID = " + id + ") обновлен]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+
+    public int assignProjectByNameToUserById() {
+        System.out.println(BLOCK_SEPARATOR);
+        System.out.println("[Назначение пользователя по ID к проекту по имени]");
+        System.out.print("Введите название проекта: ");
+        final String name = scanner.nextLine();
+        if (name == null) {
+            System.out.println("[Ошибка. Введено пустое название проекта]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.print("Введите ID пользователя: ");
+        final Long id = getIdFromScanner();
+        if (id == null) {
+            System.out.println("[Ошибка. Введен пустой ID]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        projectService.assignUserIdByName(name,id);
+        System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

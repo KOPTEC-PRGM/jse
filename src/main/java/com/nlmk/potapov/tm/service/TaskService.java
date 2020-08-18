@@ -65,16 +65,16 @@ public class TaskService {
         return taskRepository.removeById(id);
     }
 
-    public Task assertUserIdById(final Long id, final Long userId) {
+    public Task assignUserIdById(final Long id, final Long userId) {
         if (userId == null ) return null;
         if (id == null ) return null;
-        return taskRepository.assertUserIdById(id, userId);
+        return taskRepository.assignUserIdById(id, userId);
     }
 
-    public Task assertUserIdByName(final String name, final Long userId) {
+    public Task assignUserIdByName(final String name, final Long userId) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return taskRepository.assertUserIdByName(name, userId);
+        return taskRepository.assignUserIdByName(name, userId);
     }
 
     public List<Task> findAll() {
@@ -86,7 +86,7 @@ public class TaskService {
         return taskRepository.findAllByUserId(userId);
     }
 
-    public Task assertProjectId(final Long id, final Long projectId) {
+    public Task assignProjectId(final Long id, final Long projectId) {
         if (id == null ) return null;
         if (projectId == null ) return null;
         return taskRepository.assertProjectId(id, projectId);
