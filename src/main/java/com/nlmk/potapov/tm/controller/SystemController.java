@@ -41,6 +41,7 @@ public class SystemController extends AbstractController{
         System.out.println(INDENT+"exit - Выход из приложения.");
         System.out.println(INDENT+"login - Аутентификация пользователя.");
         System.out.println(INDENT+"logout - Завершение сеанса пользователя.");
+        System.out.println(INDENT+"command-history - Вывод списка 10 последних введенных команд.");
         System.out.println();
         System.out.println(INDENT+"project-create - Создание проекта.");
         System.out.println(INDENT+"project-list - Список проектов.");
