@@ -7,8 +7,7 @@ import com.nlmk.potapov.tm.service.UserService;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
-import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class SystemController extends AbstractController{
 
@@ -28,7 +27,7 @@ public class SystemController extends AbstractController{
     }
 
     public void roundAdd(final String str){
-        while (commandHistory.size() >= 10){
+        while (commandHistory.size() >= COMMAND_HISTORY_SIZE){
             commandHistory.poll();
         }
         commandHistory.offer(str);
@@ -169,7 +168,7 @@ public class SystemController extends AbstractController{
 
     public int displayCommandHistory() {
         System.out.println(BLOCK_SEPARATOR);
-        System.out.println("[Список введеных команд]");
+        System.out.println("[Список введенных команд]");
         int indexCommand = 1;
         for (String command: getCommandHistory()){
             System.out.println(INDENT+INDENT+indexCommand + ". " + command);
