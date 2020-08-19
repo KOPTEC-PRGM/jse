@@ -75,7 +75,7 @@ public class Application {
         while (!EXIT.equals(command)){
             System.out.print(INPUT_MESSAGE);
             command = scanner.nextLine();
-            AbstractController.roundAdd(command);
+            application.systemController.roundAdd(command);
             result = application.run(command);
         }
         System.exit(result);
@@ -101,7 +101,7 @@ public class Application {
         if (args == null) return;
         if (args.length < 1) return;
         final String param = args[0];
-        AbstractController.roundAdd(param);
+        systemController.roundAdd(param);
         final int result = run(param);
         if (EXIT.equals(param)) System.exit(result);
     }

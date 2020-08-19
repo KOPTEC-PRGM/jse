@@ -16,9 +16,22 @@ public class SystemController extends AbstractController{
 
     private final UserService userService;
 
+    private Deque<String> commandHistory = new ArrayDeque<>();
+
     public SystemController(Application app, UserService userService) {
         this.app = app;
         this.userService = userService;
+    }
+
+    public Deque<String> getCommandHistory() {
+        return commandHistory;
+    }
+
+    public void roundAdd(final String str){
+        while (commandHistory.size() >= 10){
+            commandHistory.poll();
+        }
+        commandHistory.offer(str);
     }
 
     public int displayHelp() {
