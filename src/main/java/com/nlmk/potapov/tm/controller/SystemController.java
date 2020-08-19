@@ -15,7 +15,7 @@ public class SystemController extends AbstractController{
 
     private final UserService userService;
 
-    private Deque<String> commandHistory = new ArrayDeque<>();
+    private final Deque<String> commandHistory = new ArrayDeque<>();
 
     public SystemController(Application app, UserService userService) {
         this.app = app;

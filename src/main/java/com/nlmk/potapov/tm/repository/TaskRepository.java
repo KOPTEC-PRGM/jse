@@ -1,6 +1,5 @@
 package com.nlmk.potapov.tm.repository;
 
-import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.ArrayList;
