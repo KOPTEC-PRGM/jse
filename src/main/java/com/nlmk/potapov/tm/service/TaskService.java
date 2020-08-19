@@ -103,4 +103,8 @@ public class TaskService {
         return taskRepository.viewTasksFromProject(projectId);
     }
 
+    public List<Task> sortList() {
+        return taskRepository.sortList();
+    }
+
 }

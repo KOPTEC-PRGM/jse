@@ -43,8 +43,8 @@ public class Application {
     private RoleType currentUserRole = null;
 
     {
-        projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №2");
+        projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №3");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");

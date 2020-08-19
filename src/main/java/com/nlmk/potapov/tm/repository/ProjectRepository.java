@@ -3,6 +3,7 @@ package com.nlmk.potapov.tm.repository;
 import com.nlmk.potapov.tm.entity.Project;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProjectRepository {
@@ -101,6 +102,11 @@ public class ProjectRepository {
         Project project = findByName(name);
         project.setUserId(userId);
         return project;
+    }
+
+    public List<Project> sortList() {
+        projects.sort(Comparator.comparing(Project::getName).thenComparing(Project::getDescription));
+        return projects;
     }
 
 }

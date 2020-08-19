@@ -1,8 +1,10 @@
 package com.nlmk.potapov.tm.repository;
 
+import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskRepository {
@@ -127,6 +129,11 @@ public class TaskRepository {
         Task task = findById(id);
         task.setProjectId(projectId);
         return task;
+    }
+
+    public List<Task> sortList() {
+        tasks.sort(Comparator.comparing(Task::getName).thenComparing(Task::getDescription));
+        return tasks;
     }
 
 }

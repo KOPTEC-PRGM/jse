@@ -91,6 +91,7 @@ public class TaskController extends AbstractController{
     }
 
     public int listTask(final Long userId, final RoleType roleType) {
+        taskService.sortList();
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач]");
         List<Task> taskList;

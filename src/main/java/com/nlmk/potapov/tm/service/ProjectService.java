@@ -86,4 +86,7 @@ public class ProjectService {
         return projectRepository.findAllByUserId(userId);
     }
 
+    public List<Project> sortList() {
+        return projectRepository.sortList();
+    }
 }

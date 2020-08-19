@@ -92,6 +92,7 @@ public class ProjectController extends AbstractController {
     }
 
     public int listProject(final Long userId, final RoleType roleType) {
+        projectService.sortList();
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
         List<Project> projectList;
