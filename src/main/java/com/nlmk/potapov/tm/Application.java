@@ -109,6 +109,7 @@ public class Application {
     public int run(final String param) {
         if (param == null) return -1;
         if (param.isBlank()) return 0;
+
         switch (param) {
             case HELP: return systemController.displayHelp();
             case VERSION: return systemController.displayVersion();
@@ -117,54 +118,58 @@ public class Application {
             case LOGIN: return systemController.login();
             case LOGOUT: return systemController.logout();
             case COMMAND_HISTORY: return systemController.displayCommandHistory();
-
-            case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
-            case PROJECT_CLEAR: return projectController.clearProject();
-            case PROJECT_LIST: return projectController.listProject(getCurrentUserId(), getCurrentUserRole());
-            case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
-            case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex();
-            case PROJECT_VIEW_BY_ID: return projectController.viewProjectById();
-            case PROJECT_REMOVE_BY_INDEX: return projectController.removeProjectByIndex();
-            case PROJECT_REMOVE_BY_NAME: return projectController.removeProjectByName();
-            case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById();
-            case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
-            case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
-            case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID: return projectController.assignProjectByNameToUserById();
-            case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
-
-            case TASK_CREATE: return taskController.createTask(getCurrentUserId());
-            case TASK_CLEAR: return taskController.clearTask();
-            case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
-            case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
-            case TASK_VIEW_BY_ID: return taskController.viewTaskById();
-            case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();
-            case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName();
-            case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
-            case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
-            case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
-            case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById();
-            case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
-            case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
-            case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
-
-            case USER_CREATE: return userController.addUser();
-            case USER_CLEAR: return userController.clearUser();
-            case USER_LIST: return userController.listUser();
-            case USER_VIEW_BY_ID: return userController.viewUserById();
-            case USER_VIEW_BY_INDEX: return userController.viewUserByIndex();
-            case USER_VIEW_BY_LOGIN: return userController.viewUserByLogin();
-            case USER_REMOVE_BY_ID: return userController.deleteUserById();
-            case USER_REMOVE_BY_INDEX: return userController.deleteUserByIndex();
-            case USER_REMOVE_BY_LOGIN: return userController.deleteUserByLogin();
-            case USER_UPDATE_BY_ID: return userController.updateUserById();
-            case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
-            case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
-            case USER_UPDATE_PASSWORD: return userController.changeUserPassword(getCurrentUserId());
-            case USER_VIEW_CURRENT: return userController.viewCurrent(getCurrentUserId());
-            case USER_UPDATE_CURRENT: return userController.changeCurrent(getCurrentUserId());
-
-            default: return systemController.displayError();
         }
+        if (getCurrentUserId() != null) {
+            switch (param) {
+                case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
+                case PROJECT_CLEAR: return projectController.clearProject();
+                case PROJECT_LIST: return projectController.listProject(getCurrentUserId(), getCurrentUserRole());
+                case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
+                case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex();
+                case PROJECT_VIEW_BY_ID: return projectController.viewProjectById();
+                case PROJECT_REMOVE_BY_INDEX: return projectController.removeProjectByIndex();
+                case PROJECT_REMOVE_BY_NAME: return projectController.removeProjectByName();
+                case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById();
+                case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
+                case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
+                case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID: return projectController.assignProjectByNameToUserById();
+                case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
+
+                case TASK_CREATE: return taskController.createTask(getCurrentUserId());
+                case TASK_CLEAR: return taskController.clearTask();
+                case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
+                case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
+                case TASK_VIEW_BY_ID: return taskController.viewTaskById();
+                case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();
+                case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName();
+                case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
+                case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
+                case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
+                case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById();
+                case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
+                case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
+                case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
+
+                case USER_CREATE: return userController.addUser();
+                case USER_CLEAR: return userController.clearUser();
+                case USER_LIST: return userController.listUser();
+                case USER_VIEW_BY_ID: return userController.viewUserById();
+                case USER_VIEW_BY_INDEX: return userController.viewUserByIndex();
+                case USER_VIEW_BY_LOGIN: return userController.viewUserByLogin();
+                case USER_REMOVE_BY_ID: return userController.deleteUserById();
+                case USER_REMOVE_BY_INDEX: return userController.deleteUserByIndex();
+                case USER_REMOVE_BY_LOGIN: return userController.deleteUserByLogin();
+                case USER_UPDATE_BY_ID: return userController.updateUserById();
+                case USER_UPDATE_BY_INDEX: return userController.updateUserByIndex();
+                case USER_UPDATE_BY_LOGIN: return userController.updateUserByLogin();
+                case USER_UPDATE_PASSWORD: return userController.changeUserPassword(getCurrentUserId());
+                case USER_VIEW_CURRENT: return userController.viewCurrent(getCurrentUserId());
+                case USER_UPDATE_CURRENT: return userController.changeCurrent(getCurrentUserId());
+
+                default: return systemController.displayError();
+            }
+        }
+        return 0;
     }
 
 }
