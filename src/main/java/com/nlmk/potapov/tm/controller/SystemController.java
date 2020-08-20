@@ -113,7 +113,7 @@ public class SystemController extends AbstractController{
 
     public int displayError() {
         System.out.println(BLOCK_SEPARATOR);
-        System.out.println(INDENT+"Ошибка! Неизвестная терминальная команда...");
+        System.out.println(INDENT+"Ошибка! Неизвестная или недоступная терминальная команда...");
         System.out.println(INDENT+"Повторите ввод.");
         System.out.println(BLOCK_SEPARATOR);
         return -1;
