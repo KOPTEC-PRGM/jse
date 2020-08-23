@@ -40,9 +40,19 @@ public class TaskService {
         return taskRepository.findByIndex(index);
     }
 
-    public Task findByName(final String name) {
+    public Task findByName(final String name, final int position) {
         if (name == null || name.isEmpty()) return null;
-        return taskRepository.findByName(name);
+        return taskRepository.findByName(name, position);
+    }
+
+    public List<Task> findListByName(String name) {
+        if (name == null || name.isEmpty()) return null;
+        return taskRepository.findListByName(name);
+    }
+
+    public List<Task> findListByName(String name, Long userId) {
+        if (name == null || name.isEmpty()) return null;
+        return taskRepository.findListByName(name, userId);
     }
 
     public Task findById(final Long id) {
@@ -55,9 +65,14 @@ public class TaskService {
         return taskRepository.removeByIndex(index);
     }
 
-    public Task removeByName(final String name) {
+    public List<Task> removeByName(final String name) {
         if (name == null || name.isEmpty()) return null;
         return taskRepository.removeByName(name);
+    }
+
+    public Task removeByName(String name, Long userId, Integer position) {
+        if (name == null || name.isEmpty()) return null;
+        return taskRepository.removeByName(name, userId, position);
     }
 
     public Task removeById(final Long id) {
@@ -71,10 +86,10 @@ public class TaskService {
         return taskRepository.assignUserIdById(id, userId);
     }
 
-    public Task assignUserIdByName(final String name, final Long userId) {
+    public Task assignUserIdByName(final String name, final Long userId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return taskRepository.assignUserIdByName(name, userId);
+        return taskRepository.assignUserIdByName(name, userId, position);
     }
 
     public List<Task> findAll() {

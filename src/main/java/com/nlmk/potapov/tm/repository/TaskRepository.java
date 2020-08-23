@@ -2,17 +2,30 @@ package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Task;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class TaskRepository {
 
     private final List<Task> tasks = new ArrayList<>();
 
+    private final Map<String,List<Task>> taskMap = new HashMap<>();
+
+    public void addToTaskMap(Task task) {
+        final String name = task.getName();
+        List<Task> valueList = taskMap.get(name);
+        if (valueList == null || valueList.isEmpty()) {
+            valueList = new ArrayList<>();
+            valueList.add(task);
+            taskMap.put(name,valueList);
+            return;
+        }
+        valueList.add(task);
+    }
+
     public Task create(final String name) {
         final Task task = new Task(name);
         tasks.add(task);
+        addToTaskMap(task);
         return task;
     }
 
@@ -22,6 +35,7 @@ public class TaskRepository {
         task.setDescription(description);
         task.setUserId(userId);
         tasks.add(task);
+        addToTaskMap(task);
         return task;
     }
 
@@ -36,17 +50,26 @@ public class TaskRepository {
 
     public void clear() {
         tasks.clear();
+        taskMap.clear();
     }
 
     public Task findByIndex(final int index) {
         return tasks.get(index);
     }
 
-    public Task findByName(final String name) {
-        for (final Task task: tasks){
-            if (task.getName().equals(name)) return task;
-        }
-        return null;
+    public Task findByName(final String name, final int position) {
+        List<Task> taskList = taskMap.get(name);
+        if (taskList == null || taskList.isEmpty()) return null;
+        return taskList.get(position);
+    }
+
+    public List<Task> findListByName(final String name) {
+        return taskMap.get(name);
+    }
+
+    public List<Task> findListByName(final String name, final Long userId) {
+        if (userId == null)  return taskMap.get(name);
+        return filterListByUserId(taskMap.get(name),userId);
     }
 
     public Task findById(final Long id) {
@@ -73,9 +96,21 @@ public class TaskRepository {
         return task;
     }
 
-    public Task removeByName(final String name) {
-        final Task task = findByName(name);
-        if (task == null) return null;
+    public List<Task> removeByName(final String name) {
+        final List<Task> taskList = findListByName(name);
+        if (taskList == null || taskList.isEmpty()) return null;
+        taskMap.remove(name);
+        for (Task task: taskList) tasks.remove(task);
+        return taskList;
+    }
+
+    public Task removeByName(final String name, final Long userId, final Integer position) {
+        final List<Task> taskList = findListByName(name);
+        if (taskList == null || taskList.isEmpty()) return null;
+        final Task task;
+        if (userId == null)  task = taskList.get(position);
+        else task = filterListByUserId(taskList,userId).get(position);
+        taskList.remove(task);
         tasks.remove(task);
         return task;
     }
@@ -118,8 +153,8 @@ public class TaskRepository {
         return task;
     }
 
-    public Task assignUserIdByName(final String name, final Long userId) {
-        Task task = findByName(name);
+    public Task assignUserIdByName(final String name, final Long userId, final int position) {
+        Task task = findByName(name, position);
         task.setUserId(userId);
         return task;
     }
@@ -133,6 +168,13 @@ public class TaskRepository {
     public List<Task> sortList() {
         tasks.sort(Comparator.comparing(Task::getName).thenComparing(Task::getDescription));
         return tasks;
+    }
+
+    public List<Task> filterListByUserId(final List<Task> taskList, final Long userId) {
+        final List<Task> filteredList = new ArrayList<>();
+        for (Task task: taskList)
+            if(task.getUserId().equals(userId)) filteredList.add(task);
+        return filteredList;
     }
 
 }

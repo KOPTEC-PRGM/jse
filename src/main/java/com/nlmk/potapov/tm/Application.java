@@ -48,21 +48,21 @@ public class Application {
         projectRepository.create("Демонстрационный проект №3");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");
-        taskRepository.create("Демонстрационное задание №3");
+        taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №4");
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1").getId(), projectService.findByName("Демонстрационный проект №1").getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2").getId(), projectService.findByName("Демонстрационный проект №2").getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №3").getId(), projectService.findByName("Демонстрационный проект №2").getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4").getId(), projectService.findByName("Демонстрационный проект №3").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",0).getId(), projectService.findByName("Демонстрационный проект №1").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",0).getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",1).getId(), projectService.findByName("Демонстрационный проект №2").getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",0).getId(), projectService.findByName("Демонстрационный проект №3").getId());
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId());
         projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId());
         projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId());
-        taskService.assignUserIdByName("Демонстрационное задание №3", userService.findByLogin("Новый пользователь 1").getId());
-        taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId());
+        taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(),0);
+        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(),0);
+        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),1);
+        taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),0);
     }
 
     public static void main(final String[] args) {
@@ -139,8 +139,9 @@ public class Application {
             case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
             case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
             case TASK_VIEW_BY_ID: return taskController.viewTaskById();
+            case TASK_VIEW_BY_NAME: return taskController.viewTaskByName();
             case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();
-            case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName();
+            case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName(getCurrentUserId(), getCurrentUserRole());
             case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
             case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
             case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
