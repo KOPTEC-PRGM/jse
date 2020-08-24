@@ -24,25 +24,25 @@ public class ProjectService {
         return projectRepository.create(name, description, userId);
     }
 
-    public Project update(final Long id, final String name, final String description) {
+    public Project update(final Long id, final String name, final String description, final Long userId) {
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
-        return projectRepository.update(id, name, description);
+        return projectRepository.update(id, name, description, userId);
     }
 
     public void clear() {
         projectRepository.clear();
     }
 
-    public Project findByIndex(final int index) {
+    public Project findByIndex(final int index, final Long userId) {
         if (index < 0 || index > projectRepository.size() -1) return null;
-        return projectRepository.findByIndex(index);
+        return projectRepository.findByIndex(index,userId);
     }
 
     public Project findByName(final String name, final Long userId, final int position) {
         if (name == null || name.isEmpty()) return null;
-        return projectRepository.findByName(name,userId,position);
+        return projectRepository.findByName(name, userId, position);
     }
 
     public List<Project> findListByName(String name, Long userId) {
@@ -50,14 +50,14 @@ public class ProjectService {
         return projectRepository.findListByName(name, userId);
     }
 
-    public Project findById(final Long id) {
+    public Project findById(final Long id, final Long userId) {
         if (id == null ) return null;
-        return projectRepository.findById(id);
+        return projectRepository.findById(id, userId);
     }
 
-    public Project removeByIndex(final int index) {
+    public Project removeByIndex(final int index, final Long userId) {
         if (index < 0 || index > projectRepository.size() -1) return null;
-        return projectRepository.removeByIndex(index);
+        return projectRepository.removeByIndex(index, userId);
     }
 
     public List<Project> removeByName(String name, Long userId) {
@@ -70,15 +70,15 @@ public class ProjectService {
         return projectRepository.removeByName(name,userId,position);
     }
 
-    public Project removeById(final Long id) {
+    public Project removeById(final Long id, final Long userId) {
         if (id == null ) return null;
-        return projectRepository.removeById(id);
+        return projectRepository.removeById(id, userId);
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return projectRepository.assignUserIdByName(name,userId,currentUserId,position);
+        return projectRepository.assignUserIdByName(name, userId, currentUserId, position);
     }
 
     public List<Project> findAll(final Long userId) {

@@ -47,8 +47,8 @@ public class ProjectRepository {
         return project;
     }
 
-    public Project update(final Long id, final String name, final String description) {
-        final Project project = findById(id);
+    public Project update(final Long id, final String name, final String description, final Long userId) {
+        final Project project = findById(id,userId);
         if (project == null) return null;
         if (!project.getName().equals(name)) {
             removeFromProjectMap(project);
@@ -65,8 +65,10 @@ public class ProjectRepository {
         projectMap.clear();
     }
 
-    public Project findByIndex(final int index) {
-        return projects.get(index);
+    public Project findByIndex(final int index, final Long userId) {
+        if (userId == null) return projects.get(index);
+        final List<Project> filteredList = filterListByUserId(projects,userId);
+        return filteredList.get(index);
     }
 
     public Project findByName(final String name, final Long userId, final int position) {
@@ -79,18 +81,19 @@ public class ProjectRepository {
 
     public List<Project> findListByName(final String name, final Long userId) {
         if (userId == null)  return projectMap.get(name);
-        return filterListByUserId(projectMap.get(name),userId);
+        return filterListByUserId(projectMap.get(name), userId);
     }
 
-    public Project findById(final Long id) {
+    public Project findById(final Long id, final Long userId) {
         for (final Project project: projects){
-            if (project.getId().equals(id)) return project;
+            if (project.getId().equals(id))
+            if (project.getUserId().equals(userId) || userId == null) return project;
         }
         return null;
     }
 
-    public Project removeByIndex(final int index) {
-        final Project project = findByIndex(index);
+    public Project removeByIndex(final int index, final Long userId) {
+        final Project project = findByIndex(index, userId);
         if (project == null) return null;
         projects.remove(project);
         removeFromProjectMap(project);
@@ -112,8 +115,8 @@ public class ProjectRepository {
         return project;
     }
 
-    public Project removeById(final Long id) {
-        final Project project = findById(id);
+    public Project removeById(final Long id, final Long userId) {
+        final Project project = findById(id, userId);
         if (project == null) return null;
         projects.remove(project);
         removeFromProjectMap(project);
@@ -130,7 +133,7 @@ public class ProjectRepository {
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
-        Project project = findByName(name,currentUserId,position);
+        Project project = findByName(name,currentUserId, position);
         project.setUserId(userId);
         return project;
     }

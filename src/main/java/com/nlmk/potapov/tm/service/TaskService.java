@@ -24,20 +24,20 @@ public class TaskService {
         return taskRepository.create(name, description, userId);
     }
 
-    public Task update(final Long id, final String name, final String description) {
+    public Task update(final Long id, final String name, final String description, final Long userId) {
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
-        return taskRepository.update(id, name, description);
+        return taskRepository.update(id, name, description, userId);
     }
 
     public void clear() {
         taskRepository.clear();
     }
 
-    public Task findByIndex(final int index) {
+    public Task findByIndex(final int index, final Long userId) {
         if (index < 0 || index > taskRepository.size() -1) return null;
-        return taskRepository.findByIndex(index);
+        return taskRepository.findByIndex(index, userId);
     }
 
     public Task findByName(final String name, final Long userId, final int position) {
@@ -50,14 +50,14 @@ public class TaskService {
         return taskRepository.findListByName(name, userId);
     }
 
-    public Task findById(final Long id) {
+    public Task findById(final Long id, final Long userId) {
         if (id == null ) return null;
-        return taskRepository.findById(id);
+        return taskRepository.findById(id, userId);
     }
 
-    public Task removeByIndex(final int index) {
+    public Task removeByIndex(final int index, final Long userId) {
         if (index < 0 || index > taskRepository.size() -1) return null;
-        return taskRepository.removeByIndex(index);
+        return taskRepository.removeByIndex(index, userId);
     }
 
     public List<Task> removeByName(final String name) {
@@ -70,9 +70,9 @@ public class TaskService {
         return taskRepository.removeByName(name, userId, position);
     }
 
-    public Task removeById(final Long id) {
+    public Task removeById(final Long id, final Long userId) {
         if (id == null ) return null;
-        return taskRepository.removeById(id);
+        return taskRepository.removeById(id, userId);
     }
 
     public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
@@ -90,10 +90,10 @@ public class TaskService {
         return taskRepository.findAllByUserId(userId);
     }
 
-    public Task assignProjectId(final Long id, final Long projectId) {
+    public Task assignProjectId(final Long id, final Long projectId, final Long userId) {
         if (id == null ) return null;
         if (projectId == null ) return null;
-        return taskRepository.assertProjectId(id, projectId);
+        return taskRepository.assertProjectId(id, projectId, userId);
     }
 
     public List<Task> sortList() {

@@ -45,7 +45,6 @@ public class Application {
     {
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
-        userService.create("1", "1","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectRepository.create("Демонстрационный проект №2");
         projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №3");
@@ -53,10 +52,10 @@ public class Application {
         taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №4");
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",null,0).getId(), projectService.findByName("Демонстрационный проект №1",null,0).getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,0).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,1).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId());
-        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",null,0).getId(), projectService.findByName("Демонстрационный проект №3",null,0).getId());
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",null,0).getId(), projectService.findByName("Демонстрационный проект №1",null,0).getId(), null);
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,0).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,1).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
+        taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",null,0).getId(), projectService.findByName("Демонстрационный проект №3",null,0).getId(), null);
         projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId(),null,0);
         projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId(),null,0);
         projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId(),null,0);
@@ -122,34 +121,34 @@ public class Application {
         if (getCurrentUserId() == null) return systemController.displayError();
         switch (param) {
             case PROJECT_CREATE: return projectController.createProject(getCurrentUserId());
-            case PROJECT_CLEAR: return projectController.clearProject();
+            case PROJECT_CLEAR: return projectController.clearProject(getCurrentUserRole());
             case PROJECT_LIST: return projectController.listProject(getCurrentUserId(), getCurrentUserRole());
             case PROJECT_LIST_WITH_TASK: return projectController.listProjectWithTasks(getCurrentUserId());
-            case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex();
-            case PROJECT_VIEW_BY_ID: return projectController.viewProjectById();
-            case PROJECT_REMOVE_BY_INDEX: return projectController.removeProjectByIndex();
+            case PROJECT_VIEW_BY_INDEX: return projectController.viewProjectByIndex(getCurrentUserId(), getCurrentUserRole());
+            case PROJECT_VIEW_BY_ID: return projectController.viewProjectById(getCurrentUserId(), getCurrentUserRole());
+            case PROJECT_REMOVE_BY_INDEX: return projectController.removeProjectByIndex(getCurrentUserId(), getCurrentUserRole());
             case PROJECT_REMOVE_BY_NAME: return projectController.removeProjectByName(getCurrentUserId(), getCurrentUserRole());
-            case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById();
-            case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
-            case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
+            case PROJECT_REMOVE_BY_ID: return projectController.removeProjectById(getCurrentUserId(), getCurrentUserRole());
+            case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex(getCurrentUserId(), getCurrentUserRole());
+            case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById(getCurrentUserId(), getCurrentUserRole());
             case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID: return projectController.assignProjectByNameToUserById(getCurrentUserId(), getCurrentUserRole());
             case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById(getCurrentUserRole());
 
             case TASK_CREATE: return taskController.createTask(getCurrentUserId());
-            case TASK_CLEAR: return taskController.clearTask();
+            case TASK_CLEAR: return taskController.clearTask(getCurrentUserRole());
             case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
-            case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
-            case TASK_VIEW_BY_ID: return taskController.viewTaskById();
+            case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex(getCurrentUserId(), getCurrentUserRole());
+            case TASK_VIEW_BY_ID: return taskController.viewTaskById(getCurrentUserId(), getCurrentUserRole());
             case TASK_VIEW_BY_NAME: return taskController.viewTaskByName(getCurrentUserId(), getCurrentUserRole());
-            case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();
+            case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex(getCurrentUserId(), getCurrentUserRole());
             case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName(getCurrentUserId(), getCurrentUserRole());
-            case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
-            case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
-            case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
+            case TASK_REMOVE_BY_ID: return taskController.removeTaskById(getCurrentUserId(), getCurrentUserRole());
+            case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex(getCurrentUserId(), getCurrentUserRole());
+            case TASK_UPDATE_BY_ID: return taskController.updateTaskById(getCurrentUserId(), getCurrentUserRole());
             case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById(getCurrentUserId(), getCurrentUserRole());
-            case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
-            case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
-            case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();
+            case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId(getCurrentUserId(), getCurrentUserRole());
+            case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds(getCurrentUserId(), getCurrentUserRole());
+            case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds(getCurrentUserId(), getCurrentUserRole());
 
             case USER_CREATE: return userController.addUser();
             case USER_CLEAR: return userController.clearUser();

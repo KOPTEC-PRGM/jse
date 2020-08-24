@@ -47,8 +47,8 @@ public class TaskRepository {
         return task;
     }
 
-    public Task update(final Long id, final String name, final String description) {
-        final Task task = findById(id);
+    public Task update(final Long id, final String name, final String description, final Long userId) {
+        final Task task = findById(id, userId);
         if (task == null) return null;
         if (!task.getName().equals(name)) {
             removeFromTaskMap(task);
@@ -65,8 +65,10 @@ public class TaskRepository {
         taskMap.clear();
     }
 
-    public Task findByIndex(final int index) {
-        return tasks.get(index);
+    public Task findByIndex(final int index, final Long userId) {
+        if (userId == null) return tasks.get(index);
+        final List<Task> filteredList = filterListByUserId(tasks, userId);
+        return filteredList.get(index);
     }
 
     public Task findByName(final String name, final Long userId, final int position) {
@@ -86,25 +88,27 @@ public class TaskRepository {
         return filterListByUserId(taskMap.get(name),userId);
     }
 
-    public Task findById(final Long id) {
+    public Task findById(final Long id, final Long userId) {
         for (final Task task: tasks){
-            if (task.getId().equals(id)) return task;
+            if (task.getId().equals(id))
+            if (task.getUserId().equals(userId) || userId == null) return task;
         }
         return null;
     }
 
-    public Task findByProjectIdAndId(final Long projectId, final Long id) {
+    public Task findByProjectIdAndId(final Long projectId, final Long id, final Long userId) {
         for (final Task task: tasks){
             Long idProject = task.getProjectId();
             if (idProject == null) continue;
             if (!idProject.equals(projectId)) continue;
+            if (!task.getUserId().equals(userId) && userId != null) continue;
             if (task.getId().equals(id)) return task;
         }
         return null;
     }
 
-    public Task removeByIndex(final int index) {
-        final Task task = findByIndex(index);
+    public Task removeByIndex(final int index, final Long userId) {
+        final Task task = findByIndex(index, userId);
         if (task == null) return null;
         tasks.remove(task);
         removeFromTaskMap(task);
@@ -130,8 +134,8 @@ public class TaskRepository {
         return task;
     }
 
-    public Task removeById(final Long id) {
-        final Task task = findById(id);
+    public Task removeById(final Long id, final Long userId) {
+        final Task task = findById(id, userId);
         if (task == null) return null;
         tasks.remove(task);
         removeFromTaskMap(task);
@@ -169,8 +173,8 @@ public class TaskRepository {
         return task;
     }
 
-    public Task assertProjectId(final Long id, final Long projectId) {
-        Task task = findById(id);
+    public Task assertProjectId(final Long id, final Long projectId, final Long userId) {
+        Task task = findById(id, userId);
         task.setProjectId(projectId);
         return task;
     }
