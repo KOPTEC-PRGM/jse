@@ -149,8 +149,7 @@ public class SystemController extends AbstractController{
             return -1;
         }
         final User user = userService.findByLogin(login);
-        if (user == null) return -1;
-        if (!userService.checkPassword(login,password)){
+        if (user == null || !userService.checkPassword(login,password)){
             System.out.println("[Ошибка. Введен неверный пользователь или пароль]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
