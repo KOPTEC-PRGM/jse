@@ -139,13 +139,13 @@ public class Application {
             case TASK_LIST: return taskController.listTask(getCurrentUserId(), getCurrentUserRole());
             case TASK_VIEW_BY_INDEX: return taskController.viewTaskByIndex();
             case TASK_VIEW_BY_ID: return taskController.viewTaskById();
-            case TASK_VIEW_BY_NAME: return taskController.viewTaskByName();
+            case TASK_VIEW_BY_NAME: return taskController.viewTaskByName(getCurrentUserId(), getCurrentUserRole());
             case TASK_REMOVE_BY_INDEX: return taskController.removeTaskByIndex();
             case TASK_REMOVE_BY_NAME: return taskController.removeTaskByName(getCurrentUserId(), getCurrentUserRole());
             case TASK_REMOVE_BY_ID: return taskController.removeTaskById();
             case TASK_UPDATE_BY_INDEX: return taskController.updateTaskByIndex();
             case TASK_UPDATE_BY_ID: return taskController.updateTaskById();
-            case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById();
+            case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID: return taskController.assignTaskByNameToUserById(getCurrentUserId(), getCurrentUserRole());
             case TASK_LIST_BY_PROJECT_ID: return taskController.listTasksByProjectId();
             case TASK_ADD_TO_PROJECT_BY_IDS: return taskController.addTaskToProjectByIds();
             case TASK_REMOVE_FROM_PROJECT_BY_IDS: return taskController.removeTaskFromProjectByIds();

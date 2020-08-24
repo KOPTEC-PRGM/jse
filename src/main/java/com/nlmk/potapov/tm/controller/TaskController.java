@@ -56,12 +56,14 @@ public class TaskController extends AbstractController{
         return result;
     }
 
-    public int viewTaskByName() {
+    public int viewTaskByName(final Long userId, final RoleType roleType) {
+        Long currentUserId = null;
+        if (!roleType.equals(RoleType.ADMIN))currentUserId =userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите название задачи: ");
         final String name = scanner.nextLine();
         if (name == null) return -1;
-        final List<Task> taskList = taskService.findListByName(name);
+        final List<Task> taskList = taskService.findListByName(name, currentUserId);
         System.out.println("Количество найденых по запросу задач: "+taskList.size());
         System.out.println();
         for (Task task: taskList){
@@ -203,7 +205,9 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int assignTaskByNameToUserById() {
+    public int assignTaskByNameToUserById(final Long userId, final RoleType roleType) {
+        Long currentUserId = null;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId =userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Назначение пользователя по ID к задаче по имени]");
         System.out.print("Введите ID пользователя: ");
@@ -220,17 +224,22 @@ public class TaskController extends AbstractController{
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        List<Task> taskList = taskService.findListByName(name);
-        if (taskList.size() == 0) System.out.println("[Ошибка. Ни одной задачи не найдено]");
-        if (taskList.size() == 1) taskService.assignUserIdByName(name,id,0);
-        if (taskList.size() > 1) {
+        final Task task;
+        List<Task> taskList = taskService.findListByName(name,currentUserId);
+        if (taskList.size() == 0) {
+            System.out.println("[Ошибка. Ни одной задачи не найдено]");
+            task = null;
+        }
+        else if (taskList.size() == 1) task =taskService.assignUserIdByName(name,id,0);
+        else {
             System.out.println("Найденые задачи: ");
             viewTaskList(taskList);
             System.out.print("Введите номер задачи, к которой хотите назначить пользователя: ");
             int i = getIndexFromScanner();
-            taskService.assignUserIdByName(name,id,i);
+            task = taskService.assignUserIdByName(name,id,i);
         }
-        System.out.println("[Готово]");
+        if (task == null) System.out.println("[Ошибка. Не удалось назначить пользователя.]");
+        else System.out.println("[Готово. Задаче \"" + task.getName() + "\" назначен пользователь(ID = \"" + id + "\").]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

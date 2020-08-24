@@ -45,11 +45,6 @@ public class TaskService {
         return taskRepository.findByName(name, position);
     }
 
-    public List<Task> findListByName(String name) {
-        if (name == null || name.isEmpty()) return null;
-        return taskRepository.findListByName(name);
-    }
-
     public List<Task> findListByName(String name, Long userId) {
         if (name == null || name.isEmpty()) return null;
         return taskRepository.findListByName(name, userId);
@@ -80,12 +75,6 @@ public class TaskService {
         return taskRepository.removeById(id);
     }
 
-    public Task assignUserIdById(final Long id, final Long userId) {
-        if (userId == null ) return null;
-        if (id == null ) return null;
-        return taskRepository.assignUserIdById(id, userId);
-    }
-
     public Task assignUserIdByName(final String name, final Long userId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
@@ -105,17 +94,6 @@ public class TaskService {
         if (id == null ) return null;
         if (projectId == null ) return null;
         return taskRepository.assertProjectId(id, projectId);
-    }
-
-    public Task findByProjectIdAndId(final Long projectId, final Long id) {
-        if (projectId == null ) return null;
-        if (id == null ) return null;
-        return taskRepository.findByProjectIdAndId(projectId, id);
-    }
-
-    public List<Task> viewTasksFromProject(final Long projectId) {
-        if (projectId == null ) return null;
-        return taskRepository.viewTasksFromProject(projectId);
     }
 
     public List<Task> sortList() {

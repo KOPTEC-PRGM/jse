@@ -147,12 +147,6 @@ public class TaskRepository {
         return result;
     }
 
-    public Task assignUserIdById(final Long id, final Long userId) {
-        Task task = findById(id);
-        task.setUserId(userId);
-        return task;
-    }
-
     public Task assignUserIdByName(final String name, final Long userId, final int position) {
         Task task = findByName(name, position);
         task.setUserId(userId);
