@@ -20,7 +20,7 @@ public class UserController extends AbstractController{
     public int addUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -61,7 +61,7 @@ public class UserController extends AbstractController{
     public int deleteUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -83,7 +83,7 @@ public class UserController extends AbstractController{
     public int deleteUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -105,7 +105,7 @@ public class UserController extends AbstractController{
     public int deleteUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -143,7 +143,7 @@ public class UserController extends AbstractController{
     public int viewUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -162,7 +162,7 @@ public class UserController extends AbstractController{
     public int viewUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -177,7 +177,7 @@ public class UserController extends AbstractController{
     public int viewUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -192,7 +192,7 @@ public class UserController extends AbstractController{
     public int listUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -215,7 +215,7 @@ public class UserController extends AbstractController{
     public int clearUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -288,7 +288,7 @@ public class UserController extends AbstractController{
     public int updateUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -303,7 +303,7 @@ public class UserController extends AbstractController{
     public int updateUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
@@ -318,7 +318,7 @@ public class UserController extends AbstractController{
     public int updateUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }

@@ -160,7 +160,7 @@ public class TaskController extends AbstractController{
     public int clearTask(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
-            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
