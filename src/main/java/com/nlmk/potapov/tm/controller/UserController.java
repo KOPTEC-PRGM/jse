@@ -17,8 +17,13 @@ public class UserController extends AbstractController{
         this.userService = userService;
     }
 
-    public int addUser() {
+    public int addUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Создание нового пользователя]");
         System.out.print("Введите логин: ");
         final String login = scanner.nextLine();
@@ -53,8 +58,13 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    public int deleteUserById() {
+    public int deleteUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Удаление пользователя по ID]");
         System.out.print("Введите ID пользователя: ");
         final Long id = getIdFromScanner();
@@ -70,8 +80,13 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    public int deleteUserByIndex() {
+    public int deleteUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Удаление пользователя по номеру]");
         System.out.print("Введите номер пользователя: ");
         final int index = getIndexFromScanner();
@@ -87,8 +102,13 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    public int deleteUserByLogin() {
+    public int deleteUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Удаление пользователя по логину]");
         System.out.print("Введите логин пользователя: ");
         final String login = scanner.nextLine();
@@ -120,8 +140,13 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    public int viewUserByLogin() {
+    public int viewUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Просмтор пользователя по логину]");
         System.out.print("Введите логин пользователя: ");
         final String login = scanner.nextLine();
@@ -134,8 +159,13 @@ public class UserController extends AbstractController{
         return viewUser(user);
     }
 
-    public int viewUserByIndex() {
+    public int viewUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Просмтор пользователя по номеру]");
         System.out.print("Введите номер пользователя: ");
         final int index = getIndexFromScanner();
@@ -144,8 +174,13 @@ public class UserController extends AbstractController{
         return viewUser(user);
     }
 
-    public int viewUserById() {
+    public int viewUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Просмтор пользователя по ID]");
         System.out.print("Введите ID пользователя: ");
         final Long id = getIdFromScanner();
@@ -154,8 +189,13 @@ public class UserController extends AbstractController{
         return viewUser(user);
     }
 
-    public int listUser() {
+    public int listUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Список пользователей]");
         viewUserList(userService.findAll());
         System.out.println("[Готово]");
@@ -172,8 +212,13 @@ public class UserController extends AbstractController{
         }
     }
 
-    public int clearUser() {
+    public int clearUser(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Очистка списка пользователей]");
         userService.clear();
         System.out.println("[Готово]");
@@ -240,8 +285,13 @@ public class UserController extends AbstractController{
         return 0;
     }
 
-    public int updateUserById() {
+    public int updateUserById(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Обновление пользователя по ID]");
         System.out.print("Введите ID пользователя: ");
         final Long id = getIdFromScanner();
@@ -250,8 +300,13 @@ public class UserController extends AbstractController{
         return updateUser(user);
     }
 
-    public int updateUserByIndex() {
+    public int updateUserByIndex(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Обновление пользователя по номеру]");
         System.out.print("Введите номер пользователя: ");
         final int index = getIndexFromScanner();
@@ -260,8 +315,13 @@ public class UserController extends AbstractController{
         return updateUser(user);
     }
 
-    public int updateUserByLogin() {
+    public int updateUserByLogin(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println("[Обновление пользователя по логину]");
         System.out.print("Введите логин пользователя: ");
         final String login = scanner.nextLine();

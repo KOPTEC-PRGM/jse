@@ -87,7 +87,7 @@ public class ProjectRepository {
     public Project findById(final Long id, final Long userId) {
         for (final Project project: projects){
             if (project.getId().equals(id))
-            if (project.getUserId().equals(userId) || userId == null) return project;
+            if (userId == null || project.getUserId().equals(userId)) return project;
         }
         return null;
     }

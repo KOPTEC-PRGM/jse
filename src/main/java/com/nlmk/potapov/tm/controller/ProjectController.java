@@ -162,12 +162,12 @@ public class ProjectController extends AbstractController {
     }
 
     public int clearProject(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
             System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Очистка списка проектов]");
         projectService.clear();
         System.out.println("[Готово]");
@@ -277,12 +277,12 @@ public class ProjectController extends AbstractController {
     }
 
     public int removeProjectWithTasksById(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
             System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта с задачами по ID]");
         System.out.print("Введите ID проекта: ");
         final Long id = getIdFromScanner();

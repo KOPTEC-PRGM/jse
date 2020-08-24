@@ -91,7 +91,8 @@ public class TaskRepository {
     public Task findById(final Long id, final Long userId) {
         for (final Task task: tasks){
             if (task.getId().equals(id))
-            if (task.getUserId().equals(userId) || userId == null) return task;
+            if (userId == null || task.getUserId().equals(userId)) return task;
+
         }
         return null;
     }
