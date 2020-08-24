@@ -1,7 +1,6 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
-import com.nlmk.potapov.tm.entity.Task;
 
 import java.util.*;
 
@@ -23,7 +22,7 @@ public class ProjectRepository {
         valueList.add(project);
     }
 
-    public void removeFromTaskMap(final Project project) {
+    public void removeFromProjectMap(final Project project) {
         final String name = project.getName();
         List<Project> valueList = projectMap.get(name);
         if (valueList == null || valueList.isEmpty()) return;
@@ -52,7 +51,7 @@ public class ProjectRepository {
         final Project project = findById(id);
         if (project == null) return null;
         if (!project.getName().equals(name)) {
-            removeFromTaskMap(project);
+            removeFromProjectMap(project);
             project.setName(name);
             addToProjectMap(project);
         }
@@ -94,6 +93,7 @@ public class ProjectRepository {
         final Project project = findByIndex(index);
         if (project == null) return null;
         projects.remove(project);
+        removeFromProjectMap(project);
         return project;
     }
 
@@ -116,28 +116,17 @@ public class ProjectRepository {
         final Project project = findById(id);
         if (project == null) return null;
         projects.remove(project);
+        removeFromProjectMap(project);
         return project;
     }
 
-    public List<Project> findAll() {
-        return projects;
-    }
-
-    public List<Project> findAllByUserId(final Long userId) {
-        List<Project> userProjects = new ArrayList<>();
-        for (Project project: findAll())
-            if (userId.equals(project.getUserId())) userProjects.add(project);
-        return userProjects;
+    public List<Project> findAll(final Long userId) {
+        if (userId == null) return projects;
+        else return filterListByUserId(projects, userId);
     }
 
     public int size() {
         return projects.size();
-    }
-
-    public Project assignUserIdById(final Long id, final Long userId) {
-        Project project = findById(id);
-        project.setUserId(userId);
-        return project;
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {

@@ -133,7 +133,7 @@ public class Application {
             case PROJECT_UPDATE_BY_INDEX: return projectController.updateProjectByIndex();
             case PROJECT_UPDATE_BY_ID: return projectController.updateProjectById();
             case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID: return projectController.assignProjectByNameToUserById(getCurrentUserId(), getCurrentUserRole());
-            case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById();
+            case PROJECT_REMOVE_WITH_TASKS_BY_ID: return projectController.removeProjectWithTasksById(getCurrentUserRole());
 
             case TASK_CREATE: return taskController.createTask(getCurrentUserId());
             case TASK_CLEAR: return taskController.clearTask();

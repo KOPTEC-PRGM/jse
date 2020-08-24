@@ -42,13 +42,13 @@ public class ProjectTaskService {
     public List<Task> viewTasksFromProject(final Long projectId) {
         if (projectId == null) return Collections.emptyList();
         if (projectRepository.findById(projectId) == null) return Collections.emptyList();
-        return taskRepository.viewTasksFromProject(projectId);
+        return taskRepository.getTasksFromProject(projectId);
     }
 
     public Project removeProjectWithTasks(final Long projectId) {
         if (projectId == null) return null;
         if (projectRepository.findById(projectId) == null) return null;
-        List<Task> tasks = taskRepository.viewTasksFromProject(projectId);
+        List<Task> tasks = taskRepository.getTasksFromProject(projectId);
         for (Task task: tasks){
             taskRepository.removeById(task.getId());
         }

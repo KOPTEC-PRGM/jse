@@ -106,13 +106,12 @@ public class ProjectController extends AbstractController {
     }
 
     public int listProject(final Long userId, final RoleType roleType) {
+        Long currentUserId = null;
+        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
         projectService.sortList();
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
-        List<Project> projectList;
-        if (userId == null) projectList = null;
-        else if (roleType.equals(RoleType.ADMIN)) projectList = projectService.findAll();
-        else projectList = projectService.findAllByUserId(userId);
+        List<Project> projectList = projectService.findAll(currentUserId);
         viewProjectList(projectList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -132,8 +131,7 @@ public class ProjectController extends AbstractController {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов с подзадачами]");
         List<Project> projectList;
-        if (userId == null) projectList = projectService.findAll();
-        else projectList = projectService.findAllByUserId(userId);
+        projectList = projectService.findAll(userId);
         viewProjectWithTasks(projectList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
@@ -224,7 +222,7 @@ public class ProjectController extends AbstractController {
 
     public int assignProjectByNameToUserById(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId =userId;
+        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Назначение пользователя по ID к проекту по имени]");
         System.out.print("Введите ID пользователя: ");
@@ -261,7 +259,12 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int removeProjectWithTasksById() {
+    public int removeProjectWithTasksById(final RoleType roleType) {
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта с задачами по ID]");
         System.out.print("Введите ID проекта: ");

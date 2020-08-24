@@ -75,26 +75,16 @@ public class ProjectService {
         return projectRepository.removeById(id);
     }
 
-    public Project assignUserIdById(final Long id, final Long userId) {
-        if (userId == null ) return null;
-        if (id == null ) return null;
-        return projectRepository.assignUserIdById(id, userId);
-    }
-
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return projectRepository.assignUserIdByName(name,userId,currentUserId,position);
     }
 
-    public List<Project> findAll() {
-        return projectRepository.findAll();
+    public List<Project> findAll(final Long userId) {
+        return projectRepository.findAll(userId);
     }
 
-    public List<Project> findAllByUserId(final Long userId) {
-        if (userId == null) return null;
-        return projectRepository.findAllByUserId(userId);
-    }
 
     public List<Project> sortList() {
         return projectRepository.sortList();

@@ -107,6 +107,7 @@ public class TaskRepository {
         final Task task = findByIndex(index);
         if (task == null) return null;
         tasks.remove(task);
+        removeFromTaskMap(task);
         return task;
     }
 
@@ -133,6 +134,7 @@ public class TaskRepository {
         final Task task = findById(id);
         if (task == null) return null;
         tasks.remove(task);
+        removeFromTaskMap(task);
         return task;
     }
 
@@ -151,7 +153,7 @@ public class TaskRepository {
         return tasks.size();
     }
 
-    public List<Task> viewTasksFromProject (final Long projectId){
+    public List<Task> getTasksFromProject (final Long projectId){
         List<Task> result = new ArrayList<>();
         for (Task task: findAll()){
             if (task.getProjectId() == null) continue;
