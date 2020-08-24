@@ -40,9 +40,9 @@ public class TaskService {
         return taskRepository.findByIndex(index);
     }
 
-    public Task findByName(final String name, final int position) {
+    public Task findByName(final String name, final Long userId, final int position) {
         if (name == null || name.isEmpty()) return null;
-        return taskRepository.findByName(name, position);
+        return taskRepository.findByName(name, userId, position);
     }
 
     public List<Task> findListByName(String name, Long userId) {
@@ -75,10 +75,10 @@ public class TaskService {
         return taskRepository.removeById(id);
     }
 
-    public Task assignUserIdByName(final String name, final Long userId, final int position) {
+    public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return taskRepository.assignUserIdByName(name, userId, position);
+        return taskRepository.assignUserIdByName(name, userId, currentUserId, position);
     }
 
     public List<Task> findAll() {

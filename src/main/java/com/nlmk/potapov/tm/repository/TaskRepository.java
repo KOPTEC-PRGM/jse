@@ -69,8 +69,10 @@ public class TaskRepository {
         return tasks.get(index);
     }
 
-    public Task findByName(final String name, final int position) {
-        List<Task> taskList = taskMap.get(name);
+    public Task findByName(final String name, final Long userId, final int position) {
+        final List<Task> taskList;
+        if (userId == null) taskList = taskMap.get(name);
+        else taskList = filterListByUserId(taskMap.get(name),userId);
         if (taskList == null || taskList.isEmpty()) return null;
         return taskList.get(position);
     }
@@ -159,8 +161,8 @@ public class TaskRepository {
         return result;
     }
 
-    public Task assignUserIdByName(final String name, final Long userId, final int position) {
-        Task task = findByName(name, position);
+    public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
+        Task task = findByName(name, currentUserId, position);
         task.setUserId(userId);
         return task;
     }

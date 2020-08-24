@@ -22,7 +22,7 @@ public class ProjectController extends AbstractController {
         this.projectTaskService = projectTaskService;
     }
 
-    public int viewProject(Project project) {
+    public int viewProjectList(Project project) {
         if (project == null) return -1;
         System.out.println("[Просмотр проекта]");
         System.out.println("ID: " + project.getId());
@@ -40,7 +40,7 @@ public class ProjectController extends AbstractController {
         if (index < 0) return -1;
         final Project project = projectService.findByIndex(index);
         if (project == null) System.out.println("[Проект не найден]");
-        return viewProject(project);
+        return viewProjectList(project);
     }
 
     public int viewProjectById() {
@@ -50,7 +50,7 @@ public class ProjectController extends AbstractController {
         if (id == null) return -1;
         final Project project = projectService.findById(id);
         if (project == null) System.out.println("[Проект не найден]");
-        return viewProject(project);
+        return viewProjectList(project);
     }
 
     public int removeProjectByIndex() {
@@ -66,14 +66,28 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int removeProjectByName() {
+    public int removeProjectByName(final Long userId, final RoleType roleType) {
+        List<Project> removedList = null;
+        Project removedProject = null;
+        Long currentUserId = null;
         System.out.println(BLOCK_SEPARATOR);
-        System.out.println("[Удаление проекта по имени]");
-        System.out.print("Введите название проекта: ");
+        System.out.println("[Удаление проекта(ов) по имени]");
+        System.out.print("Введите название проекта(ов): ");
         final String name = scanner.nextLine();
-        final Project project = projectService.removeByName(name);
-        if (project == null) System.out.println("[Ошибка удаления проекта]");
-        else System.out.println("[Готово. Проект " + project.getName() + " удален]");
+        if (!roleType.equals(RoleType.ADMIN))currentUserId =userId;
+        List<Project> projectList = projectService.findListByName(name, currentUserId);
+        if (projectList.size() == 0) System.out.println("[Ошибка. Ни одного проекта не найдено]");
+        if (projectList.size() == 1) removedProject = projectService.removeByName(name,currentUserId,0);
+        if (projectList.size() > 1){
+            System.out.println("Найденые проекты: ");
+            viewProjectList(projectList);
+            System.out.print("Введите номер проекта, который хотите удалить (0 - удалить все): ");
+            int i = getIndexFromScanner();
+            if (i == -1) removedList = projectService.removeByName(name,currentUserId);
+            else removedProject = projectService.removeByName(name,currentUserId,i);
+        }
+        if (removedProject == null && removedList == null) System.out.println("[Ошибка удаления проекта(ов)]");
+        else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -99,17 +113,17 @@ public class ProjectController extends AbstractController {
         if (userId == null) projectList = null;
         else if (roleType.equals(RoleType.ADMIN)) projectList = projectService.findAll();
         else projectList = projectService.findAllByUserId(userId);
-        viewProject(projectList);
+        viewProjectList(projectList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    private void viewProject(List<Project> projects) {
+    private void viewProjectList(List<Project> projects) {
         if (projects == null || projects.isEmpty()) return;
         int index = 1;
         for (final Project project: projects){
-            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
+            System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName() + ": UserID - " + project.getUserId());
             index++;
         }
     }
@@ -208,16 +222,11 @@ public class ProjectController extends AbstractController {
     }
 
 
-    public int assignProjectByNameToUserById() {
+    public int assignProjectByNameToUserById(final Long userId, final RoleType roleType) {
+        Long currentUserId = null;
+        if (!roleType.equals(RoleType.ADMIN))currentUserId =userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Назначение пользователя по ID к проекту по имени]");
-        System.out.print("Введите название проекта: ");
-        final String name = scanner.nextLine();
-        if (name == null) {
-            System.out.println("[Ошибка. Введено пустое название проекта]");
-            System.out.println(BLOCK_SEPARATOR);
-            return -1;
-        }
         System.out.print("Введите ID пользователя: ");
         final Long id = getIdFromScanner();
         if (id == null) {
@@ -225,8 +234,29 @@ public class ProjectController extends AbstractController {
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        projectService.assignUserIdByName(name,id);
-        System.out.println("[Готово]");
+        System.out.print("Введите название проекта: ");
+        final String name = scanner.nextLine();
+        if (name == null) {
+            System.out.println("[Ошибка. Введено пустое название проекта]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        final Project project;
+        List<Project> projectList = projectService.findListByName(name,currentUserId);
+        if (projectList.size() == 0) {
+            System.out.println("[Ошибка. Ни одного проекта не найдено]");
+            project = null;
+        }
+        else if (projectList.size() == 1) project = projectService.assignUserIdByName(name,id,currentUserId,0);
+        else {
+            System.out.println("Найденые проекты: ");
+            viewProjectList(projectList);
+            System.out.print("Введите номер проекта, которому хотите назначить пользователя: ");
+            int i = getIndexFromScanner();
+            project = projectService.assignUserIdByName(name,id,currentUserId,i);
+        }
+        if (project == null) System.out.println("[Ошибка. Не удалось назначить пользователя.]");
+        else System.out.println("[Готово. Проекту \"" + project.getName() + "\" назначен пользователь(ID = \"" + id + "\").]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

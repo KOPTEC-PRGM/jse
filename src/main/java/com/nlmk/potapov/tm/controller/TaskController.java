@@ -108,7 +108,7 @@ public class TaskController extends AbstractController{
             else removedTask = taskService.removeByName(name,currentUserId,i);
         }
         if (removedTask == null && removedList == null) System.out.println("[Ошибка удаления задач(и)]");
-        else System.out.println("[Готово.]");
+        else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
@@ -140,11 +140,11 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public void viewTaskList(List<Task> tasks) {
+    private void viewTaskList(List<Task> tasks) {
         if (tasks == null || tasks.isEmpty()) return;
         int index = 1;
         for (final Task task: tasks){
-            System.out.println(INDENT+index + ". " + task.getId() + ": " + task.getName());
+            System.out.println(INDENT+index + ". " + task.getId() + ": " + task.getName() + ": UserID - " + task.getUserId());
             index++;
         }
     }
@@ -230,13 +230,13 @@ public class TaskController extends AbstractController{
             System.out.println("[Ошибка. Ни одной задачи не найдено]");
             task = null;
         }
-        else if (taskList.size() == 1) task =taskService.assignUserIdByName(name,id,0);
+        else if (taskList.size() == 1) task =taskService.assignUserIdByName(name,id,currentUserId,0);
         else {
             System.out.println("Найденые задачи: ");
             viewTaskList(taskList);
             System.out.print("Введите номер задачи, к которой хотите назначить пользователя: ");
             int i = getIndexFromScanner();
-            task = taskService.assignUserIdByName(name,id,i);
+            task = taskService.assignUserIdByName(name,id,currentUserId,i);
         }
         if (task == null) System.out.println("[Ошибка. Не удалось назначить пользователя.]");
         else System.out.println("[Готово. Задаче \"" + task.getName() + "\" назначен пользователь(ID = \"" + id + "\").]");

@@ -40,9 +40,14 @@ public class ProjectService {
         return projectRepository.findByIndex(index);
     }
 
-    public Project findByName(final String name) {
+    public Project findByName(final String name, final Long userId, final int position) {
         if (name == null || name.isEmpty()) return null;
-        return projectRepository.findByName(name);
+        return projectRepository.findByName(name,userId,position);
+    }
+
+    public List<Project> findListByName(String name, Long userId) {
+        if (name == null || name.isEmpty()) return null;
+        return projectRepository.findListByName(name, userId);
     }
 
     public Project findById(final Long id) {
@@ -55,9 +60,14 @@ public class ProjectService {
         return projectRepository.removeByIndex(index);
     }
 
-    public Project removeByName(final String name) {
+    public List<Project> removeByName(String name, Long userId) {
         if (name == null || name.isEmpty()) return null;
-        return projectRepository.removeByName(name);
+        return projectRepository.removeByName(name, userId);
+    }
+
+    public Project removeByName(final String name, final Long userId, final int position) {
+        if (name == null || name.isEmpty()) return null;
+        return projectRepository.removeByName(name,userId,position);
     }
 
     public Project removeById(final Long id) {
@@ -68,13 +78,13 @@ public class ProjectService {
     public Project assignUserIdById(final Long id, final Long userId) {
         if (userId == null ) return null;
         if (id == null ) return null;
-        return projectRepository.assertUserIdById(id, userId);
+        return projectRepository.assignUserIdById(id, userId);
     }
 
-    public Project assignUserIdByName(final String name, final Long userId) {
+    public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return projectRepository.assertUserIdByName(name, userId);
+        return projectRepository.assignUserIdByName(name,userId,currentUserId,position);
     }
 
     public List<Project> findAll() {
