@@ -2,17 +2,30 @@ package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ProjectRepository {
 
     private final List<Project> projects = new ArrayList<>();
 
+    private final Map<String,List<Project>> projectMap = new HashMap<>();
+
+    public void addToProjectMap(Project project) {
+        final String name = project.getName();
+        List<Project> valueList = projectMap.get(name);
+        if (valueList == null || valueList.isEmpty()) {
+            valueList = new ArrayList<>();
+            valueList.add(project);
+            projectMap.put(name,valueList);
+            return;
+        }
+        valueList.add(project);
+    }
+
     public Project create(final String name) {
         final Project project = new Project(name);
         projects.add(project);
+        addToProjectMap(project);
         return project;
     }
 
