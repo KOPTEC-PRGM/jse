@@ -10,7 +10,7 @@ public class TaskRepository {
 
     private final Map<String,List<Task>> taskMap = new HashMap<>();
 
-    public void addToTaskMap(Task task) {
+    public void addToTaskMap(final Task task) {
         final String name = task.getName();
         List<Task> valueList = taskMap.get(name);
         if (valueList == null || valueList.isEmpty()) {
@@ -20,6 +20,14 @@ public class TaskRepository {
             return;
         }
         valueList.add(task);
+    }
+
+    public void removeFromTaskMap(final Task task) {
+        final String name = task.getName();
+        List<Task> valueList = taskMap.get(name);
+        if (valueList == null || valueList.isEmpty()) return;
+        if (valueList.size() > 1) valueList.remove(task);
+        else taskMap.remove(name);
     }
 
     public Task create(final String name) {
@@ -42,8 +50,12 @@ public class TaskRepository {
     public Task update(final Long id, final String name, final String description) {
         final Task task = findById(id);
         if (task == null) return null;
+        if (!task.getName().equals(name)) {
+            removeFromTaskMap(task);
+            task.setName(name);
+            addToTaskMap(task);
+        }
         task.setId(id);
-        task.setName(name);
         task.setDescription(description);
         return task;
     }

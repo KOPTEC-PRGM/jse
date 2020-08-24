@@ -56,6 +56,7 @@ public class Application {
         taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",0).getId(), projectService.findByName("Демонстрационный проект №3").getId());
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        userService.create("1", "1","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId());
         projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId());
         projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId());
