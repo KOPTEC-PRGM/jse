@@ -35,7 +35,7 @@ public class ProjectController extends AbstractController {
 
     public int viewProjectByIndex(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите номер проекта: ");
         final int index = getIndexFromScanner();
@@ -47,7 +47,7 @@ public class ProjectController extends AbstractController {
 
     public int viewProjectById(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите ID проекта: ");
         final Long id = getIdFromScanner();
@@ -59,7 +59,7 @@ public class ProjectController extends AbstractController {
 
     public int removeProjectByIndex(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта по номеру]");
         System.out.print("Введите номер проекта: ");
@@ -80,19 +80,20 @@ public class ProjectController extends AbstractController {
         System.out.println("[Удаление проекта(ов) по имени]");
         System.out.print("Введите название проекта(ов): ");
         final String name = scanner.nextLine();
-        if (!roleType.equals(RoleType.ADMIN))currentUserId =userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         List<Project> projectList = projectService.findListByName(name, currentUserId);
         if (projectList.size() == 0) System.out.println("[Ошибка. Ни одного проекта не найдено]");
-        if (projectList.size() == 1) removedProject = projectService.removeByName(name,currentUserId,0);
-        if (projectList.size() > 1){
+        else if (projectList.size() == 1) removedProject = projectList.get(0);
+        else {
             System.out.println("Найденые проекты: ");
             viewProjectList(projectList);
             System.out.print("Введите номер проекта, который хотите удалить (0 - удалить все): ");
-            int i = getIndexFromScanner();
-            if (i == -1) removedList = projectService.removeByName(name,currentUserId);
-            else removedProject = projectService.removeByName(name,currentUserId,i);
+            final int index = getIndexFromScanner();
+            if (index == -1) removedList = projectService.removeByName(name,currentUserId);
+            else removedProject = projectList.get(index);
         }
-        if (removedProject == null && removedList == null) System.out.println("[Ошибка удаления проекта(ов)]");
+        final boolean result = projectService.remove(removedProject);
+        if (!result && removedList == null) System.out.println("[Ошибка удаления проекта(ов)]");
         else System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -100,7 +101,7 @@ public class ProjectController extends AbstractController {
 
     public int removeProjectById(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Удаление проекта по ID]");
         System.out.print("Введите ID проекта: ");
@@ -115,7 +116,7 @@ public class ProjectController extends AbstractController {
 
     public int listProject(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         projectService.sortList();
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов]");
@@ -190,7 +191,7 @@ public class ProjectController extends AbstractController {
 
     public int updateProjectByIndex(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление проекта по номеру]");
         System.out.print("Введите номер проекта: ");
@@ -214,7 +215,7 @@ public class ProjectController extends AbstractController {
 
     public int updateProjectById(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Обновление проекта по ID]");
         System.out.print("Введите ID проекта: ");
@@ -239,7 +240,7 @@ public class ProjectController extends AbstractController {
 
     public int assignProjectByNameToUserById(final Long userId, final RoleType roleType) {
         Long currentUserId = null;
-        if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
+        if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Назначение пользователя по ID к проекту по имени]");
         System.out.print("Введите ID пользователя: ");

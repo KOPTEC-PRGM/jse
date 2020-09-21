@@ -60,6 +60,12 @@ public class ProjectRepository {
         return project;
     }
 
+    public boolean remove(final Project project) {
+        projects.remove(project);
+        removeFromProjectMap(project);
+        return true;
+    }
+
     public void clear() {
         projects.clear();
         projectMap.clear();
@@ -95,9 +101,8 @@ public class ProjectRepository {
     public Project removeByIndex(final int index, final Long userId) {
         final Project project = findByIndex(index, userId);
         if (project == null) return null;
-        projects.remove(project);
-        removeFromProjectMap(project);
-        return project;
+        if (remove(project)) return project;
+        return null;
     }
 
     public List<Project> removeByName(final String name, final Long userId) {
@@ -106,13 +111,6 @@ public class ProjectRepository {
         projectMap.remove(name);
         for (Project project: projectList) projects.remove(project);
         return projectList;
-    }
-
-    public Project removeByName(final String name, final Long userId, final int position) {
-        final Project project = findByName(name, userId, position);
-        if (project == null) return null;
-        projects.remove(project);
-        return project;
     }
 
     public Project removeById(final Long id, final Long userId) {

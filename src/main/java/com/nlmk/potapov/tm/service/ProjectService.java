@@ -31,6 +31,11 @@ public class ProjectService {
         return projectRepository.update(id, name, description, userId);
     }
 
+    public boolean remove(Project project) {
+        if (project == null) return false;
+        return projectRepository.remove(project);
+    }
+
     public void clear() {
         projectRepository.clear();
     }
@@ -63,11 +68,6 @@ public class ProjectService {
     public List<Project> removeByName(String name, Long userId) {
         if (name == null || name.isEmpty()) return null;
         return projectRepository.removeByName(name, userId);
-    }
-
-    public Project removeByName(final String name, final Long userId, final int position) {
-        if (name == null || name.isEmpty()) return null;
-        return projectRepository.removeByName(name,userId,position);
     }
 
     public Project removeById(final Long id, final Long userId) {
