@@ -19,40 +19,40 @@ public class ProjectTaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task addTaskToProject(final Long projectId, final Long taskId){
+    public Task addTaskToProject(final Long projectId, final Long taskId, final Long userId){
         if (projectId == null) return null;
         if (taskId == null) return null;
-        final Project project = projectRepository.findById(projectId);
+        final Project project = projectRepository.findById(projectId, userId);
         if (project == null) return null;
-        final Task task = taskRepository.findById(taskId);
+        final Task task = taskRepository.findById(taskId, userId);
         if (task == null) return null;
         task.setProjectId(projectId);
         return task;
     }
 
-    public Task removeTaskFromProject(final Long projectId, final Long taskId){
+    public Task removeTaskFromProject(final Long projectId, final Long taskId, final Long userId){
         if (projectId == null) return null;
         if (taskId == null) return null;
-        final Task task = taskRepository.findByProjectIdAndId(projectId, taskId);
+        final Task task = taskRepository.findByProjectIdAndId(projectId, taskId, userId);
         if (task == null) return null;
         task.setProjectId(null);
         return task;
     }
 
-    public List<Task> viewTasksFromProject(final Long projectId) {
+    public List<Task> viewTasksFromProject(final Long projectId, final Long userId) {
         if (projectId == null) return Collections.emptyList();
-        if (projectRepository.findById(projectId) == null) return Collections.emptyList();
-        return taskRepository.viewTasksFromProject(projectId);
+        if (projectRepository.findById(projectId, userId) == null) return Collections.emptyList();
+        return taskRepository.getTasksFromProject(projectId);
     }
 
-    public Project removeProjectWithTasks(final Long projectId) {
+    public Project removeProjectWithTasks(final Long projectId, final Long userId) {
         if (projectId == null) return null;
-        if (projectRepository.findById(projectId) == null) return null;
-        List<Task> tasks = taskRepository.viewTasksFromProject(projectId);
+        if (projectRepository.findById(projectId, userId) == null) return null;
+        List<Task> tasks = taskRepository.getTasksFromProject(projectId);
         for (Task task: tasks){
-            taskRepository.removeById(task.getId());
+            taskRepository.removeById(task.getId(), userId);
         }
-        return projectRepository.removeById(projectId);
+        return projectRepository.removeById(projectId, userId);
     }
 
 }

@@ -35,6 +35,7 @@ public final class TerminalConst {
     public static final String TASK_LIST = "task-list";
     public static final String TASK_VIEW_BY_INDEX = "task-view-by-index";
     public static final String TASK_VIEW_BY_ID = "task-view-by-id";
+    public static final String TASK_VIEW_BY_NAME = "task-view-by-name";
     public static final String TASK_REMOVE_BY_NAME = "task-remove-by-name";
     public static final String TASK_REMOVE_BY_ID = "task-remove-by-id";
     public static final String TASK_REMOVE_BY_INDEX = "task-remove-by-index";

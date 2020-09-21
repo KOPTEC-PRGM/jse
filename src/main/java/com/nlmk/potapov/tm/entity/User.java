@@ -18,9 +18,6 @@ public class User {
 
     private RoleType roleType = RoleType.USER;
 
-    public User() {
-    }
-
     public User(String login, String password, String firstName, String middleName, String lastName) {
         this.login = login;
         this.password = password;
