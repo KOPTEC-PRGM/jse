@@ -4,7 +4,11 @@ import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 
+import java.util.Collections;
 import java.util.List;
+
+import static com.nlmk.potapov.tm.constant.TerminalConst.EMPTY_PROJECT_LIST_EXCEPTION;
+import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_PROJECT_EXCEPTION;
 
 public class ProjectService {
 
@@ -45,63 +49,63 @@ public class ProjectService {
         if (index < 0 || index > projectRepository.size() -1){
             throw new ProjectException("Project does not exist");
         }
-        return returnNotNull(projectRepository.findByIndex(index,userId));
+        return throwExceptionIfNull(projectRepository.findByIndex(index,userId));
     }
 
     public Project findByName(final String name, final Long userId, final int position) throws ProjectException {
         if (name == null || name.isEmpty()) return null;
-        return returnNotNull(projectRepository.findByName(name, userId, position));
+        return throwExceptionIfNull(projectRepository.findByName(name, userId, position));
     }
 
     public List<Project> findListByName(String name, Long userId) throws ProjectException {
-        if (name == null || name.isEmpty()) return null;
-        return returnNotEmpty(projectRepository.findListByName(name, userId));
+        if (name == null || name.isEmpty()) return Collections.emptyList();
+        return throwExceptionIfEmpty(projectRepository.findListByName(name, userId));
     }
 
     public Project findById(final Long id, final Long userId) throws ProjectException {
         if (id == null ) return null;
-        return returnNotNull(projectRepository.findById(id, userId));
+        return throwExceptionIfNull(projectRepository.findById(id, userId));
     }
 
     public Project removeByIndex(final int index, final Long userId) throws ProjectException {
         if (index < 0 || index > projectRepository.size() -1) return null;
-        return returnNotNull(projectRepository.removeByIndex(index, userId));
+        return throwExceptionIfNull(projectRepository.removeByIndex(index, userId));
     }
 
     public List<Project> removeByName(String name, Long userId) throws ProjectException {
-        if (name == null || name.isEmpty()) return null;
-        return returnNotEmpty(projectRepository.removeByName(name, userId));
+        if (name == null || name.isEmpty()) return Collections.emptyList();
+        return throwExceptionIfEmpty(projectRepository.removeByName(name, userId));
     }
 
     public Project removeById(final Long id, final Long userId) throws ProjectException {
         if (id == null ) return null;
-        return returnNotNull(projectRepository.removeById(id, userId));
+        return throwExceptionIfNull(projectRepository.removeById(id, userId));
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) throws ProjectException {
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
-        return returnNotNull(projectRepository.assignUserIdByName(name, userId, currentUserId, position));
+        return throwExceptionIfNull(projectRepository.assignUserIdByName(name, userId, currentUserId, position));
     }
 
     public List<Project> findAll(final Long userId) throws ProjectException {
-        return returnNotEmpty(projectRepository.findAll(userId));
+        return throwExceptionIfEmpty(projectRepository.findAll(userId));
     }
 
     public List<Project> sortList() {
         return projectRepository.sortList();
     }
 
-    private Project returnNotNull(Project project) throws ProjectException {
+    private Project throwExceptionIfNull(final Project project) throws ProjectException {
         if (project == null){
-            throw new ProjectException("Project does not exist");
+            throw new ProjectException(NULL_PROJECT_EXCEPTION);
         }
         return project;
     }
 
-    private List<Project> returnNotEmpty(List<Project> projects) throws ProjectException {
+    private List<Project> throwExceptionIfEmpty(final List<Project> projects) throws ProjectException {
         if (projects == null || projects.isEmpty()){
-            throw new ProjectException("Projects don't exist");
+            throw new ProjectException(EMPTY_PROJECT_LIST_EXCEPTION);
         }
         return projects;
     }

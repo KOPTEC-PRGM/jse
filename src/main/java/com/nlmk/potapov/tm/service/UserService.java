@@ -1,7 +1,7 @@
 package com.nlmk.potapov.tm.service;
 
-import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.repository.UserRepository;
 import com.nlmk.potapov.tm.util.HashUtil;
 

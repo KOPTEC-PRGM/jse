@@ -2,11 +2,15 @@ package com.nlmk.potapov.tm.service;
 
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
+import com.nlmk.potapov.tm.exception.ProjectException;
+import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class ProjectTaskService {
 
@@ -19,35 +23,45 @@ public class ProjectTaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Task addTaskToProject(final Long projectId, final Long taskId, final Long userId){
+    public Task addTaskToProject(final Long projectId, final Long taskId, final Long userId) throws ProjectException, TaskException {
         if (projectId == null) return null;
         if (taskId == null) return null;
         final Project project = projectRepository.findById(projectId, userId);
-        if (project == null) return null;
+        if (project == null){
+            throw new ProjectException(NULL_PROJECT_EXCEPTION);
+        }
         final Task task = taskRepository.findById(taskId, userId);
-        if (task == null) return null;
+        if (task == null){
+            throw new TaskException(NULL_TASK_EXCEPTION);
+        }
         task.setProjectId(projectId);
         return task;
     }
 
-    public Task removeTaskFromProject(final Long projectId, final Long taskId, final Long userId){
+    public Task removeTaskFromProject(final Long projectId, final Long taskId, final Long userId) throws TaskException {
         if (projectId == null) return null;
         if (taskId == null) return null;
         final Task task = taskRepository.findByProjectIdAndId(projectId, taskId, userId);
-        if (task == null) return null;
+        if (task == null){
+            throw new TaskException(NULL_TASK_EXCEPTION);
+        }
         task.setProjectId(null);
         return task;
     }
 
-    public List<Task> viewTasksFromProject(final Long projectId, final Long userId) {
+    public List<Task> viewTasksFromProject(final Long projectId, final Long userId) throws TaskException {
         if (projectId == null) return Collections.emptyList();
-        if (projectRepository.findById(projectId, userId) == null) return Collections.emptyList();
+        if (projectRepository.findById(projectId, userId) == null){
+            throw new TaskException(EMPTY_TASK_LIST_EXCEPTION);
+        }
         return taskRepository.getTasksFromProject(projectId);
     }
 
-    public Project removeProjectWithTasks(final Long projectId, final Long userId) {
+    public Project removeProjectWithTasks(final Long projectId, final Long userId) throws ProjectException {
         if (projectId == null) return null;
-        if (projectRepository.findById(projectId, userId) == null) return null;
+        if (projectRepository.findById(projectId, userId) == null){
+            throw new ProjectException(NULL_PROJECT_EXCEPTION);
+        }
         List<Task> tasks = taskRepository.getTasksFromProject(projectId);
         for (Task task: tasks){
             taskRepository.removeById(task.getId(), userId);

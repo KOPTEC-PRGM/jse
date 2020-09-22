@@ -1,7 +1,7 @@
 package com.nlmk.potapov.tm.repository;
 
-import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
 
 import java.util.ArrayList;
 import java.util.List;

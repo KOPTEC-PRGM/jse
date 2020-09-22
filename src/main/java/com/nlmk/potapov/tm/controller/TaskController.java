@@ -2,6 +2,8 @@ package com.nlmk.potapov.tm.controller;
 
 import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.enumerated.RoleType;
+import com.nlmk.potapov.tm.exception.ProjectException;
+import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 
@@ -32,7 +34,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int viewTaskByIndex(final Long userId, final RoleType roleType) {
+    public int viewTaskByIndex(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -40,13 +42,12 @@ public class TaskController extends AbstractController{
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
         final Task task = taskService.findByIndex(index, currentUserId);
-        if (task == null) System.out.println("[Задача не найдена]");
         final int result = viewTask(task);
         System.out.println(BLOCK_SEPARATOR);
         return result;
     }
 
-    public int viewTaskById(final Long userId, final RoleType roleType) {
+    public int viewTaskById(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -54,13 +55,12 @@ public class TaskController extends AbstractController{
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Task task = taskService.findById(id, currentUserId);
-        if (task == null) System.out.println("[Задача не найдена]");
         final int result = viewTask(task);
         System.out.println(BLOCK_SEPARATOR);
         return result;
     }
 
-    public int viewTaskByName(final Long userId, final RoleType roleType) {
+    public int viewTaskByName(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -78,7 +78,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int removeTaskByIndex(final Long userId, final RoleType roleType) {
+    public int removeTaskByIndex(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -86,14 +86,13 @@ public class TaskController extends AbstractController{
         System.out.print("Введите номер задачи: ");
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
-        final Task task = taskService.removeByIndex(index, currentUserId);
-        if (task == null) System.out.println("[Ошибка удаления задачи. Задача не найдена.]");
-        else System.out.println("[Готово]");
+        taskService.removeByIndex(index, currentUserId);
+        System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int removeTaskByName(final Long userId, final RoleType roleType) {
+    public int removeTaskByName(final Long userId, final RoleType roleType) throws TaskException {
         List<Task> removedList = null;
         Task removedTask = null;
         Long currentUserId = null;
@@ -103,7 +102,6 @@ public class TaskController extends AbstractController{
         final String name = scanner.nextLine();
         if (!roleType.equals(RoleType.ADMIN))currentUserId = userId;
         List<Task> taskList = taskService.findListByName(name, currentUserId);
-        if (taskList.size() == 0) System.out.println("[Ошибка. Ни одной задачи не найдено]");
         if (taskList.size() == 1) removedTask = taskService.removeByName(name,currentUserId,0);
         if (taskList.size() > 1) {
             System.out.println("Найденые задачи: ");
@@ -119,7 +117,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int removeTaskById(final Long userId, final RoleType roleType) {
+    public int removeTaskById(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -127,14 +125,13 @@ public class TaskController extends AbstractController{
         System.out.print("Введите ID задачи: ");
         final Long id = getIdFromScanner();
         if (id == null) return -1;
-        final Task task = taskService.removeById(id, currentUserId);
-        if (task == null) System.out.println("[Ошибка удаления задачи. Задача не найдена.]");
-        else System.out.println("[Готово]");
+        taskService.removeById(id, currentUserId);
+        System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int listTask(final Long userId, final RoleType roleType) {
+    public int listTask(final Long userId, final RoleType roleType) throws TaskException {
         taskService.sortList();
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список задач]");
@@ -184,7 +181,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int updateTaskByIndex(final Long userId, final RoleType roleType) {
+    public int updateTaskByIndex(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -203,7 +200,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int updateTaskById(final Long userId, final RoleType roleType) {
+    public int updateTaskById(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -222,7 +219,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int assignTaskByNameToUserById(final Long userId, final RoleType roleType) {
+    public int assignTaskByNameToUserById(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -243,11 +240,7 @@ public class TaskController extends AbstractController{
         }
         final Task task;
         List<Task> taskList = taskService.findListByName(name, currentUserId);
-        if (taskList.size() == 0) {
-            System.out.println("[Ошибка. Ни одной задачи не найдено]");
-            task = null;
-        }
-        else if (taskList.size() == 1) task =taskService.assignUserIdByName(name, id, currentUserId, 0);
+        if (taskList.size() == 1) task = taskService.assignUserIdByName(name, id, currentUserId, 0);
         else {
             System.out.println("Найденые задачи: ");
             viewTaskList(taskList);
@@ -255,13 +248,12 @@ public class TaskController extends AbstractController{
             int i = getIndexFromScanner();
             task = taskService.assignUserIdByName(name, id, currentUserId, i);
         }
-        if (task == null) System.out.println("[Ошибка. Не удалось назначить пользователя.]");
-        else System.out.println("[Готово. Задаче \"" + task.getName() + "\" назначен пользователь(ID = \"" + id + "\").]");
+        System.out.println("[Готово. Задаче \"" + task.getName() + "\" назначен пользователь(ID = \"" + id + "\").]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int listTasksByProjectId(final Long userId, final RoleType roleType){
+    public int listTasksByProjectId(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -275,7 +267,7 @@ public class TaskController extends AbstractController{
         return 0;
     }
 
-    public int addTaskToProjectByIds(final Long userId, final RoleType roleType){
+    public int addTaskToProjectByIds(final Long userId, final RoleType roleType) throws ProjectException, TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -287,13 +279,12 @@ public class TaskController extends AbstractController{
         final Long taskId = getIdFromScanner();
         if (taskId == null) return -1;
         Task task = projectTaskService.addTaskToProject(projectId, taskId, currentUserId);
-        if (task == null) System.out.println("[Ошибка добавления задачи в проект]");
-        else System.out.println("[Готово. Задача (ID = " + task.getId() + ") добавлена в проект (ID = " + projectId + ")]");
+        System.out.println("[Готово. Задача (ID = " + task.getId() + ") добавлена в проект (ID = " + projectId + ")]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int removeTaskFromProjectByIds(final Long userId, final RoleType roleType){
+    public int removeTaskFromProjectByIds(final Long userId, final RoleType roleType) throws TaskException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -305,8 +296,7 @@ public class TaskController extends AbstractController{
         final Long taskId = getIdFromScanner();
         if (taskId == null) return -1;
         Task task = projectTaskService.removeTaskFromProject(projectId, taskId, currentUserId);
-        if (task == null) System.out.println("[Ошибка удаления задачи из проекта]");
-        else System.out.println("[Готово. Задача (ID = " + task.getId() + ") удалена из проекта (ID = " + projectId + ")]");
+        System.out.println("[Готово. Задача (ID = " + task.getId() + ") удалена из проекта (ID = " + projectId + ")]");
         return 0;
     }
 

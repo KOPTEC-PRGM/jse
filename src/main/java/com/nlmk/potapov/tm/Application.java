@@ -1,8 +1,12 @@
 package com.nlmk.potapov.tm;
 
-import com.nlmk.potapov.tm.controller.*;
+import com.nlmk.potapov.tm.controller.ProjectController;
+import com.nlmk.potapov.tm.controller.SystemController;
+import com.nlmk.potapov.tm.controller.TaskController;
+import com.nlmk.potapov.tm.controller.UserController;
 import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.exception.ProjectException;
+import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.repository.UserRepository;
@@ -61,13 +65,13 @@ public class Application {
             projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId(),null,0);
             projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId(),null,0);
             projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-        } catch (ProjectException e) {
+            taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(),null,0);
+            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(),null,0);
+            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),null,1);
+            taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),null,0);
+        } catch (ProjectException | TaskException e) {
             e.printStackTrace();
         }
-        taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(),null,0);
-        taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),null,1);
-        taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),null,0);
     }
 
     public static void main(final String[] args) {
@@ -83,8 +87,8 @@ public class Application {
             application.systemController.roundAdd(command);
             try {
                 result = application.run(command);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (ProjectException | TaskException e) {
+                e.printStackTrace();
             }
         }
         System.exit(result);
@@ -114,12 +118,12 @@ public class Application {
         try {
             final int result = run(param);
             if (EXIT.equals(param)) System.exit(result);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (ProjectException | TaskException e) {
+            e.printStackTrace();
         }
     }
 
-    public int run(final String param) throws ProjectException {
+    public int run(final String param) throws ProjectException, TaskException {
         if (param == null) return -1;
         if (param.isBlank()) return 0;
         switch (param) {
