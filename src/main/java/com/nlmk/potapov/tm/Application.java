@@ -88,7 +88,8 @@ public class Application {
             try {
                 result = application.run(command);
             } catch (ProjectException | TaskException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
+                System.out.println(BLOCK_SEPARATOR);
             }
         }
         System.exit(result);
@@ -119,7 +120,8 @@ public class Application {
             final int result = run(param);
             if (EXIT.equals(param)) System.exit(result);
         } catch (ProjectException | TaskException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println(BLOCK_SEPARATOR);
         }
     }
 
