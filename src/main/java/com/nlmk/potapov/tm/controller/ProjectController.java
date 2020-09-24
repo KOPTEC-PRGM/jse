@@ -3,6 +3,8 @@ package com.nlmk.potapov.tm.controller;
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.enumerated.RoleType;
+import com.nlmk.potapov.tm.exception.ProjectException;
+import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 
@@ -33,19 +35,18 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int viewProjectByIndex(final Long userId, final RoleType roleType) {
+    public int viewProjectByIndex(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
         System.out.print("Введите номер проекта: ");
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
-        final Project project = projectService.findByIndex(index,currentUserId);
-        if (project == null) System.out.println("[Проект не найден]");
+        final Project project = projectService.findByIndex(index, currentUserId);
         return viewProjectList(project);
     }
 
-    public int viewProjectById(final Long userId, final RoleType roleType) {
+    public int viewProjectById(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -53,11 +54,10 @@ public class ProjectController extends AbstractController {
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Project project = projectService.findById(id, currentUserId);
-        if (project == null) System.out.println("[Проект не найден]");
         return viewProjectList(project);
     }
 
-    public int removeProjectByIndex(final Long userId, final RoleType roleType) {
+    public int removeProjectByIndex(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -66,13 +66,12 @@ public class ProjectController extends AbstractController {
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
         final Project project = projectService.removeByIndex(index, currentUserId);
-        if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
-        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
+        System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int removeProjectByName(final Long userId, final RoleType roleType) {
+    public int removeProjectByName(final Long userId, final RoleType roleType) throws ProjectException {
         List<Project> removedList = null;
         Project removedProject = null;
         Long currentUserId = null;
@@ -82,8 +81,7 @@ public class ProjectController extends AbstractController {
         final String name = scanner.nextLine();
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         List<Project> projectList = projectService.findListByName(name, currentUserId);
-        if (projectList.size() == 0) System.out.println("[Ошибка. Ни одного проекта не найдено]");
-        else if (projectList.size() == 1) removedProject = projectList.get(0);
+        if (projectList.size() == 1) removedProject = projectList.get(0);
         else {
             System.out.println("Найденые проекты: ");
             viewProjectList(projectList);
@@ -99,7 +97,7 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int removeProjectById(final Long userId, final RoleType roleType) {
+    public int removeProjectById(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -108,13 +106,12 @@ public class ProjectController extends AbstractController {
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Project project = projectService.removeById(id, currentUserId);
-        if (project == null) System.out.println("[Ошибка удаления проекта. Проект не найден.]");
-        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
+        System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
-    public int listProject(final Long userId, final RoleType roleType) {
+    public int listProject(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         projectService.sortList();
@@ -136,7 +133,7 @@ public class ProjectController extends AbstractController {
         }
     }
 
-    public int listProjectWithTasks(final Long userId) {
+    public int listProjectWithTasks(final Long userId) throws ProjectException, TaskException {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список проектов с подзадачами]");
         List<Project> projectList;
@@ -147,7 +144,7 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    private void viewProjectWithTasks(List<Project> projects, final Long userId) {
+    private void viewProjectWithTasks(List<Project> projects, final Long userId) throws TaskException {
         if (projects == null || projects.isEmpty()) return;
         int index = 1;
         for (final Project project: projects){
@@ -189,7 +186,7 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int updateProjectByIndex(final Long userId, final RoleType roleType) {
+    public int updateProjectByIndex(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -213,7 +210,7 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int updateProjectById(final Long userId, final RoleType roleType) {
+    public int updateProjectById(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -222,11 +219,6 @@ public class ProjectController extends AbstractController {
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Project project = projectService.findById(id, currentUserId);
-        if (project == null) {
-            System.out.println("[Ошибка обновления проекта. Проект не найден]");
-            System.out.println(BLOCK_SEPARATOR);
-            return 0;
-        }
         System.out.print("Введите название проекта: ");
         final String name = scanner.nextLine();
         System.out.print("Введите описание проекта: ");
@@ -238,7 +230,7 @@ public class ProjectController extends AbstractController {
     }
 
 
-    public int assignProjectByNameToUserById(final Long userId, final RoleType roleType) {
+    public int assignProjectByNameToUserById(final Long userId, final RoleType roleType) throws ProjectException {
         Long currentUserId = null;
         if (!roleType.equals(RoleType.ADMIN)) currentUserId = userId;
         System.out.println(BLOCK_SEPARATOR);
@@ -259,11 +251,7 @@ public class ProjectController extends AbstractController {
         }
         final Project project;
         List<Project> projectList = projectService.findListByName(name,currentUserId);
-        if (projectList.size() == 0) {
-            System.out.println("[Ошибка. Ни одного проекта не найдено]");
-            project = null;
-        }
-        else if (projectList.size() == 1) project = projectService.assignUserIdByName(name,id,currentUserId,0);
+        if (projectList.size() == 1) project = projectService.assignUserIdByName(name,id,currentUserId,0);
         else {
             System.out.println("Найденые проекты: ");
             viewProjectList(projectList);
@@ -277,7 +265,7 @@ public class ProjectController extends AbstractController {
         return 0;
     }
 
-    public int removeProjectWithTasksById(final RoleType roleType) {
+    public int removeProjectWithTasksById(final RoleType roleType) throws ProjectException {
         System.out.println(BLOCK_SEPARATOR);
         if (!roleType.equals(RoleType.ADMIN)){
             System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
@@ -289,8 +277,7 @@ public class ProjectController extends AbstractController {
         final Long id = getIdFromScanner();
         if (id == null) return -1;
         final Project project = projectTaskService.removeProjectWithTasks(id, null);
-        if (project == null) System.out.println("[Ошибка удаления проекта. Проект (ID = " + id + ") не найден.]");
-        else System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
+        System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

@@ -107,7 +107,7 @@ public class ProjectRepository {
 
     public List<Project> removeByName(final String name, final Long userId) {
         final List<Project> projectList = findListByName(name,userId);
-        if (projectList == null || projectList.isEmpty()) return null;
+        if (projectList == null || projectList.isEmpty()) return Collections.emptyList();
         projectMap.remove(name);
         for (Project project: projectList) projects.remove(project);
         return projectList;

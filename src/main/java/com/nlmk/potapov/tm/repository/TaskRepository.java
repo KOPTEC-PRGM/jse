@@ -174,7 +174,7 @@ public class TaskRepository {
         return task;
     }
 
-    public Task assertProjectId(final Long id, final Long projectId, final Long userId) {
+    public Task assignProjectId(final Long id, final Long projectId, final Long userId) {
         Task task = findById(id, userId);
         task.setProjectId(projectId);
         return task;

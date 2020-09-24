@@ -16,6 +16,12 @@ public final class TerminalConst {
     public static final String INDENT = "   ";
     public static final String INPUT_MESSAGE = "Task Manager> ";
 
+    public static final String NULL_TASK_EXCEPTION = "Задачи не существует";
+    public static final String EMPTY_TASK_LIST_EXCEPTION = "Задач не существует";
+    public static final String NULL_PROJECT_EXCEPTION = "Проекта не существует";
+    public static final String EMPTY_PROJECT_LIST_EXCEPTION = "Проектов не существует";
+
+
     public static final String PROJECT_CREATE = "project-create";
     public static final String PROJECT_CLEAR = "project-clear";
     public static final String PROJECT_LIST = "project-list";
