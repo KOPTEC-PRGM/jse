@@ -14,12 +14,16 @@ import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 import com.nlmk.potapov.tm.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class Application {
+
+    public static final Logger logger = LogManager.getLogger(Application.class);
 
     private final ProjectRepository projectRepository = new ProjectRepository();
 
@@ -50,6 +54,7 @@ public class Application {
     {
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        userService.create("1", "1","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectRepository.create("Демонстрационный проект №2");
         projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №3");
@@ -70,7 +75,7 @@ public class Application {
             taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),null,1);
             taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),null,0);
         } catch (ProjectException | TaskException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -90,6 +95,7 @@ public class Application {
             } catch (ProjectException | TaskException e) {
                 System.out.println(e.getMessage());
                 System.out.println(BLOCK_SEPARATOR);
+                logger.error(e);
             }
         }
         System.exit(result);
@@ -122,6 +128,7 @@ public class Application {
         } catch (ProjectException | TaskException e) {
             System.out.println(e.getMessage());
             System.out.println(BLOCK_SEPARATOR);
+            logger.error(e);
         }
     }
 
