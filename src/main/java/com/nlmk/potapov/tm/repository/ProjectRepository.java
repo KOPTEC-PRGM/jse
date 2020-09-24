@@ -1,6 +1,5 @@
 package com.nlmk.potapov.tm.repository;
 
-import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.Project;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
