@@ -19,7 +19,7 @@
 <!--        <Logger name="com.nlmk.potapov.tm.Application">-->
 <!--            <AppenderRef ref="Rolling"/>-->
 <!--        </Logger>-->
-        <Root level="INFO">
+        <Root level="all">
             <AppenderRef ref="Console"/>
         </Root>
 

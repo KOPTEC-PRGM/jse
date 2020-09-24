@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ProjectRepository {
 
-    public static final Logger logger = LogManager.getLogger(Application.class);
+    private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
     private final List<Project> projects = new ArrayList<>();
 

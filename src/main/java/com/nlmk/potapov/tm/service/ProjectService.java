@@ -3,6 +3,8 @@ package com.nlmk.potapov.tm.service;
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,8 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_PROJECT_EXCEPTION;
 
 public class ProjectService {
 
+    private static final Logger logger = LogManager.getLogger(ProjectService.class);
+
     private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
@@ -19,17 +23,23 @@ public class ProjectService {
     }
 
     public Project create(final String name) {
-        if (name == null || name.isEmpty()) return null;
+        final String logMessage = "create("+name+")";
+        logger.trace(logMessage);
+        if (name.isEmpty()) return null;
         return projectRepository.create(name);
     }
 
     public Project create(final String name, final String description, final Long userId) {
-        if (name == null || name.isEmpty()) return null;
-        if (description == null || description.isEmpty()) return null;
+        final String logMessage = "create("+name+", "+description+", "+userId+")";
+        logger.trace(logMessage);
+        if (name.isEmpty()) return null;
+        if (description.isEmpty()) return null;
         return projectRepository.create(name, description, userId);
     }
 
     public Project update(final Long id, final String name, final String description, final Long userId) {
+        final String logMessage = "update("+id+", "+name+", "+description+", "+userId+")";
+        logger.trace(logMessage);
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
@@ -37,15 +47,19 @@ public class ProjectService {
     }
 
     public boolean remove(Project project) {
+        logger.trace("remove({"+project.toString()+"})");
         if (project == null) return false;
         return projectRepository.remove(project);
     }
 
     public void clear() {
+        logger.trace("clear()");
         projectRepository.clear();
     }
 
     public Project findByIndex(final int index, final Long userId) throws ProjectException {
+        final String logMessage = "findByIndex("+index+", "+userId+")";
+        logger.trace(logMessage);
         if (index < 0 || index > projectRepository.size() -1){
             throw new ProjectException("Project does not exist");
         }
@@ -53,46 +67,64 @@ public class ProjectService {
     }
 
     public Project findByName(final String name, final Long userId, final int position) throws ProjectException {
+        final String logMessage = "findByName("+name+", "+userId+", "+position+")";
+        logger.trace(logMessage);
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(projectRepository.findByName(name, userId, position));
     }
 
     public List<Project> findListByName(String name, Long userId) throws ProjectException {
-        if (name == null || name.isEmpty()) return Collections.emptyList();
+        final String logMessage = "findListByName("+name+", "+userId+")";
+        logger.trace(logMessage);
+        if (name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(projectRepository.findListByName(name, userId));
     }
 
     public Project findById(final Long id, final Long userId) throws ProjectException {
+        final String logMessage = "findById("+id+", "+userId+")";
+        logger.trace(logMessage);
         if (id == null ) return null;
         return throwExceptionIfNull(projectRepository.findById(id, userId));
     }
 
     public Project removeByIndex(final int index, final Long userId) throws ProjectException {
+        final String logMessage = "removeByIndex("+index+", "+userId+")";
+        logger.trace(logMessage);
         if (index < 0 || index > projectRepository.size() -1) return null;
         return throwExceptionIfNull(projectRepository.removeByIndex(index, userId));
     }
 
     public List<Project> removeByName(String name, Long userId) throws ProjectException {
+        final String logMessage = "removeByName("+name+", "+userId+")";
+        logger.trace(logMessage);
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(projectRepository.removeByName(name, userId));
     }
 
     public Project removeById(final Long id, final Long userId) throws ProjectException {
+        final String logMessage = "removeById("+id+", "+userId+")";
+        logger.trace(logMessage);
         if (id == null ) return null;
         return throwExceptionIfNull(projectRepository.removeById(id, userId));
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) throws ProjectException {
+        final String logMessage = "assignUserIdByName("+name+", "+userId+", "+currentUserId+", "+position+")";
+        logger.trace(logMessage);
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return throwExceptionIfNull(projectRepository.assignUserIdByName(name, userId, currentUserId, position));
     }
 
     public List<Project> findAll(final Long userId) throws ProjectException {
+        final String logMessage = "findAll("+userId+")";
+        logger.trace(logMessage);
         return throwExceptionIfEmpty(projectRepository.findAll(userId));
     }
 
     public List<Project> sortList() {
+        final String logMessage = "sortList()";
+        logger.trace(logMessage);
         return projectRepository.sortList();
     }
 

@@ -23,7 +23,7 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class Application {
 
-    public static final Logger logger = LogManager.getLogger(Application.class);
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     private final ProjectRepository projectRepository = new ProjectRepository();
 
@@ -91,6 +91,7 @@ public class Application {
             command = scanner.nextLine();
             application.systemController.roundAdd(command);
             try {
+                logger.trace("Запрошено выполнение команды \""+command+"\".");
                 result = application.run(command);
             } catch (ProjectException | TaskException e) {
                 System.out.println(e.getMessage());
