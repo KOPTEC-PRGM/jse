@@ -1,10 +1,15 @@
 package com.nlmk.potapov.tm.repository;
 
+import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.Project;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
 public class ProjectRepository {
+
+    public static final Logger logger = LogManager.getLogger(Application.class);
 
     private final List<Project> projects = new ArrayList<>();
 
@@ -34,6 +39,7 @@ public class ProjectRepository {
         final Project project = new Project(name);
         projects.add(project);
         addToProjectMap(project);
+        logger.info("Создан проект ["+project.toString()+"].");
         return project;
     }
 
@@ -44,6 +50,7 @@ public class ProjectRepository {
         project.setUserId(userId);
         projects.add(project);
         addToProjectMap(project);
+        logger.info("Создан проект ["+project.toString()+"].");
         return project;
     }
 
@@ -57,18 +64,21 @@ public class ProjectRepository {
         }
         project.setId(id);
         project.setDescription(description);
+        logger.info("Обновлен проект ["+project.toString()+"].");
         return project;
     }
 
     public boolean remove(final Project project) {
         projects.remove(project);
         removeFromProjectMap(project);
+        logger.info("Удален проект ["+project.toString()+"].");
         return true;
     }
 
     public void clear() {
         projects.clear();
         projectMap.clear();
+        logger.info("Все проекты удалены");
     }
 
     public Project findByIndex(final int index, final Long userId) {
@@ -133,6 +143,7 @@ public class ProjectRepository {
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         Project project = findByName(name,currentUserId, position);
         project.setUserId(userId);
+        logger.info("Проекту ["+project.toString()+"] назначен пользователь userId="+userId+".");
         return project;
     }
 
