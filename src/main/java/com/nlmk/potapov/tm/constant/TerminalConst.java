@@ -22,6 +22,14 @@ public final class TerminalConst {
     public static final String EMPTY_PROJECT_LIST_EXCEPTION = "Проектов не существует";
 
 
+    public static final String LOGGER_CREATE_TASK = "Создана задача [{}].";
+    public static final String LOGGER_UPDATE_TASK = "Обновлена задача [{}].";
+    public static final String LOGGER_DELETE_TASK = "Удалена задача [{}].";
+    public static final String LOGGER_CREATE_PROJECT = "Создан проект [{}].";
+    public static final String LOGGER_UPDATE_PROJECT = "Обновлен проект [{}].";
+    public static final String LOGGER_DELETE_PROJECT = "Удален проект [{}].";
+
+
     public static final String PROJECT_CREATE = "project-create";
     public static final String PROJECT_CLEAR = "project-clear";
     public static final String PROJECT_LIST = "project-list";

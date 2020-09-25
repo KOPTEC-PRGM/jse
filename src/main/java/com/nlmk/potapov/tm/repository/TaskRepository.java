@@ -1,10 +1,16 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Task;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
+
 public class TaskRepository {
+
+    private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
     private final List<Task> tasks = new ArrayList<>();
 
@@ -34,6 +40,7 @@ public class TaskRepository {
         final Task task = new Task(name);
         tasks.add(task);
         addToTaskMap(task);
+        logger.info(LOGGER_CREATE_TASK, task);
         return task;
     }
 
@@ -44,6 +51,7 @@ public class TaskRepository {
         task.setUserId(userId);
         tasks.add(task);
         addToTaskMap(task);
+        logger.info(LOGGER_CREATE_TASK, task);
         return task;
     }
 
@@ -57,12 +65,14 @@ public class TaskRepository {
         }
         task.setId(id);
         task.setDescription(description);
+        logger.info(LOGGER_UPDATE_TASK, task);
         return task;
     }
 
     public void clear() {
         tasks.clear();
         taskMap.clear();
+        logger.info("Все задачи удалены");
     }
 
     public Task findByIndex(final int index, final Long userId) {
@@ -113,6 +123,7 @@ public class TaskRepository {
         if (task == null) return null;
         tasks.remove(task);
         removeFromTaskMap(task);
+        logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
 
@@ -120,7 +131,10 @@ public class TaskRepository {
         final List<Task> taskList = findListByName(name);
         if (taskList == null || taskList.isEmpty()) return null;
         taskMap.remove(name);
-        for (Task task: taskList) tasks.remove(task);
+        for (Task task: taskList){
+            logger.info(LOGGER_DELETE_TASK,task);
+            tasks.remove(task);
+        }
         return taskList;
     }
 
@@ -132,6 +146,7 @@ public class TaskRepository {
         else task = filterListByUserId(taskList,userId).get(position);
         taskList.remove(task);
         tasks.remove(task);
+        logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
 
@@ -140,6 +155,7 @@ public class TaskRepository {
         if (task == null) return null;
         tasks.remove(task);
         removeFromTaskMap(task);
+        logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
 
@@ -171,12 +187,14 @@ public class TaskRepository {
     public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         Task task = findByName(name, currentUserId, position);
         task.setUserId(userId);
+        logger.info("Задаче [{}] назначен пользователь ID={}", task, userId);
         return task;
     }
 
     public Task assignProjectId(final Long id, final Long projectId, final Long userId) {
         Task task = findById(id, userId);
         task.setProjectId(projectId);
+        logger.info("Задача [{}] привязана к проекту ID={}", task, projectId);
         return task;
     }
 
