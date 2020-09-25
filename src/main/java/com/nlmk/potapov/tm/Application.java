@@ -91,7 +91,7 @@ public class Application {
             command = scanner.nextLine();
             application.systemController.roundAdd(command);
             try {
-                logger.trace("Запрошено выполнение команды \""+command+"\".");
+                logger.trace("Запрошено выполнение команды \"{}\".",command);
                 result = application.run(command);
             } catch (ProjectException | TaskException e) {
                 System.out.println(e.getMessage());
@@ -151,6 +151,7 @@ public class Application {
                 return systemController.logout();
             case COMMAND_HISTORY:
                 return systemController.displayCommandHistory();
+            default:
         }
         if (getCurrentUserId() == null) return systemController.displayError();
         switch (param) {

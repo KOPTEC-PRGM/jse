@@ -10,7 +10,7 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class TaskRepository {
 
-    private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
+    private static final Logger logger = LogManager.getLogger(TaskRepository.class);
 
     private final List<Task> tasks = new ArrayList<>();
 
@@ -100,8 +100,8 @@ public class TaskRepository {
 
     public Task findById(final Long id, final Long userId) {
         for (final Task task: tasks){
-            if (task.getId().equals(id))
-            if (userId == null || task.getUserId().equals(userId)) return task;
+            if ((task.getId().equals(id))
+            && (userId == null || task.getUserId().equals(userId)))return task;
 
         }
         return null;
@@ -110,9 +110,9 @@ public class TaskRepository {
     public Task findByProjectIdAndId(final Long projectId, final Long id, final Long userId) {
         for (final Task task: tasks){
             Long idProject = task.getProjectId();
-            if (idProject == null) continue;
-            if (!idProject.equals(projectId)) continue;
-            if (!task.getUserId().equals(userId) && userId != null) continue;
+            if ((idProject == null)
+            || (!idProject.equals(projectId) )
+            || (!task.getUserId().equals(userId) && userId != null))continue;
             if (task.getId().equals(id)) return task;
         }
         return null;
@@ -129,7 +129,7 @@ public class TaskRepository {
 
     public List<Task> removeByName(final String name) {
         final List<Task> taskList = findListByName(name);
-        if (taskList == null || taskList.isEmpty()) return null;
+        if (taskList == null || taskList.isEmpty()) return Collections.emptyList();
         taskMap.remove(name);
         for (Task task: taskList){
             logger.info(LOGGER_DELETE_TASK,task);
