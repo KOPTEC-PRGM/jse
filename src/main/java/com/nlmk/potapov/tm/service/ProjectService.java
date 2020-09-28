@@ -18,8 +18,8 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectService() {
+        this.projectRepository = ProjectRepository.getInstance();
     }
 
     public Project create(final String name) {

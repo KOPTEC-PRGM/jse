@@ -18,9 +18,9 @@ public class ProjectTaskService {
 
     private final TaskRepository taskRepository;
 
-    public ProjectTaskService(ProjectRepository projectRepository, TaskRepository taskRepository) {
-        this.projectRepository = projectRepository;
-        this.taskRepository = taskRepository;
+    public ProjectTaskService() {
+        this.projectRepository = ProjectRepository.getInstance();
+        this.taskRepository = TaskRepository.getInstance();
     }
 
     public Task addTaskToProject(final Long projectId, final Long taskId, final Long userId) throws ProjectException, TaskException {

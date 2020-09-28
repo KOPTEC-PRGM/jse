@@ -25,19 +25,19 @@ public class Application {
 
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-    private final ProjectRepository projectRepository = new ProjectRepository();
+//    private final ProjectRepository projectRepository = new ProjectRepository();
 
-    private final TaskRepository taskRepository = new TaskRepository();
+//    private final TaskRepository taskRepository = new TaskRepository();
 
-    private final UserRepository userRepository = new UserRepository();
+//    private final UserRepository userRepository = new UserRepository();
 
-    private final ProjectService projectService = new ProjectService(projectRepository);
+    private final ProjectService projectService = new ProjectService();
 
-    private final TaskService taskService = new TaskService(taskRepository);
+    private final TaskService taskService = new TaskService();
 
-    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
+    private final ProjectTaskService projectTaskService = new ProjectTaskService();
 
-    private final UserService userService = new UserService(userRepository);
+    private final UserService userService = new UserService();
 
     private final ProjectController projectController = new ProjectController(projectService, projectTaskService);
 
@@ -54,13 +54,14 @@ public class Application {
     {
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
-        projectRepository.create("Демонстрационный проект №2");
-        projectRepository.create("Демонстрационный проект №1");
-        projectRepository.create("Демонстрационный проект №3");
-        taskRepository.create("Демонстрационное задание №1");
-        taskRepository.create("Демонстрационное задание №2");
-        taskRepository.create("Демонстрационное задание №2");
-        taskRepository.create("Демонстрационное задание №4");
+        userService.create("1", "1","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        ProjectRepository.getInstance().create("Демонстрационный проект №2");
+        ProjectRepository.getInstance().create("Демонстрационный проект №1");
+        ProjectRepository.getInstance().create("Демонстрационный проект №3");
+        TaskRepository.getInstance().create("Демонстрационное задание №1");
+        TaskRepository.getInstance().create("Демонстрационное задание №2");
+        TaskRepository.getInstance().create("Демонстрационное задание №2");
+        TaskRepository.getInstance().create("Демонстрационное задание №4");
         try {
             taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",null,0).getId(), projectService.findByName("Демонстрационный проект №1",null,0).getId(), null);
             taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,0).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);

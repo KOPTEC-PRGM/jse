@@ -8,7 +8,19 @@ import java.util.List;
 
 public class UserRepository {
 
+    private static UserRepository instance;
+
     private final List<User> users = new ArrayList<>();
+
+    private UserRepository() {
+    }
+
+    public static UserRepository getInstance() {
+        if (instance == null){
+            instance = new UserRepository();
+        }
+        return instance;
+    }
 
     public User create(final String login, final String password, final String firstName, final String middleName, final String lastName) {
         final User user = new User(login, password, firstName, middleName, lastName);

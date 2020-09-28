@@ -11,8 +11,8 @@ public class UserService {
 
     final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService() {
+        this.userRepository = UserRepository.getInstance();
     }
 
     public User create(final String login, final String password,

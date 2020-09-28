@@ -18,8 +18,12 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+//    public TaskService(TaskRepository taskRepository) {
+//        this.taskRepository = taskRepository;
+//    }
+
+    public TaskService() {
+        this.taskRepository = TaskRepository.getInstance();
     }
 
     public Task create(final String name) {

@@ -10,11 +10,23 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class ProjectRepository {
 
+    private static ProjectRepository instance;
+
     private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
     private final List<Project> projects = new ArrayList<>();
 
     private final Map<String,List<Project>> projectMap = new HashMap<>();
+
+    private ProjectRepository() {
+    }
+
+    public static ProjectRepository getInstance() {
+        if (instance == null){
+            instance = new ProjectRepository();
+        }
+        return instance;
+    }
 
     public void addToProjectMap(final Project project) {
         final String name = project.getName();
