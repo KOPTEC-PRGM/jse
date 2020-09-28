@@ -9,10 +9,19 @@ import java.util.List;
 
 public class UserService {
 
+    private static UserService instance;
+
     final UserRepository userRepository;
 
-    public UserService() {
+    private UserService() {
         this.userRepository = UserRepository.getInstance();
+    }
+
+    public static UserService getInstance() {
+        if (instance == null){
+            instance = new UserService();
+        }
+        return instance;
     }
 
     public User create(final String login, final String password,

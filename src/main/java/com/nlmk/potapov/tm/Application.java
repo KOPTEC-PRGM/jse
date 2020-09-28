@@ -9,9 +9,7 @@ import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
-import com.nlmk.potapov.tm.repository.UserRepository;
 import com.nlmk.potapov.tm.service.ProjectService;
-import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -25,36 +23,21 @@ public class Application {
 
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-//    private final ProjectRepository projectRepository = new ProjectRepository();
+    private final ProjectController projectController = new ProjectController();
 
-//    private final TaskRepository taskRepository = new TaskRepository();
+    private final TaskController taskController = new TaskController();
 
-//    private final UserRepository userRepository = new UserRepository();
+    private final UserController userController = new UserController();
 
-    private final ProjectService projectService = new ProjectService();
-
-    private final TaskService taskService = new TaskService();
-
-    private final ProjectTaskService projectTaskService = new ProjectTaskService();
-
-    private final UserService userService = new UserService();
-
-    private final ProjectController projectController = new ProjectController(projectService, projectTaskService);
-
-    private final TaskController taskController = new TaskController(taskService, projectTaskService);
-
-    private final UserController userController = new UserController(userService);
-
-    private final SystemController systemController = new SystemController(this, userService);
+    private final SystemController systemController = new SystemController(this);
 
     private Long currentUserId = null;
 
     private RoleType currentUserRole = null;
 
     {
-        userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
-        userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
-        userService.create("1", "1","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        UserService.getInstance().create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
+        UserService.getInstance().create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         ProjectRepository.getInstance().create("Демонстрационный проект №2");
         ProjectRepository.getInstance().create("Демонстрационный проект №1");
         ProjectRepository.getInstance().create("Демонстрационный проект №3");
@@ -63,17 +46,17 @@ public class Application {
         TaskRepository.getInstance().create("Демонстрационное задание №2");
         TaskRepository.getInstance().create("Демонстрационное задание №4");
         try {
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",null,0).getId(), projectService.findByName("Демонстрационный проект №1",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,0).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,1).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",null,0).getId(), projectService.findByName("Демонстрационный проект №3",null,0).getId(), null);
-            projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId(),null,0);
-            projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId(),null,0);
-            projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),null,1);
-            taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),null,0);
+            TaskService.getInstance().assignProjectId(TaskService.getInstance().findByName("Демонстрационное задание №1",null,0).getId(), ProjectService.getInstance().findByName("Демонстрационный проект №1",null,0).getId(), null);
+            TaskService.getInstance().assignProjectId(TaskService.getInstance().findByName("Демонстрационное задание №2",null,0).getId(), ProjectService.getInstance().findByName("Демонстрационный проект №2",null,0).getId(), null);
+            TaskService.getInstance().assignProjectId(TaskService.getInstance().findByName("Демонстрационное задание №2",null,1).getId(), ProjectService.getInstance().findByName("Демонстрационный проект №2",null,0).getId(), null);
+            TaskService.getInstance().assignProjectId(TaskService.getInstance().findByName("Демонстрационное задание №4",null,0).getId(), ProjectService.getInstance().findByName("Демонстрационный проект №3",null,0).getId(), null);
+            ProjectService.getInstance().assignUserIdByName("Демонстрационный проект №1", UserService.getInstance().findByLogin("Главный администратор").getId(),null,0);
+            ProjectService.getInstance().assignUserIdByName("Демонстрационный проект №2", UserService.getInstance().findByLogin("Главный администратор").getId(),null,0);
+            ProjectService.getInstance().assignUserIdByName("Демонстрационный проект №3", UserService.getInstance().findByLogin("Новый пользователь 1").getId(),null,0);
+            TaskService.getInstance().assignUserIdByName("Демонстрационное задание №1", UserService.getInstance().findByLogin("Новый пользователь 1").getId(),null,0);
+            TaskService.getInstance().assignUserIdByName("Демонстрационное задание №2", UserService.getInstance().findByLogin("Главный администратор").getId(),null,0);
+            TaskService.getInstance().assignUserIdByName("Демонстрационное задание №2", UserService.getInstance().findByLogin("Новый пользователь 1").getId(),null,1);
+            TaskService.getInstance().assignUserIdByName("Демонстрационное задание №4", UserService.getInstance().findByLogin("Новый пользователь 1").getId(),null,0);
         } catch (ProjectException | TaskException e) {
             logger.error(e);
         }

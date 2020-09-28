@@ -14,16 +14,21 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_TASK_EXCEPTION;
 
 public class TaskService {
 
+    private static TaskService instance;
+
     private static final Logger logger = LogManager.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
 
-//    public TaskService(TaskRepository taskRepository) {
-//        this.taskRepository = taskRepository;
-//    }
-
-    public TaskService() {
+    private TaskService() {
         this.taskRepository = TaskRepository.getInstance();
+    }
+
+    public static TaskService getInstance() {
+        if (instance == null){
+            instance = new TaskService();
+        }
+        return instance;
     }
 
     public Task create(final String name) {

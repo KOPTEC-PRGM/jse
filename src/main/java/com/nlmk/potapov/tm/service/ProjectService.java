@@ -14,12 +14,21 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_PROJECT_EXCEPTION;
 
 public class ProjectService {
 
+    private static ProjectService instance;
+
     private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
     private final ProjectRepository projectRepository;
 
-    public ProjectService() {
+    private ProjectService() {
         this.projectRepository = ProjectRepository.getInstance();
+    }
+
+    public static ProjectService getInstance() {
+        if (instance == null){
+            instance = new ProjectService();
+        }
+        return instance;
     }
 
     public Project create(final String name) {
