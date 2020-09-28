@@ -91,7 +91,6 @@ public class Application {
             command = scanner.nextLine();
             application.systemController.roundAdd(command);
             try {
-                logger.trace("Запрошено выполнение команды \"{}\".",command);
                 result = application.run(command);
             } catch (ProjectException | TaskException e) {
                 System.out.println(e.getMessage());

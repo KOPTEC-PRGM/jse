@@ -9,19 +9,18 @@
         </Console>
         <RollingFile name="Rolling" fileName="${filename}" filePattern="log/rollingfile.%i.log.gz">
             <PatternLayout>
-                <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+                <pattern>%d %p %c{3.} [%t] %m%n</pattern>
             </PatternLayout>
-            <SizeBasedTriggeringPolicy size="1000"/>
+            <SizeBasedTriggeringPolicy size="1000000"/>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
     <Loggers>
-<!--        <Logger name="com.nlmk.potapov.tm.Application">-->
-<!--            <AppenderRef ref="Rolling"/>-->
-<!--        </Logger>-->
-        <Root level="all">
+        <Logger name="com.nlmk.potapov.tm.Application" level ="ERROR"  additivity="true">
             <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="ALL">
+            <AppenderRef ref="Rolling"/>
         </Root>
-
     </Loggers>
 </Configuration>

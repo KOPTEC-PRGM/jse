@@ -50,7 +50,7 @@ public class TaskService {
     public Task findByIndex(final int index, final Long userId) throws TaskException {
         traceLogger("findByIndex",new Object[]{index,userId});
         if (index < 0 || index > taskRepository.size() -1){
-            throw new TaskException("Task does not exist");
+            throw new TaskException(NULL_TASK_EXCEPTION);
         }
         return throwExceptionIfNull(taskRepository.findByIndex(index, userId));
     }
