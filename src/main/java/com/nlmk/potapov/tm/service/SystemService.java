@@ -5,11 +5,14 @@ import java.util.Deque;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.COMMAND_HISTORY_SIZE;
 
-public class SystemService {
+public class SystemService{
 
     private static SystemService instance;
 
     private final Deque<String> commandHistory = new ArrayDeque<>();
+
+    private SystemService() {
+    }
 
     public static SystemService getInstance() {
         if (instance == null){

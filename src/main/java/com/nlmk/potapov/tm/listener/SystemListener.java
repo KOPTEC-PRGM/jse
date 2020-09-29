@@ -7,8 +7,6 @@ import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.service.SystemService;
 import com.nlmk.potapov.tm.service.UserService;
 
-import java.util.Deque;
-
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class SystemListener implements Listener{
@@ -20,7 +18,7 @@ public class SystemListener implements Listener{
     }
 
     @Override
-    public int callMethod(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
+    public int callMethod(String method, Long userId, RoleType roleType){
         switch (method) {
             case HELP:
                 return displayHelp();

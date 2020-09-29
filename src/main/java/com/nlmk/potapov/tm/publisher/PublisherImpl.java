@@ -1,6 +1,5 @@
 package com.nlmk.potapov.tm.publisher;
 
-import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
 import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.exception.TaskException;

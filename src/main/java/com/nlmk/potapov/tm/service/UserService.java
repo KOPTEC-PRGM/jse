@@ -133,4 +133,5 @@ public class UserService {
     public void setCurrentAppUser(User currentAppUser) {
         userRepository.setCurrentAppUser(currentAppUser);
     }
+
 }
