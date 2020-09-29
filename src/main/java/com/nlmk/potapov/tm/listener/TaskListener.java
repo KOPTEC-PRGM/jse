@@ -1,4 +1,4 @@
-package com.nlmk.potapov.tm.controller;
+package com.nlmk.potapov.tm.listener;
 
 import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.enumerated.RoleType;
@@ -9,18 +9,55 @@ import com.nlmk.potapov.tm.service.TaskService;
 
 import java.util.List;
 
-import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
-import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class TaskController extends AbstractController{
+public class TaskListener implements Listener{
 
     private final TaskService taskService;
 
     private final ProjectTaskService projectTaskService;
 
-    public TaskController() {
+    public TaskListener() {
         this.taskService = TaskService.getInstance();
         this.projectTaskService = ProjectTaskService.getInstance();
+    }
+
+    @Override
+    public int callMethod(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
+        if (userId == null) return 0;
+        switch (method) {
+            case TASK_CREATE:
+                return createTask(userId);
+            case TASK_CLEAR:
+                return clearTask(roleType);
+            case TASK_LIST:
+                return listTask(userId, roleType);
+            case TASK_VIEW_BY_INDEX:
+                return viewTaskByIndex(userId, roleType);
+            case TASK_VIEW_BY_ID:
+                return viewTaskById(userId, roleType);
+            case TASK_VIEW_BY_NAME:
+                return viewTaskByName(userId, roleType);
+            case TASK_REMOVE_BY_INDEX:
+                return removeTaskByIndex(userId, roleType);
+            case TASK_REMOVE_BY_NAME:
+                return removeTaskByName(userId, roleType);
+            case TASK_REMOVE_BY_ID:
+                return removeTaskById(userId, roleType);
+            case TASK_UPDATE_BY_INDEX:
+                return updateTaskByIndex(userId, roleType);
+            case TASK_UPDATE_BY_ID:
+                return updateTaskById(userId, roleType);
+            case TASK_ASSIGN_BY_NAME_TO_USER_BY_ID:
+                return assignTaskByNameToUserById(userId, roleType);
+            case TASK_LIST_BY_PROJECT_ID:
+                return listTasksByProjectId(userId, roleType);
+            case TASK_ADD_TO_PROJECT_BY_IDS:
+                return addTaskToProjectByIds(userId, roleType);
+            case TASK_REMOVE_FROM_PROJECT_BY_IDS:
+                return removeTaskFromProjectByIds(userId, roleType);
+        }
+        return 0;
     }
 
     public int viewTask(Task task) {

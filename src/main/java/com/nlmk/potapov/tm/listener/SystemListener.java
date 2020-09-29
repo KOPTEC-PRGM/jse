@@ -1,36 +1,44 @@
-package com.nlmk.potapov.tm.controller;
+package com.nlmk.potapov.tm.listener;
 
-import com.nlmk.potapov.tm.Application;
 import com.nlmk.potapov.tm.entity.User;
+import com.nlmk.potapov.tm.enumerated.RoleType;
+import com.nlmk.potapov.tm.exception.ProjectException;
+import com.nlmk.potapov.tm.exception.TaskException;
+import com.nlmk.potapov.tm.service.SystemService;
 import com.nlmk.potapov.tm.service.UserService;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class SystemController extends AbstractController{
-
-    private final Application app;
+public class SystemListener implements Listener{
 
     private final UserService userService;
 
-    private final Deque<String> commandHistory = new ArrayDeque<>();
-
-    public SystemController(Application app) {
-        this.app = app;
+    public SystemListener() {
         this.userService = UserService.getInstance();
     }
 
-    public Deque<String> getCommandHistory() {
-        return commandHistory;
-    }
-
-    public void roundAdd(final String str){
-        while (commandHistory.size() >= COMMAND_HISTORY_SIZE){
-            commandHistory.poll();
+    @Override
+    public int callMethod(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
+        switch (method) {
+            case HELP:
+                return displayHelp();
+            case VERSION:
+                return displayVersion();
+            case ABOUT:
+                return displayAbout();
+            case EXIT:
+                return displayExit();
+            case LOGIN:
+                return login();
+            case LOGOUT:
+                return logout();
+            case COMMAND_HISTORY:
+                return displayCommandHistory();
+            default:
         }
-        commandHistory.offer(str);
+        return 0;
     }
 
     public int displayHelp() {
@@ -154,8 +162,7 @@ public class SystemController extends AbstractController{
             System.out.println(BLOCK_SEPARATOR);
             return -1;
         }
-        app.setCurrentUserId(user.getId());
-        app.setCurrentUserRole(user.getRoleType());
+        userService.setCurrentAppUser(user);
         System.out.println("[Готово. Добро пожаловать \"" + user.getLogin() + "\"]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -164,8 +171,7 @@ public class SystemController extends AbstractController{
     public int logout() {
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Выход из системы]");
-        app.setCurrentUserId(null);
-        app.setCurrentUserRole(null);
+        userService.setCurrentAppUser(null);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
@@ -175,7 +181,7 @@ public class SystemController extends AbstractController{
         System.out.println(BLOCK_SEPARATOR);
         System.out.println("[Список введенных команд]");
         int indexCommand = 1;
-        for (String command: getCommandHistory()){
+        for (String command: SystemService.getInstance().getCommandHistory()){
             System.out.println(INDENT+INDENT+indexCommand + ". " + command);
             indexCommand++;
         }

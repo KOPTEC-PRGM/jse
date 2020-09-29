@@ -126,4 +126,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getCurrentAppUser() {
+        return userRepository.getCurrentAppUser();
+    }
+
+    public void setCurrentAppUser(User currentAppUser) {
+        userRepository.setCurrentAppUser(currentAppUser);
+    }
 }
