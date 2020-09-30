@@ -50,8 +50,10 @@ public class UserListener implements Listener{
                 return viewCurrent(userId);
             case USER_UPDATE_CURRENT:
                 return changeCurrent(userId);
+
+            default:
+                return 0;
         }
-        return 0;
     }
 
     public int addUser(final RoleType roleType) {

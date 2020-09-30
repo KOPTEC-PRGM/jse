@@ -52,6 +52,8 @@ public class ProjectListener implements Listener{
                 return assignProjectByNameToUserById(userId, roleType);
             case PROJECT_REMOVE_WITH_TASKS_BY_ID:
                 return removeProjectWithTasksById(roleType);
+
+            default:
         }
         return 0;
     }

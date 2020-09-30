@@ -56,8 +56,10 @@ public class TaskListener implements Listener{
                 return addTaskToProjectByIds(userId, roleType);
             case TASK_REMOVE_FROM_PROJECT_BY_IDS:
                 return removeTaskFromProjectByIds(userId, roleType);
+
+            default:
+                return 0;
         }
-        return 0;
     }
 
     public int viewTask(Task task) {

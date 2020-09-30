@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public interface Listener {
 
-    final Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
 
     int callMethod(final String method, final Long userId, final RoleType roleType) throws TaskException, ProjectException;
 

@@ -2,8 +2,6 @@ package com.nlmk.potapov.tm.listener;
 
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
-import com.nlmk.potapov.tm.exception.ProjectException;
-import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.service.SystemService;
 import com.nlmk.potapov.tm.service.UserService;
 
@@ -35,8 +33,8 @@ public class SystemListener implements Listener{
             case COMMAND_HISTORY:
                 return displayCommandHistory();
             default:
+                return 0;
         }
-        return 0;
     }
 
     public int displayHelp() {
