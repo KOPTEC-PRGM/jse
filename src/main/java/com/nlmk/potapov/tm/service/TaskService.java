@@ -3,6 +3,7 @@ package com.nlmk.potapov.tm.service;
 import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.TaskRepository;
+import com.nlmk.potapov.tm.util.ServiceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,14 +38,14 @@ public class TaskService {
     }
 
     public Task create(final String name, final String description, final Long userId) {
-        traceLogger("create",new Object[]{name,description,userId});
+        ServiceUtil.traceLogger("create",new Object[]{name,description,userId});
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
         return taskRepository.create(name, description, userId);
     }
 
     public Task update(final Long id, final String name, final String description, final Long userId) {
-        traceLogger("update",new Object[]{id,name,description,userId});
+        ServiceUtil.traceLogger("update",new Object[]{id,name,description,userId});
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
@@ -52,12 +53,12 @@ public class TaskService {
     }
 
     public void clear() {
-        traceLogger("clear",new Object[]{});
+        ServiceUtil.traceLogger("clear",new Object[]{});
         taskRepository.clear();
     }
 
     public Task findByIndex(final int index, final Long userId) throws TaskException {
-        traceLogger("findByIndex",new Object[]{index,userId});
+        ServiceUtil.traceLogger("findByIndex",new Object[]{index,userId});
         if (index < 0 || index > taskRepository.size() -1){
             throw new TaskException(NULL_TASK_EXCEPTION);
         }
@@ -65,74 +66,74 @@ public class TaskService {
     }
 
     public Task findByName(final String name, final Long userId, final int position) throws TaskException {
-        traceLogger("findByName",new Object[]{name,userId,position});
+        ServiceUtil.traceLogger("findByName",new Object[]{name,userId,position});
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(taskRepository.findByName(name, userId, position));
     }
 
     public List<Task> findListByName(String name, Long userId) throws TaskException {
-        traceLogger("findListByName",new Object[]{name,userId});
+        ServiceUtil.traceLogger("findListByName",new Object[]{name,userId});
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.findListByName(name, userId));
     }
 
     public Task findById(final Long id, final Long userId) throws TaskException {
-        traceLogger("findById",new Object[]{id,userId});
+        ServiceUtil.traceLogger("findById",new Object[]{id,userId});
         if (id == null ) return null;
         return throwExceptionIfNull(taskRepository.findById(id, userId));
     }
 
     public Task removeByIndex(final int index, final Long userId) throws TaskException {
-        traceLogger("removeByIndex",new Object[]{index,userId});
+        ServiceUtil.traceLogger("removeByIndex",new Object[]{index,userId});
         if (index < 0 || index > taskRepository.size() -1) return null;
         return throwExceptionIfNull(taskRepository.removeByIndex(index, userId));
     }
 
     public List<Task> removeByName(final String name) throws TaskException {
-        traceLogger("removeByName",new Object[]{name});
+        ServiceUtil.traceLogger("removeByName",new Object[]{name});
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.removeByName(name));
     }
 
     public Task removeByName(String name, Long userId, Integer position) throws TaskException {
-        traceLogger("removeByName",new Object[]{name,userId,position});
+        ServiceUtil.traceLogger("removeByName",new Object[]{name,userId,position});
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(taskRepository.removeByName(name, userId, position));
     }
 
     public Task removeById(final Long id, final Long userId) throws TaskException {
-        traceLogger("removeById",new Object[]{id,userId});
+        ServiceUtil.traceLogger("removeById",new Object[]{id,userId});
         if (id == null ) return null;
         return throwExceptionIfNull(taskRepository.removeById(id, userId));
     }
 
     public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) throws TaskException {
-        traceLogger("assignUserIdByName",new Object[]{name,userId,currentUserId,position});
+        ServiceUtil.traceLogger("assignUserIdByName",new Object[]{name,userId,currentUserId,position});
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return throwExceptionIfNull(taskRepository.assignUserIdByName(name, userId, currentUserId, position));
     }
 
     public List<Task> findAll() throws TaskException {
-        traceLogger("findAll",new Object[]{});
+        ServiceUtil.traceLogger("findAll",new Object[]{});
         return throwExceptionIfEmpty(taskRepository.findAll());
     }
 
     public List<Task> findAllByUserId(final Long userId) throws TaskException {
-        traceLogger("findAllByUserId",new Object[]{userId});
+        ServiceUtil.traceLogger("findAllByUserId",new Object[]{userId});
         if (userId == null) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.findAllByUserId(userId));
     }
 
     public void assignProjectId(final Long id, final Long projectId, final Long userId) {
-        traceLogger("assignProjectId",new Object[]{id,projectId,userId});
+        ServiceUtil.traceLogger("assignProjectId",new Object[]{id,projectId,userId});
         if (id == null ) return;
         if (projectId == null ) return;
         taskRepository.assignProjectId(id, projectId, userId);
     }
 
     public void sortList() {
-        traceLogger("sortList",new Object[]{});
+        ServiceUtil.traceLogger("sortList",new Object[]{});
         taskRepository.sortList();
     }
 
@@ -148,19 +149,6 @@ public class TaskService {
             throw new TaskException(EMPTY_TASK_LIST_EXCEPTION);
         }
         return tasks;
-    }
-
-    private void traceLogger(final String methodName, final Object[] params) {
-        StringBuilder resultMessage = new StringBuilder();
-        resultMessage.append("Вызов метода ").append(methodName).append("(");
-        String prefix ="";
-        for (Object par:params){
-            resultMessage.append(prefix);
-            prefix = ", ";
-            resultMessage.append(par);
-        }
-        resultMessage.append(")");
-        logger.trace(resultMessage);
     }
 
 }
