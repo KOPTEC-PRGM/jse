@@ -8,13 +8,13 @@ import java.util.*;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class ProjectRepository {
+public class ProjectRepository extends AbstractRepository{
 
     private static ProjectRepository instance;
 
     private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
-    private final List<Project> projects = new ArrayList<>();
+    private final List<Project> projects = getEntity();
 
     private final Map<String,List<Project>> projectMap = new HashMap<>();
 
