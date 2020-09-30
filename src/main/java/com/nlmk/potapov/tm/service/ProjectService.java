@@ -3,6 +3,7 @@ package com.nlmk.potapov.tm.service;
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
+import com.nlmk.potapov.tm.util.ServiceUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,20 +33,20 @@ public class ProjectService {
     }
 
     public Project create(final String name) {
-        traceLogger("create", new Object[]{name});
+        ServiceUtil.traceLogger("create", new Object[]{name});
         if (name.isEmpty()) return null;
         return projectRepository.create(name);
     }
 
     public Project create(final String name, final String description, final Long userId) {
-        traceLogger("create", new Object[]{name,description,userId});
+        ServiceUtil.traceLogger("create", new Object[]{name,description,userId});
         if (name.isEmpty()) return null;
         if (description.isEmpty()) return null;
         return projectRepository.create(name, description, userId);
     }
 
     public Project update(final Long id, final String name, final String description, final Long userId) {
-        traceLogger("update", new Object[]{id,name,description,userId});
+        ServiceUtil.traceLogger("update", new Object[]{id,name,description,userId});
         if (id == null ) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
@@ -53,18 +54,18 @@ public class ProjectService {
     }
 
     public boolean remove(Project project) {
-        traceLogger("remove",new Object[]{});
+        ServiceUtil.traceLogger("remove",new Object[]{});
         if (project == null) return false;
         return projectRepository.remove(project);
     }
 
     public void clear() {
-        traceLogger("clear",new Object[]{});
+        ServiceUtil.traceLogger("clear",new Object[]{});
         projectRepository.clear();
     }
 
     public Project findByIndex(final int index, final Long userId) throws ProjectException {
-        traceLogger("findByIndex",new Object[]{index,userId});
+        ServiceUtil.traceLogger("findByIndex",new Object[]{index,userId});
         if (index < 0 || index > projectRepository.size() -1){
             throw new ProjectException("Project does not exist");
         }
@@ -72,55 +73,55 @@ public class ProjectService {
     }
 
     public Project findByName(final String name, final Long userId, final int position) throws ProjectException {
-        traceLogger("findByName",new Object[]{name,userId,position});
+        ServiceUtil.traceLogger("findByName",new Object[]{name,userId,position});
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(projectRepository.findByName(name, userId, position));
     }
 
     public List<Project> findListByName(String name, Long userId) throws ProjectException {
-        traceLogger("findListByName",new Object[]{name,userId});
+        ServiceUtil.traceLogger("findListByName",new Object[]{name,userId});
         if (name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(projectRepository.findListByName(name, userId));
     }
 
     public Project findById(final Long id, final Long userId) throws ProjectException {
-        traceLogger("findById",new Object[]{id,userId});
+        ServiceUtil.traceLogger("findById",new Object[]{id,userId});
         if (id == null ) return null;
         return throwExceptionIfNull(projectRepository.findById(id, userId));
     }
 
     public Project removeByIndex(final int index, final Long userId) throws ProjectException {
-        traceLogger("removeByIndex",new Object[]{index,userId});
+        ServiceUtil.traceLogger("removeByIndex",new Object[]{index,userId});
         if (index < 0 || index > projectRepository.size() -1) return null;
         return throwExceptionIfNull(projectRepository.removeByIndex(index, userId));
     }
 
     public List<Project> removeByName(String name, Long userId) throws ProjectException {
-        traceLogger("removeByName",new Object[]{name,userId});
+        ServiceUtil.traceLogger("removeByName",new Object[]{name,userId});
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(projectRepository.removeByName(name, userId));
     }
 
     public Project removeById(final Long id, final Long userId) throws ProjectException {
-        traceLogger("removeById",new Object[]{id,userId});
+        ServiceUtil.traceLogger("removeById",new Object[]{id,userId});
         if (id == null ) return null;
         return throwExceptionIfNull(projectRepository.removeById(id, userId));
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) throws ProjectException {
-        traceLogger("assignUserIdByName", new Object[]{name,userId,currentUserId,position});
+        ServiceUtil.traceLogger("assignUserIdByName", new Object[]{name,userId,currentUserId,position});
         if (name == null || name.isEmpty()) return null;
         if (userId == null ) return null;
         return throwExceptionIfNull(projectRepository.assignUserIdByName(name, userId, currentUserId, position));
     }
 
     public List<Project> findAll(final Long userId) throws ProjectException {
-        traceLogger("findAll", new Object[]{userId});
+        ServiceUtil.traceLogger("findAll", new Object[]{userId});
         return throwExceptionIfEmpty(projectRepository.findAll(userId));
     }
 
     public void sortList() {
-        traceLogger("sortList", new Object[]{});
+        ServiceUtil.traceLogger("sortList", new Object[]{});
         projectRepository.sortList();
     }
 
@@ -136,19 +137,6 @@ public class ProjectService {
             throw new ProjectException(EMPTY_PROJECT_LIST_EXCEPTION);
         }
         return projects;
-    }
-
-    private void traceLogger(final String methodName, final Object[] params) {
-        StringBuilder resultMessage = new StringBuilder();
-        resultMessage.append("Вызов метода ").append(methodName).append("(");
-        String prefix ="";
-        for (Object par:params){
-            resultMessage.append(prefix);
-            prefix = ", ";
-            resultMessage.append(par);
-        }
-        resultMessage.append(")");
-        logger.trace(resultMessage);
     }
 
 }
