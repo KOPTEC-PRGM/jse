@@ -4,8 +4,6 @@ import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.util.ServiceUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +14,6 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_PROJECT_EXCEPTION;
 public class ProjectService {
 
     private static ProjectService instance;
-
-    private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
     private final ProjectRepository projectRepository;
 

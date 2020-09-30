@@ -4,8 +4,6 @@ import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.util.ServiceUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +14,6 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.NULL_TASK_EXCEPTION;
 public class TaskService {
 
     private static TaskService instance;
-
-    private static final Logger logger = LogManager.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
 
