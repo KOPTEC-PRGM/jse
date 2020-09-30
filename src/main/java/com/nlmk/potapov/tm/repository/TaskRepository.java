@@ -8,13 +8,13 @@ import java.util.*;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class TaskRepository {
+public class TaskRepository extends AbstractRepository{
 
     private static TaskRepository instance;
 
     private static final Logger logger = LogManager.getLogger(TaskRepository.class);
 
-    private final List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks = getEntity();
 
     private final Map<String,List<Task>> taskMap = new HashMap<>();
 
@@ -171,27 +171,19 @@ public class TaskRepository {
         return task;
     }
 
-    public List<Task> findAll() {
-        return tasks;
-    }
-
     public List<Task> findAllByUserId(final Long userId) {
         List<Task> userTasks = new ArrayList<>();
-        for (Task task: findAll())
-            if (userId.equals(task.getUserId())) userTasks.add(task);
+        for (Object task: findAll())
+            if (userId.equals(((Task)task).getUserId())) userTasks.add(((Task)task));
         return userTasks;
-    }
-
-    public int size(){
-        return tasks.size();
     }
 
     public List<Task> getTasksFromProject (final Long projectId){
         List<Task> result = new ArrayList<>();
-        for (Task task: findAll()){
-            if (task.getProjectId() == null) continue;
-            if (task.getProjectId().equals(projectId))
-                result.add(task);
+        for (Object task: findAll()){
+            if (((Task)task).getProjectId() == null) continue;
+            if (((Task)task).getProjectId().equals(projectId))
+                result.add(((Task)task));
         }
         return result;
     }

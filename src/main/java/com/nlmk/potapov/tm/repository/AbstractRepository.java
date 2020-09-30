@@ -11,4 +11,12 @@ public class AbstractRepository<T> {
         return entity;
     }
 
+    public int size() {
+        return entity.size();
+    }
+
+    public List<T> findAll() {
+        return (List<T>)entity;
+    }
+
 }

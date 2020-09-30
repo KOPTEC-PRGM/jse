@@ -155,10 +155,6 @@ public class ProjectRepository extends AbstractRepository{
         else return filterListByUserId(projects, userId);
     }
 
-    public int size() {
-        return projects.size();
-    }
-
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         Project project = findByName(name,currentUserId, position);
         project.setUserId(userId);
