@@ -22,10 +22,6 @@ public class Application {
 
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-    private Long currentUserId = null;
-
-    private RoleType currentUserRole = null;
-
     {
         UserService.getInstance().create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         UserService.getInstance().create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
