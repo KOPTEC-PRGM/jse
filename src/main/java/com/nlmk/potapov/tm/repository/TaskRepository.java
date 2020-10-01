@@ -14,8 +14,6 @@ public class TaskRepository extends AbstractRepository<Task>{
 
     private static final Logger logger = LogManager.getLogger(TaskRepository.class);
 
-    private final List<Task> tasks = getEntity();
-
     private final Map<String,List<Task>> taskMap = new HashMap<>();
 
     private TaskRepository(){
@@ -50,7 +48,7 @@ public class TaskRepository extends AbstractRepository<Task>{
 
     public Task create(final String name) {
         final Task task = new Task(name);
-        tasks.add(task);
+        entityList.add(task);
         addToTaskMap(task);
         logger.info(LOGGER_CREATE_TASK, task);
         return task;
@@ -61,7 +59,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         task.setName(name);
         task.setDescription(description);
         task.setUserId(userId);
-        tasks.add(task);
+        entityList.add(task);
         addToTaskMap(task);
         logger.info(LOGGER_CREATE_TASK, task);
         return task;
@@ -82,14 +80,14 @@ public class TaskRepository extends AbstractRepository<Task>{
     }
 
     public void clear() {
-        tasks.clear();
+        entityList.clear();
         taskMap.clear();
         logger.info("Все задачи удалены");
     }
 
     public Task findByIndex(final int index, final Long userId) {
-        if (userId == null) return tasks.get(index);
-        final List<Task> filteredList = filterListByUserId(tasks, userId);
+        if (userId == null) return entityList.get(index);
+        final List<Task> filteredList = filterListByUserId(entityList, userId);
         return filteredList.get(index);
     }
 
@@ -111,7 +109,7 @@ public class TaskRepository extends AbstractRepository<Task>{
     }
 
     public Task findById(final Long id, final Long userId) {
-        for (final Task task: tasks){
+        for (final Task task: entityList){
             if ((task.getId().equals(id))
             && (userId == null || task.getUserId().equals(userId)))return task;
 
@@ -120,7 +118,7 @@ public class TaskRepository extends AbstractRepository<Task>{
     }
 
     public Task findByProjectIdAndId(final Long projectId, final Long id, final Long userId) {
-        for (final Task task: tasks){
+        for (final Task task: entityList){
             Long idProject = task.getProjectId();
             if ((idProject == null)
             || (!idProject.equals(projectId) )
@@ -133,7 +131,7 @@ public class TaskRepository extends AbstractRepository<Task>{
     public Task removeByIndex(final int index, final Long userId) {
         final Task task = findByIndex(index, userId);
         if (task == null) return null;
-        tasks.remove(task);
+        entityList.remove(task);
         removeFromTaskMap(task);
         logger.info(LOGGER_DELETE_TASK, task);
         return task;
@@ -145,7 +143,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         taskMap.remove(name);
         for (Task task: taskList){
             logger.info(LOGGER_DELETE_TASK,task);
-            tasks.remove(task);
+            entityList.remove(task);
         }
         return taskList;
     }
@@ -157,7 +155,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         if (userId == null)  task = taskList.get(position);
         else task = filterListByUserId(taskList,userId).get(position);
         taskList.remove(task);
-        tasks.remove(task);
+        entityList.remove(task);
         logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
@@ -165,7 +163,7 @@ public class TaskRepository extends AbstractRepository<Task>{
     public Task removeById(final Long id, final Long userId) {
         final Task task = findById(id, userId);
         if (task == null) return null;
-        tasks.remove(task);
+        entityList.remove(task);
         removeFromTaskMap(task);
         logger.info(LOGGER_DELETE_TASK, task);
         return task;
@@ -203,8 +201,8 @@ public class TaskRepository extends AbstractRepository<Task>{
     }
 
     public List<Task> sortList() {
-        tasks.sort(Comparator.comparing(Task::getName).thenComparing(Task::getDescription));
-        return tasks;
+        entityList.sort(Comparator.comparing(Task::getName).thenComparing(Task::getDescription));
+        return entityList;
     }
 
     public List<Task> filterListByUserId(final List<Task> taskList, final Long userId) {
