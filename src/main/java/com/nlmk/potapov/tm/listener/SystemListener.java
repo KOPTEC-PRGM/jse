@@ -16,7 +16,7 @@ public class SystemListener implements Listener{
     }
 
     @Override
-    public int callMethod(String method, Long userId, RoleType roleType){
+    public int callCommand(String method, Long userId, RoleType roleType){
         switch (method) {
             case HELP:
                 return displayHelp();

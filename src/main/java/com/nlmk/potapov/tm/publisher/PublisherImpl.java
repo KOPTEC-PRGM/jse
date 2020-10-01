@@ -31,7 +31,7 @@ public class PublisherImpl implements Publisher{
     @Override
     public int notifyListener(final String method, final Long userId, final RoleType roleType) throws TaskException, ProjectException {
         for(Listener listener: listeners){
-            listener.callMethod(method,userId,roleType);
+            listener.callCommand(method,userId,roleType);
         }
         return 0;
     }

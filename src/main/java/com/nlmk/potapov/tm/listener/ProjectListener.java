@@ -23,7 +23,7 @@ public class ProjectListener implements Listener{
         this.projectTaskService = ProjectTaskService.getInstance();
     }
     @Override
-    public int callMethod(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
+    public int callCommand(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
         if (userId == null) return 0;
         switch (method) {
             case PROJECT_CREATE:
