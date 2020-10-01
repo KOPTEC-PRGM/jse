@@ -8,7 +8,7 @@ import java.util.*;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class TaskRepository extends AbstractRepository{
+public class TaskRepository extends AbstractRepository<Task>{
 
     private static TaskRepository instance;
 
@@ -173,17 +173,17 @@ public class TaskRepository extends AbstractRepository{
 
     public List<Task> findAllByUserId(final Long userId) {
         List<Task> userTasks = new ArrayList<>();
-        for (Object task: findAll())
-            if (userId.equals(((Task)task).getUserId())) userTasks.add(((Task)task));
+        for (Task task: findAll())
+            if (userId.equals(task.getUserId())) userTasks.add(task);
         return userTasks;
     }
 
     public List<Task> getTasksFromProject (final Long projectId){
         List<Task> result = new ArrayList<>();
-        for (Object task: findAll()){
-            if (((Task)task).getProjectId() == null) continue;
-            if (((Task)task).getProjectId().equals(projectId))
-                result.add(((Task)task));
+        for (Task task: findAll()){
+            if (task.getProjectId() == null) continue;
+            if (task.getProjectId().equals(projectId))
+                result.add(task);
         }
         return result;
     }

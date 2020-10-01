@@ -8,7 +8,7 @@ import java.util.*;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class ProjectRepository extends AbstractRepository{
+public class ProjectRepository extends AbstractRepository<Project>{
 
     private static ProjectRepository instance;
 

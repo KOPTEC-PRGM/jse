@@ -3,7 +3,7 @@ package com.nlmk.potapov.tm.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractRepository<T> {
+public abstract class AbstractRepository<T> {
 
     private final List<T> entity = new ArrayList<>();
 
@@ -16,7 +16,7 @@ public class AbstractRepository<T> {
     }
 
     public List<T> findAll() {
-        return (List<T>)entity;
+        return entity;
     }
 
 }
