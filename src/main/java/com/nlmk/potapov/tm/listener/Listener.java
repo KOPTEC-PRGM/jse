@@ -10,6 +10,6 @@ public interface Listener {
 
     Scanner scanner = new Scanner(System.in);
 
-    int callMethod(final String method, final Long userId, final RoleType roleType) throws TaskException, ProjectException;
+    int callCommand(final String method, final Long userId, final RoleType roleType) throws TaskException, ProjectException;
 
 }

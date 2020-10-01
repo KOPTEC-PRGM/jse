@@ -30,10 +30,11 @@ public class PublisherImpl implements Publisher{
 
     @Override
     public int notifyListener(final String method, final Long userId, final RoleType roleType) throws TaskException, ProjectException {
+        int result = 0;
         for(Listener listener: listeners){
-            listener.callMethod(method,userId,roleType);
+            result = listener.callCommand(method,userId,roleType);
         }
-        return 0;
+        return result;
     }
 
     public void runLoop(final String startMethod) throws TaskException, ProjectException {
@@ -59,7 +60,7 @@ public class PublisherImpl implements Publisher{
             command = scanner.nextLine();
 
         }
-        notifyListener(command, userId, roleType);
+        result = notifyListener(command, userId, roleType);
         System.exit(result);
     }
 }
