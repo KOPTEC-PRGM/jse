@@ -60,7 +60,7 @@ public class PublisherImpl implements Publisher{
             command = scanner.nextLine();
 
         }
-        notifyListener(command, userId, roleType);
+        result = notifyListener(command, userId, roleType);
         System.exit(result);
     }
 }
