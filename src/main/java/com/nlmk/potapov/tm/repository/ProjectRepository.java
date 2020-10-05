@@ -1,10 +1,16 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
+
 public class ProjectRepository {
+
+    private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
     private final List<Project> projects = new ArrayList<>();
 
@@ -34,6 +40,7 @@ public class ProjectRepository {
         final Project project = new Project(name);
         projects.add(project);
         addToProjectMap(project);
+        logger.info(LOGGER_CREATE_PROJECT,project);
         return project;
     }
 
@@ -44,6 +51,7 @@ public class ProjectRepository {
         project.setUserId(userId);
         projects.add(project);
         addToProjectMap(project);
+        logger.info(LOGGER_CREATE_PROJECT,project);
         return project;
     }
 
@@ -57,18 +65,21 @@ public class ProjectRepository {
         }
         project.setId(id);
         project.setDescription(description);
+        logger.info(LOGGER_UPDATE_PROJECT, project);
         return project;
     }
 
     public boolean remove(final Project project) {
         projects.remove(project);
         removeFromProjectMap(project);
+        logger.info(LOGGER_DELETE_PROJECT,project);
         return true;
     }
 
     public void clear() {
         projects.clear();
         projectMap.clear();
+        logger.info("Все проекты удалены");
     }
 
     public Project findByIndex(final int index, final Long userId) {
@@ -92,8 +103,8 @@ public class ProjectRepository {
 
     public Project findById(final Long id, final Long userId) {
         for (final Project project: projects){
-            if (project.getId().equals(id))
-            if (userId == null || project.getUserId().equals(userId)) return project;
+            if ((project.getId().equals(id))
+            && (userId == null || project.getUserId().equals(userId))) return project;
         }
         return null;
     }
@@ -101,7 +112,10 @@ public class ProjectRepository {
     public Project removeByIndex(final int index, final Long userId) {
         final Project project = findByIndex(index, userId);
         if (project == null) return null;
-        if (remove(project)) return project;
+        if (remove(project)){
+            logger.info(LOGGER_DELETE_PROJECT,project);
+            return project;
+        }
         return null;
     }
 
@@ -109,7 +123,10 @@ public class ProjectRepository {
         final List<Project> projectList = findListByName(name,userId);
         if (projectList == null || projectList.isEmpty()) return Collections.emptyList();
         projectMap.remove(name);
-        for (Project project: projectList) projects.remove(project);
+        for (Project project: projectList){
+            logger.info(LOGGER_DELETE_PROJECT,project);
+            projects.remove(project);
+        }
         return projectList;
     }
 
@@ -133,12 +150,12 @@ public class ProjectRepository {
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
         Project project = findByName(name,currentUserId, position);
         project.setUserId(userId);
+        logger.info("Проекту [{}] назначен пользователь userId={}.", project, userId);
         return project;
     }
 
-    public List<Project> sortList() {
+    public void sortList() {
         projects.sort(Comparator.comparing(Project::getName).thenComparing(Project::getDescription));
-        return projects;
     }
 
     public List<Project> filterListByUserId(final List<Project> projectList, final Long userId) {

@@ -86,8 +86,8 @@ public class TaskController extends AbstractController{
         System.out.print("Введите номер задачи: ");
         final int index = getIndexFromScanner();
         if (index < 0) return -1;
-        taskService.removeByIndex(index, currentUserId);
-        System.out.println("[Готово]");
+        final Task task = taskService.removeByIndex(index, currentUserId);
+        System.out.println("[Готово. Задача (ID = " + task.getId() + ") удалена]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

@@ -2,6 +2,10 @@ package com.nlmk.potapov.tm.constant;
 
 public final class TerminalConst {
 
+    private TerminalConst() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final int COMMAND_HISTORY_SIZE = 10;
 
     public static final String HELP = "help";
@@ -20,6 +24,14 @@ public final class TerminalConst {
     public static final String EMPTY_TASK_LIST_EXCEPTION = "Задач не существует";
     public static final String NULL_PROJECT_EXCEPTION = "Проекта не существует";
     public static final String EMPTY_PROJECT_LIST_EXCEPTION = "Проектов не существует";
+
+
+    public static final String LOGGER_CREATE_TASK = "Создана задача [{}].";
+    public static final String LOGGER_UPDATE_TASK = "Обновлена задача [{}].";
+    public static final String LOGGER_DELETE_TASK = "Удалена задача [{}].";
+    public static final String LOGGER_CREATE_PROJECT = "Создан проект [{}].";
+    public static final String LOGGER_UPDATE_PROJECT = "Обновлен проект [{}].";
+    public static final String LOGGER_DELETE_PROJECT = "Удален проект [{}].";
 
 
     public static final String PROJECT_CREATE = "project-create";

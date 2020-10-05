@@ -258,18 +258,20 @@ public class UserController extends AbstractController{
         if (currentUser.equals(user)) System.out.print("Введите пароль: ");
         else System.out.print("Введите пароль Администратора: ");
         final String password = scanner.nextLine();
-        if (currentUser.equals(user))
+        if (currentUser.equals(user)) {
             if (!userService.checkPassword(user.getLogin(), password)) {
                 System.out.println("[Ошибка. Неверный логин или пароль]");
                 System.out.println(BLOCK_SEPARATOR);
                 return -1;
             }
-        else
+        }
+        else {
             if (!userService.checkPassword(currentUser.getLogin(), password)) {
                 System.out.println("[Ошибка. Неверный пароль]");
                 System.out.println(BLOCK_SEPARATOR);
                 return -1;
             }
+        }
         System.out.print("Введите новый пароль: ");
         final String newPassword = scanner.nextLine();
         System.out.print("Подтвердите новый пароль: ");
