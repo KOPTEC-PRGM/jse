@@ -26,8 +26,12 @@ public class ProjectTaskService {
     }
 
     public static ProjectTaskService getInstance() {
-        if (instance == null){
-            instance = new ProjectTaskService();
+        if (instance == null) {
+            synchronized (ProjectTaskService.class) {
+                if (instance == null) {
+                    instance = new ProjectTaskService();
+                }
+            }
         }
         return instance;
     }
