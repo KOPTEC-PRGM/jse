@@ -26,8 +26,12 @@ public class TaskService {
     }
 
     public static TaskService getInstance() {
-        if (instance == null){
-            instance = new TaskService();
+        if (instance == null) {
+            synchronized (TaskService.class) {
+                if (instance == null) {
+                    instance = new TaskService();
+                }
+            }
         }
         return instance;
     }

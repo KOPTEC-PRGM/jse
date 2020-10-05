@@ -1,6 +1,7 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
+import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,8 +23,12 @@ public class ProjectRepository {
     }
 
     public static ProjectRepository getInstance() {
-        if (instance == null){
-            instance = new ProjectRepository();
+        if (instance == null) {
+            synchronized (ProjectRepository.class) {
+                if (instance == null) {
+                    instance = new ProjectRepository();
+                }
+            }
         }
         return instance;
     }
