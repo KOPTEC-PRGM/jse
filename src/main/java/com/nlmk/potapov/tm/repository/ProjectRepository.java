@@ -1,7 +1,6 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
-import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,8 +13,6 @@ public class ProjectRepository extends AbstractRepository<Project>{
     private static ProjectRepository instance;
 
     private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
-
-    //private final Map<String,List<Project>> entityMap = getEntityMap();
 
     private ProjectRepository() {
     }
@@ -31,30 +28,8 @@ public class ProjectRepository extends AbstractRepository<Project>{
         return instance;
     }
 
-//    public void addToProjectMap(final Project project) {
-//        final String name = project.getName();
-//        List<Project> valueList = entityMap.get(name);
-//        if (valueList == null || valueList.isEmpty()) {
-//            valueList = new ArrayList<>();
-//            valueList.add(project);
-//            entityMap.put(name,valueList);
-//            return;
-//        }
-//        valueList.add(project);
-//    }
-
-    public void removeFromProjectMap(final Project project) {
-        final String name = project.getName();
-        List<Project> valueList = entityMap.get(name);
-        if (valueList == null || valueList.isEmpty()) return;
-        if (valueList.size() > 1) valueList.remove(project);
-        else entityMap.remove(name);
-    }
-
     public Project create(final String name) {
         final Project project = new Project(name);
-//        entityList.add(project);
-//        addToProjectMap(project);
         super.create(project);
         logger.info(LOGGER_CREATE_PROJECT,project);
         return project;
@@ -65,8 +40,6 @@ public class ProjectRepository extends AbstractRepository<Project>{
         project.setName(name);
         project.setDescription(description);
         project.setUserId(userId);
-//        entityList.add(project);
-//        addToProjectMap(project);
         super.create(project);
         logger.info(LOGGER_CREATE_PROJECT,project);
         return project;
@@ -76,7 +49,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
         final Project project = findById(id,userId);
         if (project == null) return null;
         if (!project.getName().equals(name)) {
-            removeFromProjectMap(project);
+            removeFromEntityMap(project);
             project.setName(name);
             super.addToEntityMap(project);
         }
@@ -88,7 +61,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
 
     public boolean remove(final Project project) {
         entityList.remove(project);
-        removeFromProjectMap(project);
+        removeFromEntityMap(project);
         logger.info(LOGGER_DELETE_PROJECT,project);
         return true;
     }
@@ -151,7 +124,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
         final Project project = findById(id, userId);
         if (project == null) return null;
         entityList.remove(project);
-        removeFromProjectMap(project);
+        removeFromEntityMap(project);
         return project;
     }
 

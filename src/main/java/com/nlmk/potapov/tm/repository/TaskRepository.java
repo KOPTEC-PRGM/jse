@@ -14,8 +14,6 @@ public class TaskRepository extends AbstractRepository<Task>{
 
     private static final Logger logger = LogManager.getLogger(TaskRepository.class);
 
-    private final Map<String,List<Task>> taskMap = new HashMap<>();
-
     private TaskRepository(){
     }
 
@@ -30,30 +28,9 @@ public class TaskRepository extends AbstractRepository<Task>{
         return instance;
     }
 
-    public void addToTaskMap(final Task task) {
-        final String name = task.getName();
-        List<Task> valueList = taskMap.get(name);
-        if (valueList == null || valueList.isEmpty()) {
-            valueList = new ArrayList<>();
-            valueList.add(task);
-            taskMap.put(name,valueList);
-            return;
-        }
-        valueList.add(task);
-    }
-
-    public void removeFromTaskMap(final Task task) {
-        final String name = task.getName();
-        List<Task> valueList = taskMap.get(name);
-        if (valueList == null || valueList.isEmpty()) return;
-        if (valueList.size() > 1) valueList.remove(task);
-        else taskMap.remove(name);
-    }
-
     public Task create(final String name) {
         final Task task = new Task(name);
-        entityList.add(task);
-        addToTaskMap(task);
+        super.create(task);
         logger.info(LOGGER_CREATE_TASK, task);
         return task;
     }
@@ -63,8 +40,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         task.setName(name);
         task.setDescription(description);
         task.setUserId(userId);
-        entityList.add(task);
-        addToTaskMap(task);
+        super.create(task);
         logger.info(LOGGER_CREATE_TASK, task);
         return task;
     }
@@ -73,9 +49,9 @@ public class TaskRepository extends AbstractRepository<Task>{
         final Task task = findById(id, userId);
         if (task == null) return null;
         if (!task.getName().equals(name)) {
-            removeFromTaskMap(task);
+            removeFromEntityMap(task);
             task.setName(name);
-            addToTaskMap(task);
+            super.addToEntityMap(task);
         }
         task.setId(id);
         task.setDescription(description);
@@ -85,7 +61,7 @@ public class TaskRepository extends AbstractRepository<Task>{
 
     public void clear() {
         entityList.clear();
-        taskMap.clear();
+        entityMap.clear();
         logger.info("Все задачи удалены");
     }
 
@@ -97,19 +73,19 @@ public class TaskRepository extends AbstractRepository<Task>{
 
     public Task findByName(final String name, final Long userId, final int position) {
         final List<Task> taskList;
-        if (userId == null) taskList = taskMap.get(name);
-        else taskList = filterListByUserId(taskMap.get(name),userId);
+        if (userId == null) taskList = entityMap.get(name);
+        else taskList = filterListByUserId(entityMap.get(name),userId);
         if (taskList == null || taskList.isEmpty()) return null;
         return taskList.get(position);
     }
 
     public List<Task> findListByName(final String name) {
-        return taskMap.get(name);
+        return entityMap.get(name);
     }
 
     public List<Task> findListByName(final String name, final Long userId) {
-        if (userId == null)  return taskMap.get(name);
-        return filterListByUserId(taskMap.get(name),userId);
+        if (userId == null)  return entityMap.get(name);
+        return filterListByUserId(entityMap.get(name),userId);
     }
 
     public Task findById(final Long id, final Long userId) {
@@ -136,7 +112,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         final Task task = findByIndex(index, userId);
         if (task == null) return null;
         entityList.remove(task);
-        removeFromTaskMap(task);
+        removeFromEntityMap(task);
         logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
@@ -144,7 +120,7 @@ public class TaskRepository extends AbstractRepository<Task>{
     public List<Task> removeByName(final String name) {
         final List<Task> taskList = findListByName(name);
         if (taskList == null || taskList.isEmpty()) return Collections.emptyList();
-        taskMap.remove(name);
+        entityMap.remove(name);
         for (Task task: taskList){
             logger.info(LOGGER_DELETE_TASK,task);
             entityList.remove(task);
@@ -168,7 +144,7 @@ public class TaskRepository extends AbstractRepository<Task>{
         final Task task = findById(id, userId);
         if (task == null) return null;
         entityList.remove(task);
-        removeFromTaskMap(task);
+        removeFromEntityMap(task);
         logger.info(LOGGER_DELETE_TASK, task);
         return task;
     }
