@@ -20,8 +20,12 @@ public class TaskRepository extends AbstractRepository<Task>{
     }
 
     public static TaskRepository getInstance() {
-        if (instance == null){
-            instance = new TaskRepository();
+        if (instance == null) {
+            synchronized (TaskRepository.class) {
+                if (instance == null) {
+                    instance = new TaskRepository();
+                }
+            }
         }
         return instance;
     }

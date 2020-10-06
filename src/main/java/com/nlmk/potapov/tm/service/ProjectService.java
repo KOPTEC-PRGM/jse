@@ -26,8 +26,12 @@ public class ProjectService {
     }
 
     public static ProjectService getInstance() {
-        if (instance == null){
-            instance = new ProjectService();
+        if (instance == null) {
+            synchronized (ProjectService.class) {
+                if (instance == null) {
+                    instance = new ProjectService();
+                }
+            }
         }
         return instance;
     }

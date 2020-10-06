@@ -26,8 +26,12 @@ public class UserRepository {
     }
 
     public static UserRepository getInstance() {
-        if (instance == null){
-            instance = new UserRepository();
+        if (instance == null) {
+            synchronized (UserRepository.class) {
+                if (instance == null) {
+                    instance = new UserRepository();
+                }
+            }
         }
         return instance;
     }
