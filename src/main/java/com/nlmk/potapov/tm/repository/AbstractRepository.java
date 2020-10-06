@@ -1,6 +1,5 @@
 package com.nlmk.potapov.tm.repository;
 
-import com.nlmk.potapov.tm.entity.Project;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +37,7 @@ public abstract class AbstractRepository<T> {
             Method method = entity.getClass().getMethod("getName");
             return method.invoke(entity, null).toString();
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logger.error("Ошибка при вызове метода \"getName()\" у класса " + entity.getClass()+ ":"+e.getMessage());
+            logger.error("Ошибка при вызове метода \"getName()\" у класса {}: {}", entity.getClass(), e.getMessage());
             return null;
         }
     }
