@@ -15,8 +15,12 @@ public class SystemService{
     }
 
     public static SystemService getInstance() {
-        if (instance == null){
-            instance = new SystemService();
+        if (instance == null) {
+            synchronized (SystemService.class) {
+                if (instance == null) {
+                    instance = new SystemService();
+                }
+            }
         }
         return instance;
     }
