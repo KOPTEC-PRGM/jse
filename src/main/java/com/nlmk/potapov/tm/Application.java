@@ -10,6 +10,7 @@ import com.nlmk.potapov.tm.listener.UserListener;
 import com.nlmk.potapov.tm.publisher.PublisherImpl;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
+import com.nlmk.potapov.tm.repository.UserRepository;
 import com.nlmk.potapov.tm.service.ProjectService;
 import com.nlmk.potapov.tm.service.TaskService;
 import com.nlmk.potapov.tm.service.UserService;
@@ -26,6 +27,7 @@ public class Application {
         final UserService userService = UserService.getInstance();
         final ProjectRepository projectRepository = ProjectRepository.getInstance();
         final TaskRepository taskRepository = TaskRepository.getInstance();
+        final UserRepository userRepository = UserRepository.getInstance();
         final TaskService taskService = TaskService.getInstance();
         final ProjectService projectService = ProjectService.getInstance();
 
@@ -53,6 +55,12 @@ public class Application {
         } catch (ProjectException | TaskException e) {
             logger.error(e);
         }
+        projectRepository.saveToJson("ProjectList.json");
+        taskRepository.saveToJson("TaskList.json");
+        userRepository.saveToJson("UserList.json");
+        projectRepository.saveToXml("ProjectList.xml");
+        taskRepository.saveToXml("TaskList.xml");
+        userRepository.saveToXml("UserList.xml");
     }
 
     public static void main(final String[] args) {

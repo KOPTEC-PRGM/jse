@@ -1,8 +1,14 @@
 package com.nlmk.potapov.tm.repository;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -60,6 +66,27 @@ public abstract class AbstractRepository<T> {
         if (valueList == null || valueList.isEmpty()) return;
         if (valueList.size() > 1) valueList.remove(entity);
         else entityMap.remove(name);
+    }
+
+    public void saveToJson(final String filePath) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            objectMapper.writeValue(new File(filePath),entityList);
+        } catch (IOException e) {
+            logger.error("ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
+        }
+
+    }
+
+    public void saveToXml(final String filePath) {
+        final XmlMapper xmlMapper = new XmlMapper();
+        try {
+            xmlMapper.writeValue(new File(filePath),entityList);
+        } catch (IOException e) {
+            logger.error("ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
+        }
+
     }
 
 }

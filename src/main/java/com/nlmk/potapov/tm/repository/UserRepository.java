@@ -1,12 +1,22 @@
 package com.nlmk.potapov.tm.repository;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository {
+
+    private static final Logger logger = LogManager.getLogger(UserRepository.class);
 
     private static UserRepository instance;
 
@@ -127,6 +137,25 @@ public class UserRepository {
 
     public int size() {
         return users.size();
+    }
+
+    public void saveToJson(final String filePath) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            objectMapper.writeValue(new File(filePath),users);
+        } catch (IOException e) {
+            logger.error("ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
+        }
+    }
+
+    public void saveToXml(final String filePath) {
+        final XmlMapper xmlMapper = new XmlMapper();
+        try {
+            xmlMapper.writeValue(new File(filePath),users);
+        } catch (IOException e) {
+            logger.error("ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
+        }
     }
 
 }
