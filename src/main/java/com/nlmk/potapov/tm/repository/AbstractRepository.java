@@ -74,7 +74,7 @@ public abstract class AbstractRepository<T> {
         try {
             objectMapper.writeValue(new File(filePath),entityList);
         } catch (IOException e) {
-            logger.error("ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
+            logger.error("Ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
         }
 
     }
@@ -84,7 +84,7 @@ public abstract class AbstractRepository<T> {
         try {
             xmlMapper.writeValue(new File(filePath),entityList);
         } catch (IOException e) {
-            logger.error("ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
+            logger.error("Ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
         }
 
     }

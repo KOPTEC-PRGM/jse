@@ -145,7 +145,7 @@ public class UserRepository {
         try {
             objectMapper.writeValue(new File(filePath),users);
         } catch (IOException e) {
-            logger.error("ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
+            logger.error("Ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
         }
     }
 
@@ -154,7 +154,7 @@ public class UserRepository {
         try {
             xmlMapper.writeValue(new File(filePath),users);
         } catch (IOException e) {
-            logger.error("ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
+            logger.error("Ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
         }
     }
 
