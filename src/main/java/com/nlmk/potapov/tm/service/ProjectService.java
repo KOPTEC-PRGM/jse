@@ -160,6 +160,7 @@ public class ProjectService {
 
     public void loadFromXml(String filePath) {
         if (filePath.isEmpty()) filePath = "defaultProjectRepository.xml";
-        ProjectRepository.loadFromXml(filePath);
+        projectRepository.loadFromXml(filePath);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.nlmk.potapov.tm.repository;
 
+import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -190,6 +191,14 @@ public class TaskRepository extends AbstractRepository<Task>{
         for (Task task: taskList)
             if(task.getUserId().equals(userId)) filteredList.add(task);
         return filteredList;
+    }
+
+    public void loadFromJson(final String filePath) {
+        super.loadFromJson(filePath, Task.class);
+    }
+
+    public void loadFromXml(final String filePath) {
+        super.loadFromXml(filePath, Task.class);
     }
 
 }

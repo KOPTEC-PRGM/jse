@@ -30,12 +30,12 @@ public class ProjectRepository extends AbstractRepository<Project> {
         return instance;
     }
 
-    public static void loadFromJson(final String filePath) {
-        instance.loadFromJson(filePath, Project.class);
+    public void loadFromJson(final String filePath) {
+        super.loadFromJson(filePath, Project.class);
     }
 
-    public static void loadFromXml(final String filePath) {
-        instance.loadFromXml(filePath, Project.class);
+    public void loadFromXml(final String filePath) {
+        super.loadFromXml(filePath, Project.class);
     }
 
     public Project create(final String name) {
