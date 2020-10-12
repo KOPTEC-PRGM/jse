@@ -1,4 +1,4 @@
-package com.nlmk.potapov.tm.controller;
+package com.nlmk.potapov.tm.listener;
 
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
@@ -6,15 +6,54 @@ import com.nlmk.potapov.tm.service.UserService;
 
 import java.util.List;
 
-import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
-import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class UserController extends AbstractController{
+public class UserListener implements Listener{
 
     private final UserService userService;
 
-    public UserController() {
+    public UserListener() {
         this.userService = UserService.getInstance();
+    }
+
+    @Override
+    public int callCommand(String method, Long userId, RoleType roleType) {
+        if (userId == null) return 0;
+        switch (method) {
+            case USER_CREATE:
+                return addUser(roleType);
+            case USER_CLEAR:
+                return clearUser(roleType);
+            case USER_LIST:
+                return listUser(roleType);
+            case USER_VIEW_BY_ID:
+                return viewUserById(roleType);
+            case USER_VIEW_BY_INDEX:
+                return viewUserByIndex(roleType);
+            case USER_VIEW_BY_LOGIN:
+                return viewUserByLogin(roleType);
+            case USER_REMOVE_BY_ID:
+                return deleteUserById(roleType);
+            case USER_REMOVE_BY_INDEX:
+                return deleteUserByIndex(roleType);
+            case USER_REMOVE_BY_LOGIN:
+                return deleteUserByLogin(roleType);
+            case USER_UPDATE_BY_ID:
+                return updateUserById(roleType);
+            case USER_UPDATE_BY_INDEX:
+                return updateUserByIndex(roleType);
+            case USER_UPDATE_BY_LOGIN:
+                return updateUserByLogin(roleType);
+            case USER_UPDATE_PASSWORD:
+                return changeUserPassword(userId);
+            case USER_VIEW_CURRENT:
+                return viewCurrent(userId);
+            case USER_UPDATE_CURRENT:
+                return changeCurrent(userId);
+
+            default:
+                return 0;
+        }
     }
 
     public int addUser(final RoleType roleType) {
@@ -389,5 +428,4 @@ public class UserController extends AbstractController{
         }
         return Integer.parseInt(scanner.nextLine()) -1;
     }
-
 }

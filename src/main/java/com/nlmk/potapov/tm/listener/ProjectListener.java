@@ -1,4 +1,4 @@
-package com.nlmk.potapov.tm.controller;
+package com.nlmk.potapov.tm.listener;
 
 import com.nlmk.potapov.tm.entity.Project;
 import com.nlmk.potapov.tm.entity.Task;
@@ -10,18 +10,52 @@ import com.nlmk.potapov.tm.service.ProjectTaskService;
 
 import java.util.List;
 
-import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
-import static com.nlmk.potapov.tm.constant.TerminalConst.INDENT;
+import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class ProjectController extends AbstractController {
+public class ProjectListener implements Listener{
 
     private final ProjectService projectService;
 
     private final ProjectTaskService projectTaskService;
 
-    public ProjectController() {
+    public ProjectListener() {
         this.projectService = ProjectService.getInstance();
         this.projectTaskService = ProjectTaskService.getInstance();
+    }
+    @Override
+    public int callCommand(String method, Long userId, RoleType roleType) throws TaskException, ProjectException {
+        if (userId == null) return 0;
+        switch (method) {
+            case PROJECT_CREATE:
+                return createProject(userId);
+            case PROJECT_CLEAR:
+                return clearProject(roleType);
+            case PROJECT_LIST:
+                return listProject(userId, roleType);
+            case PROJECT_LIST_WITH_TASK:
+                return listProjectWithTasks(userId);
+            case PROJECT_VIEW_BY_INDEX:
+                return viewProjectByIndex(userId, roleType);
+            case PROJECT_VIEW_BY_ID:
+                return viewProjectById(userId, roleType);
+            case PROJECT_REMOVE_BY_INDEX:
+                return removeProjectByIndex(userId, roleType);
+            case PROJECT_REMOVE_BY_NAME:
+                return removeProjectByName(userId, roleType);
+            case PROJECT_REMOVE_BY_ID:
+                return removeProjectById(userId, roleType);
+            case PROJECT_UPDATE_BY_INDEX:
+                return updateProjectByIndex(userId, roleType);
+            case PROJECT_UPDATE_BY_ID:
+                return updateProjectById(userId, roleType);
+            case PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID:
+                return assignProjectByNameToUserById(userId, roleType);
+            case PROJECT_REMOVE_WITH_TASKS_BY_ID:
+                return removeProjectWithTasksById(roleType);
+
+            default:
+        }
+        return 0;
     }
 
     public int viewProjectList(Project project) {
@@ -150,10 +184,10 @@ public class ProjectController extends AbstractController {
         for (final Project project: projects){
             int indexTask = 1;
             System.out.println(INDENT+index + ". " + project.getId() + ": " + project.getName());
-                for (final Task task: projectTaskService.viewTasksFromProject(project.getId(), userId)){
-                    System.out.println(INDENT+INDENT+indexTask + ". " + task.getId() + ": " + task.getName());
-                    indexTask++;
-                }
+            for (final Task task: projectTaskService.viewTasksFromProject(project.getId(), userId)){
+                System.out.println(INDENT+INDENT+indexTask + ". " + task.getId() + ": " + task.getName());
+                indexTask++;
+            }
             System.out.println();
             index++;
         }

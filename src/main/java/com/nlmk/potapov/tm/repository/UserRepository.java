@@ -12,6 +12,16 @@ public class UserRepository {
 
     private final List<User> users = new ArrayList<>();
 
+    private User currentAppUser;
+
+    public User getCurrentAppUser() {
+        return currentAppUser;
+    }
+
+    public void setCurrentAppUser(User currentAppUser) {
+        this.currentAppUser = currentAppUser;
+    }
+
     private UserRepository() {
     }
 
