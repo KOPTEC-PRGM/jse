@@ -65,6 +65,7 @@ public class SystemListener implements Listener{
         System.out.println(INDENT+"project-update-by-index - Обновление проекта по номеру.");
         System.out.println(INDENT+"project-update-by-id - Обновление проекта по ID.");
         System.out.println(INDENT+"project-assign-by-name-to-user-by-id - Назначение проекта по имени пользователю по ID.");
+        System.out.println(INDENT+"project-save - Сохранение репозитория проектов.");
         System.out.println();
         System.out.println(INDENT+"task-create - Создание задачи.");
         System.out.println(INDENT+"task-list - Список задач.");
@@ -80,6 +81,7 @@ public class SystemListener implements Listener{
         System.out.println(INDENT+"task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи.");
         System.out.println(INDENT+"task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи.");
         System.out.println(INDENT+"task-assign-by-name-to-user-by-id - Назначение задачи по имени пользователю по ID.");
+        System.out.println(INDENT+"task-save - Сохранение репозитория задач.");
         System.out.println();
         System.out.println(INDENT+"user-create - Добавление нового пользователя.");
         System.out.println(INDENT+"user-list - Список пользователей.");
@@ -96,6 +98,7 @@ public class SystemListener implements Listener{
         System.out.println(INDENT+"user-update-password - Обновление пароля пользователя.");
         System.out.println(INDENT+"user-view-current - Просмотр данных текущего пользователя.");
         System.out.println(INDENT+"user-update-current - Обновление данных текущего пользователя.");
+        System.out.println(INDENT+"user-save - Сохранение репозитория пользователей.");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
