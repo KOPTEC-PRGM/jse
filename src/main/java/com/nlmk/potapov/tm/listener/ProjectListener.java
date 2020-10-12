@@ -54,6 +54,8 @@ public class ProjectListener implements Listener{
                 return removeProjectWithTasksById(roleType);
             case PROJECT_SAVE:
                 return saveProjects(roleType);
+            case PROJECT_LOAD:
+                return loadProjects(roleType);
 
             default:
         }
@@ -329,15 +331,15 @@ public class ProjectListener implements Listener{
         System.out.println("Выберите формат файла:");
         System.out.println(INDENT+"1 - JSON");
         System.out.println(INDENT+"2 - XML");
-        System.out.println("Формат файла:");
+        System.out.print("Формат файла:");
         int i = getIndexFromScanner();
         if (i == 0) {
-            System.out.println("Введите название JSON-файла:");
+            System.out.print("Введите название JSON-файла:");
             String filename = scanner.nextLine();
             projectService.saveToJson(filename);
         }
         else if (i == 1) {
-            System.out.println("Введите название XML-файла:");
+            System.out.print("Введите название XML-файла:");
             String filename = scanner.nextLine();
             projectService.saveToXml(filename);
         }
@@ -347,6 +349,39 @@ public class ProjectListener implements Listener{
             return 0;
         }
         System.out.println("[Готово. Проекты сохранены]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    public int loadProjects(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.println("[Загрузка репозитория проектов]");
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.print("Формат файла: ");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.print("Введите название JSON-файла: ");
+            String filename = scanner.nextLine();
+            projectService.loadFromJson(filename);
+        }
+        else if (i == 1) {
+            System.out.print("Введите название XML-файла: ");
+            String filename = scanner.nextLine();
+//            projectService.saveToXml(filename);
+        }
+        else{
+            System.out.print("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.println("[Готово. Проекты загружены]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

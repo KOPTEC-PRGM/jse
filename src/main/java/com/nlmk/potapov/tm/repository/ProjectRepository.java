@@ -4,15 +4,17 @@ import com.nlmk.potapov.tm.entity.Project;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
-public class ProjectRepository extends AbstractRepository<Project>{
-
-    private static ProjectRepository instance;
+public class ProjectRepository extends AbstractRepository<Project> {
 
     private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
+    private static ProjectRepository instance;
 
     private ProjectRepository() {
     }
@@ -28,10 +30,14 @@ public class ProjectRepository extends AbstractRepository<Project>{
         return instance;
     }
 
+    public static void loadFromJson(String filePath) {
+        instance.loadFromJson(filePath, Project.class);
+    }
+
     public Project create(final String name) {
         final Project project = new Project(name);
         super.create(project);
-        logger.info(LOGGER_CREATE_PROJECT,project);
+        logger.info(LOGGER_CREATE_PROJECT, project);
         return project;
     }
 
@@ -41,12 +47,12 @@ public class ProjectRepository extends AbstractRepository<Project>{
         project.setDescription(description);
         project.setUserId(userId);
         super.create(project);
-        logger.info(LOGGER_CREATE_PROJECT,project);
+        logger.info(LOGGER_CREATE_PROJECT, project);
         return project;
     }
 
     public Project update(final Long id, final String name, final String description, final Long userId) {
-        final Project project = findById(id,userId);
+        final Project project = findById(id, userId);
         if (project == null) return null;
         if (!project.getName().equals(name)) {
             removeFromEntityMap(project);
@@ -62,7 +68,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
     public boolean remove(final Project project) {
         entityList.remove(project);
         removeFromEntityMap(project);
-        logger.info(LOGGER_DELETE_PROJECT,project);
+        logger.info(LOGGER_DELETE_PROJECT, project);
         return true;
     }
 
@@ -74,7 +80,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
 
     public Project findByIndex(final int index, final Long userId) {
         if (userId == null) return entityList.get(index);
-        final List<Project> filteredList = filterListByUserId(entityList,userId);
+        final List<Project> filteredList = filterListByUserId(entityList, userId);
         return filteredList.get(index);
     }
 
@@ -87,14 +93,14 @@ public class ProjectRepository extends AbstractRepository<Project>{
     }
 
     public List<Project> findListByName(final String name, final Long userId) {
-        if (userId == null)  return entityMap.get(name);
+        if (userId == null) return entityMap.get(name);
         return filterListByUserId(entityMap.get(name), userId);
     }
 
     public Project findById(final Long id, final Long userId) {
-        for (final Project project: entityList){
+        for (final Project project : entityList) {
             if ((project.getId().equals(id))
-            && (userId == null || project.getUserId().equals(userId))) return project;
+                    && (userId == null || project.getUserId().equals(userId))) return project;
         }
         return null;
     }
@@ -102,19 +108,19 @@ public class ProjectRepository extends AbstractRepository<Project>{
     public Project removeByIndex(final int index, final Long userId) {
         final Project project = findByIndex(index, userId);
         if (project == null) return null;
-        if (remove(project)){
-            logger.info(LOGGER_DELETE_PROJECT,project);
+        if (remove(project)) {
+            logger.info(LOGGER_DELETE_PROJECT, project);
             return project;
         }
         return null;
     }
 
     public List<Project> removeByName(final String name, final Long userId) {
-        final List<Project> projectList = findListByName(name,userId);
+        final List<Project> projectList = findListByName(name, userId);
         if (projectList == null || projectList.isEmpty()) return Collections.emptyList();
         entityMap.remove(name);
-        for (Project project: projectList){
-            logger.info(LOGGER_DELETE_PROJECT,project);
+        for (Project project : projectList) {
+            logger.info(LOGGER_DELETE_PROJECT, project);
             entityList.remove(project);
         }
         return projectList;
@@ -134,7 +140,7 @@ public class ProjectRepository extends AbstractRepository<Project>{
     }
 
     public Project assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) {
-        Project project = findByName(name,currentUserId, position);
+        Project project = findByName(name, currentUserId, position);
         project.setUserId(userId);
         logger.info("Проекту [{}] назначен пользователь userId={}.", project, userId);
         return project;
@@ -146,8 +152,8 @@ public class ProjectRepository extends AbstractRepository<Project>{
 
     public List<Project> filterListByUserId(final List<Project> projectList, final Long userId) {
         final List<Project> filteredList = new ArrayList<>();
-        for (Project project: projectList)
-            if(project.getUserId().equals(userId)) filteredList.add(project);
+        for (Project project : projectList)
+            if (project.getUserId().equals(userId)) filteredList.add(project);
         return filteredList;
     }
 

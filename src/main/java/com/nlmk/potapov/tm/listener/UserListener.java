@@ -422,15 +422,15 @@ public class UserListener implements Listener{
         System.out.println("Выберите формат файла:");
         System.out.println(INDENT+"1 - JSON");
         System.out.println(INDENT+"2 - XML");
-        System.out.println("Формат файла:");
+        System.out.print("Формат файла:");
         int i = getIndexFromScanner();
         if (i == 0) {
-            System.out.println("Введите название JSON-файла:");
+            System.out.print("Введите название JSON-файла:");
             String filename = scanner.nextLine();
             userService.saveToJson(filename);
         }
         else if (i == 1) {
-            System.out.println("Введите название XML-файла:");
+            System.out.print("Введите название XML-файла:");
             String filename = scanner.nextLine();
             userService.saveToXml(filename);
         }

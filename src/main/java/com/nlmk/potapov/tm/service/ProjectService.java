@@ -153,4 +153,8 @@ public class ProjectService {
         projectRepository.saveToXml(filePath);
     }
 
+    public void loadFromJson(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultProjectRepository.json";
+        projectRepository.loadFromJson(filePath);
+    }
 }
