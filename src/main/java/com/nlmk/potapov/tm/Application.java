@@ -32,8 +32,8 @@ public class Application {
         userService.create("Новый пользователь 1", "Надежный пароль", "Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль", "Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         userService.create("1", "1", "Семен", "Семенович", "Горбунков", RoleType.ADMIN);
-        projectRepository.create(" №2");
-        projectRepository.create(" №1");
+        projectRepository.create("Демонстрационный проект №2");
+        projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №3");
         taskRepository.create("Демонстрационное задание №1");
         taskRepository.create("Демонстрационное задание №2");

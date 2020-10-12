@@ -328,29 +328,13 @@ public class ProjectListener implements Listener{
             return -1;
         }
         System.out.println("[Сохранение репозитория проектов]");
-        System.out.println("Выберите формат файла:");
-        System.out.println(INDENT+"1 - JSON");
-        System.out.println(INDENT+"2 - XML");
-        System.out.print("Формат файла:");
-        int i = getIndexFromScanner();
-        if (i == 0) {
-            System.out.print("Введите название JSON-файла:");
-            String filename = scanner.nextLine();
-            projectService.saveToJson(filename);
-        }
-        else if (i == 1) {
-            System.out.print("Введите название XML-файла:");
-            String filename = scanner.nextLine();
-            projectService.saveToXml(filename);
-        }
-        else{
-            System.out.println("Неверный формат файла");
+        if (persistRepository("save") == 0) {
+            System.out.println("[Готово. Проекты сохранены]");
             System.out.println(BLOCK_SEPARATOR);
             return 0;
         }
-        System.out.println("[Готово. Проекты сохранены]");
-        System.out.println(BLOCK_SEPARATOR);
-        return 0;
+        else
+            return -1;
     }
 
     public int loadProjects(final RoleType roleType) {
@@ -361,29 +345,13 @@ public class ProjectListener implements Listener{
             return -1;
         }
         System.out.println("[Загрузка репозитория проектов]");
-        System.out.println("Выберите формат файла:");
-        System.out.println(INDENT+"1 - JSON");
-        System.out.println(INDENT+"2 - XML");
-        System.out.print("Формат файла: ");
-        int i = getIndexFromScanner();
-        if (i == 0) {
-            System.out.print("Введите название JSON-файла: ");
-            String filename = scanner.nextLine();
-            projectService.loadFromJson(filename);
-        }
-        else if (i == 1) {
-            System.out.print("Введите название XML-файла: ");
-            String filename = scanner.nextLine();
-//            projectService.saveToXml(filename);
-        }
-        else{
-            System.out.print("Неверный формат файла");
+        if (persistRepository("load") == 0) {
+            System.out.println("[Готово. Проекты загружены]");
             System.out.println(BLOCK_SEPARATOR);
             return 0;
         }
-        System.out.println("[Готово. Проекты загружены]");
-        System.out.println(BLOCK_SEPARATOR);
-        return 0;
+        else
+            return -1;
     }
 
     private Long getIdFromScanner(){
@@ -404,6 +372,40 @@ public class ProjectListener implements Listener{
             return -1;
         }
         return Integer.parseInt(scanner.nextLine()) -1;
+    }
+
+    private int persistRepository(final String method){
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.print("Формат файла: ");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.print("Введите название JSON-файла: ");
+            String filename = scanner.nextLine();
+            switch (method) {
+                case "save":
+                    projectService.saveToJson(filename);
+                case "load":
+                    projectService.loadFromJson(filename);
+            }
+        }
+        else if (i == 1) {
+            System.out.print("Введите название XML-файла: ");
+            String filename = scanner.nextLine();
+            switch (method) {
+                case "save":
+                    projectService.saveToXml(filename);
+                case "load":
+                    projectService.loadFromXml(filename);
+            }
+        }
+        else{
+            System.out.println("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        return 0;
     }
 
 }

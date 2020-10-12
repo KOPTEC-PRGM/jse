@@ -103,4 +103,20 @@ public abstract class AbstractRepository<T> {
         }
     }
 
+    protected void loadFromXml(final String filePath, Class clazz) {
+        final XmlMapper xmlMapper = new XmlMapper();
+        List<T> fileList = null;
+        try {
+            TypeFactory t = TypeFactory.defaultInstance();
+            fileList = xmlMapper.readValue(new File(filePath), t.constructCollectionType(ArrayList.class, clazz));
+        } catch (IOException e) {
+            logger.error("Ошибка чтения из файла {} : {}", filePath, e.getMessage());
+        }
+        entityList.clear();
+        entityMap.clear();
+        for (T entity : fileList) {
+            create(entity);
+        }
+    }
+
 }

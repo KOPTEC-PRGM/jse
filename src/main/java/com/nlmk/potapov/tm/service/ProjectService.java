@@ -157,4 +157,9 @@ public class ProjectService {
         if (filePath.isEmpty()) filePath = "defaultProjectRepository.json";
         projectRepository.loadFromJson(filePath);
     }
+
+    public void loadFromXml(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultProjectRepository.xml";
+        ProjectRepository.loadFromXml(filePath);
+    }
 }

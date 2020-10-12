@@ -352,15 +352,15 @@ public class TaskListener implements Listener{
         System.out.println("Выберите формат файла:");
         System.out.println(INDENT+"1 - JSON");
         System.out.println(INDENT+"2 - XML");
-        System.out.print("Формат файла:");
+        System.out.print("Формат файла: ");
         int i = getIndexFromScanner();
         if (i == 0) {
-            System.out.print("Введите название JSON-файла:");
+            System.out.print("Введите название JSON-файла: ");
             String filename = scanner.nextLine();
             taskService.saveToJson(filename);
         }
         else if (i == 1) {
-            System.out.print("Введите название XML-файла:");
+            System.out.print("Введите название XML-файла: ");
             String filename = scanner.nextLine();
             taskService.saveToXml(filename);
         }
