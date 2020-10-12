@@ -52,6 +52,8 @@ public class ProjectListener implements Listener{
                 return assignProjectByNameToUserById(userId, roleType);
             case PROJECT_REMOVE_WITH_TASKS_BY_ID:
                 return removeProjectWithTasksById(roleType);
+            case PROJECT_SAVE:
+                return saveProjects(roleType);
 
             default:
         }
@@ -312,6 +314,39 @@ public class ProjectListener implements Listener{
         if (id == null) return -1;
         final Project project = projectTaskService.removeProjectWithTasks(id, null);
         System.out.println("[Готово. Проект (ID = " + project.getId() + ") удален]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
+    public int saveProjects(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.println("[Сохранение репозитория проектов]");
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.println("Формат файла:");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.println("Введите название JSON-файла:");
+            String filename = scanner.nextLine();
+            projectService.saveToJson(filename);
+        }
+        else if (i == 1) {
+            System.out.println("Введите название XML-файла:");
+            String filename = scanner.nextLine();
+            projectService.saveToXml(filename);
+        }
+        else{
+            System.out.println("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.println("[Готово. Проекты сохранены]");
         System.out.println(BLOCK_SEPARATOR);
         return 0;
     }

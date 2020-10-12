@@ -42,117 +42,127 @@ public class TaskService {
     }
 
     public Task create(final String name, final String description, final Long userId) {
-        ServiceUtil.traceLogger(logger, "create",new Object[]{name,description,userId});
+        ServiceUtil.traceLogger(logger, "create", new Object[]{name, description, userId});
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
         return taskRepository.create(name, description, userId);
     }
 
     public Task update(final Long id, final String name, final String description, final Long userId) {
-        ServiceUtil.traceLogger(logger, "update",new Object[]{id,name,description,userId});
-        if (id == null ) return null;
+        ServiceUtil.traceLogger(logger, "update", new Object[]{id, name, description, userId});
+        if (id == null) return null;
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
         return taskRepository.update(id, name, description, userId);
     }
 
     public void clear() {
-        ServiceUtil.traceLogger(logger, "clear",new Object[]{});
+        ServiceUtil.traceLogger(logger, "clear", new Object[]{});
         taskRepository.clear();
     }
 
     public Task findByIndex(final int index, final Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "findByIndex",new Object[]{index,userId});
-        if (index < 0 || index > taskRepository.size() -1){
+        ServiceUtil.traceLogger(logger, "findByIndex", new Object[]{index, userId});
+        if (index < 0 || index > taskRepository.size() - 1) {
             throw new TaskException(NULL_TASK_EXCEPTION);
         }
         return throwExceptionIfNull(taskRepository.findByIndex(index, userId));
     }
 
     public Task findByName(final String name, final Long userId, final int position) throws TaskException {
-        ServiceUtil.traceLogger(logger, "findByName",new Object[]{name,userId,position});
+        ServiceUtil.traceLogger(logger, "findByName", new Object[]{name, userId, position});
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(taskRepository.findByName(name, userId, position));
     }
 
     public List<Task> findListByName(String name, Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "findListByName",new Object[]{name,userId});
+        ServiceUtil.traceLogger(logger, "findListByName", new Object[]{name, userId});
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.findListByName(name, userId));
     }
 
     public Task findById(final Long id, final Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "findById",new Object[]{id,userId});
-        if (id == null ) return null;
+        ServiceUtil.traceLogger(logger, "findById", new Object[]{id, userId});
+        if (id == null) return null;
         return throwExceptionIfNull(taskRepository.findById(id, userId));
     }
 
     public Task removeByIndex(final int index, final Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "removeByIndex",new Object[]{index,userId});
-        if (index < 0 || index > taskRepository.size() -1) return null;
+        ServiceUtil.traceLogger(logger, "removeByIndex", new Object[]{index, userId});
+        if (index < 0 || index > taskRepository.size() - 1) return null;
         return throwExceptionIfNull(taskRepository.removeByIndex(index, userId));
     }
 
     public List<Task> removeByName(final String name) throws TaskException {
-        ServiceUtil.traceLogger(logger, "removeByName",new Object[]{name});
+        ServiceUtil.traceLogger(logger, "removeByName", new Object[]{name});
         if (name == null || name.isEmpty()) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.removeByName(name));
     }
 
     public Task removeByName(String name, Long userId, Integer position) throws TaskException {
-        ServiceUtil.traceLogger(logger, "removeByName",new Object[]{name,userId,position});
+        ServiceUtil.traceLogger(logger, "removeByName", new Object[]{name, userId, position});
         if (name == null || name.isEmpty()) return null;
         return throwExceptionIfNull(taskRepository.removeByName(name, userId, position));
     }
 
     public Task removeById(final Long id, final Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "removeById",new Object[]{id,userId});
-        if (id == null ) return null;
+        ServiceUtil.traceLogger(logger, "removeById", new Object[]{id, userId});
+        if (id == null) return null;
         return throwExceptionIfNull(taskRepository.removeById(id, userId));
     }
 
     public Task assignUserIdByName(final String name, final Long userId, final Long currentUserId, final int position) throws TaskException {
-        ServiceUtil.traceLogger(logger, "assignUserIdByName",new Object[]{name,userId,currentUserId,position});
+        ServiceUtil.traceLogger(logger, "assignUserIdByName", new Object[]{name, userId, currentUserId, position});
         if (name == null || name.isEmpty()) return null;
-        if (userId == null ) return null;
+        if (userId == null) return null;
         return throwExceptionIfNull(taskRepository.assignUserIdByName(name, userId, currentUserId, position));
     }
 
     public List<Task> findAll() throws TaskException {
-        ServiceUtil.traceLogger(logger, "findAll",new Object[]{});
+        ServiceUtil.traceLogger(logger, "findAll", new Object[]{});
         return throwExceptionIfEmpty(taskRepository.findAll());
     }
 
     public List<Task> findAllByUserId(final Long userId) throws TaskException {
-        ServiceUtil.traceLogger(logger, "findAllByUserId",new Object[]{userId});
+        ServiceUtil.traceLogger(logger, "findAllByUserId", new Object[]{userId});
         if (userId == null) return Collections.emptyList();
         return throwExceptionIfEmpty(taskRepository.findAllByUserId(userId));
     }
 
     public void assignProjectId(final Long id, final Long projectId, final Long userId) {
-        ServiceUtil.traceLogger(logger, "assignProjectId",new Object[]{id,projectId,userId});
-        if (id == null ) return;
-        if (projectId == null ) return;
+        ServiceUtil.traceLogger(logger, "assignProjectId", new Object[]{id, projectId, userId});
+        if (id == null) return;
+        if (projectId == null) return;
         taskRepository.assignProjectId(id, projectId, userId);
     }
 
     public void sortList() {
-        ServiceUtil.traceLogger(logger, "sortList",new Object[]{});
+        ServiceUtil.traceLogger(logger, "sortList", new Object[]{});
         taskRepository.sortList();
     }
 
     private Task throwExceptionIfNull(final Task task) throws TaskException {
-        if (task == null){
+        if (task == null) {
             throw new TaskException(NULL_TASK_EXCEPTION);
         }
         return task;
     }
 
     private List<Task> throwExceptionIfEmpty(final List<Task> tasks) throws TaskException {
-        if (tasks == null || tasks.isEmpty()){
+        if (tasks == null || tasks.isEmpty()) {
             throw new TaskException(EMPTY_TASK_LIST_EXCEPTION);
         }
         return tasks;
+    }
+
+    public void saveToJson(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultProjectRepository.json";
+        taskRepository.saveToJson(filePath);
+    }
+
+    public void saveToXml(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultProjectRepository.xml";
+        taskRepository.saveToXml(filePath);
     }
 
 }

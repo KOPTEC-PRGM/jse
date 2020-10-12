@@ -56,6 +56,8 @@ public class TaskListener implements Listener{
                 return addTaskToProjectByIds(userId, roleType);
             case TASK_REMOVE_FROM_PROJECT_BY_IDS:
                 return removeTaskFromProjectByIds(userId, roleType);
+            case TASK_SAVE:
+                return saveTasks(roleType);
 
             default:
                 return 0;
@@ -336,6 +338,39 @@ public class TaskListener implements Listener{
         if (taskId == null) return -1;
         Task task = projectTaskService.removeTaskFromProject(projectId, taskId, currentUserId);
         System.out.println("[Готово. Задача (ID = " + task.getId() + ") удалена из проекта (ID = " + projectId + ")]");
+        return 0;
+    }
+
+    public int saveTasks(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.println("[Сохранение репозитория задач]");
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.println("Формат файла:");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.println("Введите название JSON-файла:");
+            String filename = scanner.nextLine();
+            taskService.saveToJson(filename);
+        }
+        else if (i == 1) {
+            System.out.println("Введите название XML-файла:");
+            String filename = scanner.nextLine();
+            taskService.saveToXml(filename);
+        }
+        else{
+            System.out.println("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.println("[Готово. Задачи сохранены]");
+        System.out.println(BLOCK_SEPARATOR);
         return 0;
     }
 
