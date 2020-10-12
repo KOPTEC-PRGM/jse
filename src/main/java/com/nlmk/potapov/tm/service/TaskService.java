@@ -17,10 +17,23 @@ public class TaskService {
 
     private static final Logger logger = LogManager.getLogger(TaskService.class);
 
+    private static TaskService instance;
+
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    private TaskService() {
+        this.taskRepository = TaskRepository.getInstance();
+    }
+
+    public static TaskService getInstance() {
+        if (instance == null) {
+            synchronized (TaskService.class) {
+                if (instance == null) {
+                    instance = new TaskService();
+                }
+            }
+        }
+        return instance;
     }
 
     public Task create(final String name) {

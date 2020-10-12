@@ -17,10 +17,23 @@ public class ProjectService {
 
     private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
+    private static ProjectService instance;
+
     private final ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    private ProjectService() {
+        this.projectRepository = ProjectRepository.getInstance();
+    }
+
+    public static ProjectService getInstance() {
+        if (instance == null) {
+            synchronized (ProjectService.class) {
+                if (instance == null) {
+                    instance = new ProjectService();
+                }
+            }
+        }
+        return instance;
     }
 
     public Project create(final String name) {

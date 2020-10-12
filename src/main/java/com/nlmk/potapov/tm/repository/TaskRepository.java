@@ -10,11 +10,27 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class TaskRepository {
 
+    private static TaskRepository instance;
+
     private static final Logger logger = LogManager.getLogger(TaskRepository.class);
 
     private final List<Task> tasks = new ArrayList<>();
 
     private final Map<String,List<Task>> taskMap = new HashMap<>();
+
+    private TaskRepository(){
+    }
+
+    public static TaskRepository getInstance() {
+        if (instance == null) {
+            synchronized (TaskRepository.class) {
+                if (instance == null) {
+                    instance = new TaskRepository();
+                }
+            }
+        }
+        return instance;
+    }
 
     public void addToTaskMap(final Task task) {
         final String name = task.getName();

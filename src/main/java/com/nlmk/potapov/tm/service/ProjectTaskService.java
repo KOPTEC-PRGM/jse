@@ -14,13 +14,26 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class ProjectTaskService {
 
+    private static ProjectTaskService instance;
+
     private final ProjectRepository projectRepository;
 
     private final TaskRepository taskRepository;
 
-    public ProjectTaskService(ProjectRepository projectRepository, TaskRepository taskRepository) {
-        this.projectRepository = projectRepository;
-        this.taskRepository = taskRepository;
+    private ProjectTaskService() {
+        this.projectRepository = ProjectRepository.getInstance();
+        this.taskRepository = TaskRepository.getInstance();
+    }
+
+    public static ProjectTaskService getInstance() {
+        if (instance == null) {
+            synchronized (ProjectTaskService.class) {
+                if (instance == null) {
+                    instance = new ProjectTaskService();
+                }
+            }
+        }
+        return instance;
     }
 
     public Task addTaskToProject(final Long projectId, final Long taskId, final Long userId) throws ProjectException, TaskException {

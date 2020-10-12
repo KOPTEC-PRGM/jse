@@ -13,8 +13,8 @@ public class UserController extends AbstractController{
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController() {
+        this.userService = UserService.getInstance();
     }
 
     public int addUser(final RoleType roleType) {

@@ -19,9 +19,9 @@ public class ProjectController extends AbstractController {
 
     private final ProjectTaskService projectTaskService;
 
-    public ProjectController(ProjectService projectService, ProjectTaskService projectTaskService) {
-        this.projectService = projectService;
-        this.projectTaskService = projectTaskService;
+    public ProjectController() {
+        this.projectService = ProjectService.getInstance();
+        this.projectTaskService = ProjectTaskService.getInstance();
     }
 
     public int viewProjectList(Project project) {

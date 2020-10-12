@@ -9,9 +9,7 @@ import com.nlmk.potapov.tm.exception.ProjectException;
 import com.nlmk.potapov.tm.exception.TaskException;
 import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
-import com.nlmk.potapov.tm.repository.UserRepository;
 import com.nlmk.potapov.tm.service.ProjectService;
-import com.nlmk.potapov.tm.service.ProjectTaskService;
 import com.nlmk.potapov.tm.service.TaskService;
 import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -25,33 +23,25 @@ public class Application {
 
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-    private final ProjectRepository projectRepository = new ProjectRepository();
+    private final ProjectController projectController = new ProjectController();
 
-    private final TaskRepository taskRepository = new TaskRepository();
+    private final TaskController taskController = new TaskController();
 
-    private final UserRepository userRepository = new UserRepository();
+    private final UserController userController = new UserController();
 
-    private final ProjectService projectService = new ProjectService(projectRepository);
-
-    private final TaskService taskService = new TaskService(taskRepository);
-
-    private final ProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
-
-    private final UserService userService = new UserService(userRepository);
-
-    private final ProjectController projectController = new ProjectController(projectService, projectTaskService);
-
-    private final TaskController taskController = new TaskController(taskService, projectTaskService);
-
-    private final UserController userController = new UserController(userService);
-
-    private final SystemController systemController = new SystemController(this, userService);
+    private final SystemController systemController = new SystemController(this);
 
     private Long currentUserId = null;
 
     private RoleType currentUserRole = null;
 
     {
+        final UserService userService = UserService.getInstance();
+        final ProjectRepository projectRepository = ProjectRepository.getInstance();
+        final TaskRepository taskRepository = TaskRepository.getInstance();
+        final TaskService taskService = TaskService.getInstance();
+        final ProjectService projectService = ProjectService.getInstance();
+
         userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
         userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectRepository.create("Демонстрационный проект №2");

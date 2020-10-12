@@ -1,6 +1,7 @@
 package com.nlmk.potapov.tm.repository;
 
 import com.nlmk.potapov.tm.entity.Project;
+import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,11 +11,27 @@ import static com.nlmk.potapov.tm.constant.TerminalConst.*;
 
 public class ProjectRepository {
 
+    private static ProjectRepository instance;
+
     private static final Logger logger = LogManager.getLogger(ProjectRepository.class);
 
     private final List<Project> projects = new ArrayList<>();
 
     private final Map<String,List<Project>> projectMap = new HashMap<>();
+
+    private ProjectRepository() {
+    }
+
+    public static ProjectRepository getInstance() {
+        if (instance == null) {
+            synchronized (ProjectRepository.class) {
+                if (instance == null) {
+                    instance = new ProjectRepository();
+                }
+            }
+        }
+        return instance;
+    }
 
     public void addToProjectMap(final Project project) {
         final String name = project.getName();
