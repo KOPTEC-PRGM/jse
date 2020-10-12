@@ -84,5 +84,6 @@ public final class TerminalConst {
     public static final String USER_VIEW_CURRENT = "user-view-current";
     public static final String USER_UPDATE_CURRENT = "user-update-current";
     public static final String USER_SAVE = "user-save";
+    public static final String USER_LOAD = "user-load";
 
 }

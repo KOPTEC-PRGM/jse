@@ -2,7 +2,9 @@ package com.nlmk.potapov.tm.repository;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.nlmk.potapov.tm.entity.User;
 import com.nlmk.potapov.tm.enumerated.RoleType;
@@ -155,6 +157,35 @@ public class UserRepository {
             xmlMapper.writeValue(new File(filePath),users);
         } catch (IOException e) {
             logger.error("Ошибка записи объекта {} в файл {} : {}", users, filePath, e.getMessage());
+        }
+    }
+
+    public void loadFromJson(final String filePath) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            List<User> loadList = objectMapper.readValue(new File(filePath), new TypeReference<>() {});
+            users.clear();
+            users.clear();
+            for (User user : loadList) {
+                users.add(user);
+            }
+        } catch (IOException e) {
+            logger.error("Ошибка чтения из файла {} : {}", filePath, e.getMessage());
+        }
+    }
+
+    public void loadFromXml(final String filePath) {
+        final XmlMapper xmlMapper = new XmlMapper();
+        try {
+            List<User> loadList = xmlMapper.readValue(new File(filePath), new TypeReference<>() {});
+            users.clear();
+            users.clear();
+            for (User user : loadList) {
+                users.add(user);
+            }
+        } catch (IOException e) {
+            logger.error("Ошибка чтения из файла {} : {}", filePath, e.getMessage());
         }
     }
 
