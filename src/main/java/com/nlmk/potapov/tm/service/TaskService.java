@@ -156,12 +156,12 @@ public class TaskService {
     }
 
     public void saveToJson(String filePath) {
-        if (filePath.isEmpty()) filePath = "defaultProjectRepository.json";
+        if (filePath.isEmpty()) filePath = "defaultTaskRepository.json";
         taskRepository.saveToJson(filePath);
     }
 
     public void saveToXml(String filePath) {
-        if (filePath.isEmpty()) filePath = "defaultProjectRepository.xml";
+        if (filePath.isEmpty()) filePath = "defaultTaskRepository.xml";
         taskRepository.saveToXml(filePath);
     }
 

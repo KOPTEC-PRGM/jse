@@ -139,12 +139,12 @@ public class UserService {
     }
 
     public void saveToJson(String filePath) {
-        if (filePath.isEmpty()) filePath = "defaultProjectRepository.json";
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.json";
         userRepository.saveToJson(filePath);
     }
 
     public void saveToXml(String filePath) {
-        if (filePath.isEmpty()) filePath = "defaultProjectRepository.xml";
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.xml";
         userRepository.saveToXml(filePath);
     }
 
