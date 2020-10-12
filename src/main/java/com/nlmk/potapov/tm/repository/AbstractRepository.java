@@ -86,7 +86,7 @@ public abstract class AbstractRepository<T> {
         }
     }
 
-    protected void loadFromJson(final String filePath, Class clazz) {
+    protected void loadFromJson(final String filePath, Class<? extends T> clazz) {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
@@ -102,7 +102,7 @@ public abstract class AbstractRepository<T> {
         }
     }
 
-    protected void loadFromXml(final String filePath, Class clazz) {
+    protected void loadFromXml(final String filePath, Class<? extends T> clazz) {
         final XmlMapper xmlMapper = new XmlMapper();
         try {
             TypeFactory type = TypeFactory.defaultInstance();
