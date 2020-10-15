@@ -9,6 +9,7 @@ import com.nlmk.potapov.tm.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static com.nlmk.potapov.tm.constant.TerminalConst.*;
@@ -54,11 +55,12 @@ public class PublisherImpl implements Publisher{
                 userId = null;
                 roleType = null;
             }
-            if (!command.isEmpty()) SystemService.getInstance().roundAdd(command);
-            result = notifyListener(command, userId, roleType);
+            if (!Objects.equals(command,null)) {
+                SystemService.getInstance().roundAdd(command);
+                result = notifyListener(command, userId, roleType);
+            }
             System.out.print(INPUT_MESSAGE);
             command = scanner.nextLine();
-
         }
         result = notifyListener(command, userId, roleType);
         System.exit(result);
