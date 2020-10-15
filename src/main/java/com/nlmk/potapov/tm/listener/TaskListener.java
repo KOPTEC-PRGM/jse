@@ -182,9 +182,9 @@ public class TaskListener implements Listener{
         if (userId == null) taskList = null;
         else if (roleType.equals(RoleType.ADMIN)) taskList = taskService.findAll();
         else taskList = taskService.findAllByUserId(userId);
+        viewTaskList(taskList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
-        viewTaskList(taskList);
         return 0;
     }
 
