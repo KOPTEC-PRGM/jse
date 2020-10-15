@@ -59,9 +59,9 @@ public class Application {
     public static void main(final String[] args) {
         final PublisherImpl publisher = new PublisherImpl();
         Application application = new Application();
-        if (args == null) return;
-        if (args.length < 1) return;
-        final String param = args[0];
+        String param = null;
+        if (args.length > 0) param= args[0];
+
         publisher.addListener(new SystemListener());
         publisher.addListener(new UserListener());
         publisher.addListener(new TaskListener());
