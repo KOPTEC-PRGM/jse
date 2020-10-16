@@ -50,6 +50,8 @@ public class UserListener implements Listener{
                 return viewCurrent(userId);
             case USER_UPDATE_CURRENT:
                 return changeCurrent(userId);
+            case USER_SAVE:
+                return saveUsers(roleType);
 
             default:
                 return 0;
@@ -409,6 +411,39 @@ public class UserListener implements Listener{
         return updateUser(user);
     }
 
+    public int saveUsers(final RoleType roleType) {
+        System.out.println(BLOCK_SEPARATOR);
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.println("[Сохранение репозитория пользователей]");
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.println("Формат файла:");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.println("Введите название JSON-файла:");
+            String filename = scanner.nextLine();
+            userService.saveToJson(filename);
+        }
+        else if (i == 1) {
+            System.out.println("Введите название XML-файла:");
+            String filename = scanner.nextLine();
+            userService.saveToXml(filename);
+        }
+        else{
+            System.out.println("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        System.out.println("[Готово. Пользователи сохранены]");
+        System.out.println(BLOCK_SEPARATOR);
+        return 0;
+    }
+
     private Long getIdFromScanner(){
         if (!scanner.hasNextLong()) {
             final String error_value = scanner.nextLine();
@@ -428,4 +463,5 @@ public class UserListener implements Listener{
         }
         return Integer.parseInt(scanner.nextLine()) -1;
     }
+
 }

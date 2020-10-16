@@ -62,6 +62,7 @@ project-remove-with-tasks-by-id - Удаление проекта с его за
 project-update-by-index - Обновление проекта по номеру
 project-update-by-id - Обновление проекта по ID
 project-assign-by-name-to-user-by-id - Назначение проекта по имени пользователю по ID
+project-save - Сохранение репозитория проектов
 
 task-create - Создание задачи
 task-list - Вывод списка задач
@@ -77,6 +78,7 @@ task-list-by-project-id - Список задач в проекте по ID пр
 task-add-to-project-by-ids - Добавление задачи в проект по ID проекта и ID задачи
 task-remove-from-project-by-ids - Удаление задачи из проекта по ID проекта и ID задачи
 task-assign-by-name-to-user-by-id - Назначение задачи по имени пользователю по ID
+task-save - Сохранение репозитория задач
 
 user-create - Добавление нового пользователя
 user-list - Список пользователей
@@ -93,4 +95,5 @@ user-update-by-login - Обновление пользователя по лог
 user-update-password - Обновление пароля пользователя
 user-view-current - Просмотр данных текущего пользователя
 user-update-current - Обновление данных текущего пользователя
+user-save - Сохранение репозитория пользователей
 ```

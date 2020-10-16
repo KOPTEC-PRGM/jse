@@ -68,7 +68,7 @@ public class UserService {
         if (firstName == null || firstName.isEmpty()) return null;
         if (middleName == null || middleName.isEmpty()) return null;
         if (lastName == null || lastName.isEmpty()) return null;
-        return userRepository.update(login,  firstName, middleName, lastName);
+        return userRepository.update(login, firstName, middleName, lastName);
     }
 
     public User update(
@@ -95,7 +95,7 @@ public class UserService {
     }
 
     public User findByIndex(final int index) {
-        if (index < 0 || index > userRepository.size() -1) return null;
+        if (index < 0 || index > userRepository.size() - 1) return null;
         return userRepository.findByIndex(index);
     }
 
@@ -110,7 +110,7 @@ public class UserService {
     }
 
     public User removeByIndex(final int index) {
-        if (index < 0 || index > userRepository.size() -1) return null;
+        if (index < 0 || index > userRepository.size() - 1) return null;
         return userRepository.removeByIndex(index);
     }
 
@@ -119,7 +119,7 @@ public class UserService {
         return userRepository.removeById(id);
     }
 
-    public boolean checkPassword(final String login, final String password){
+    public boolean checkPassword(final String login, final String password) {
         if (login == null || login.isEmpty()) return false;
         if (password == null || password.isEmpty()) return false;
         User user = userRepository.findByLogin(login);
@@ -136,6 +136,16 @@ public class UserService {
 
     public void setCurrentAppUser(User currentAppUser) {
         userRepository.setCurrentAppUser(currentAppUser);
+    }
+
+    public void saveToJson(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.json";
+        userRepository.saveToJson(filePath);
+    }
+
+    public void saveToXml(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.xml";
+        userRepository.saveToXml(filePath);
     }
 
 }

@@ -16,7 +16,7 @@ import com.nlmk.potapov.tm.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.nlmk.potapov.tm.constant.TerminalConst.*;
+import static com.nlmk.potapov.tm.constant.TerminalConst.BLOCK_SEPARATOR;
 
 public class Application {
 
@@ -29,8 +29,8 @@ public class Application {
         final TaskService taskService = TaskService.getInstance();
         final ProjectService projectService = ProjectService.getInstance();
 
-        userService.create("Новый пользователь 1", "Надежный пароль","Иван", "Васильевич", "Бунша", RoleType.USER);
-        userService.create("Главный администратор", "Очень надежный пароль","Семен", "Семенович", "Горбунков", RoleType.ADMIN);
+        userService.create("Новый пользователь 1", "Надежный пароль", "Иван", "Васильевич", "Бунша", RoleType.USER);
+        userService.create("Главный администратор", "Очень надежный пароль", "Семен", "Семенович", "Горбунков", RoleType.ADMIN);
         projectRepository.create("Демонстрационный проект №2");
         projectRepository.create("Демонстрационный проект №1");
         projectRepository.create("Демонстрационный проект №3");
@@ -39,17 +39,17 @@ public class Application {
         taskRepository.create("Демонстрационное задание №2");
         taskRepository.create("Демонстрационное задание №4");
         try {
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1",null,0).getId(), projectService.findByName("Демонстрационный проект №1",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,0).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2",null,1).getId(), projectService.findByName("Демонстрационный проект №2",null,0).getId(), null);
-            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4",null,0).getId(), projectService.findByName("Демонстрационный проект №3",null,0).getId(), null);
-            projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId(),null,0);
-            projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId(),null,0);
-            projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(),null,0);
-            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(),null,1);
-            taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(),null,0);
+            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №1", null, 0).getId(), projectService.findByName("Демонстрационный проект №1", null, 0).getId(), null);
+            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2", null, 0).getId(), projectService.findByName("Демонстрационный проект №2", null, 0).getId(), null);
+            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №2", null, 1).getId(), projectService.findByName("Демонстрационный проект №2", null, 0).getId(), null);
+            taskService.assignProjectId(taskService.findByName("Демонстрационное задание №4", null, 0).getId(), projectService.findByName("Демонстрационный проект №3", null, 0).getId(), null);
+            projectService.assignUserIdByName("Демонстрационный проект №1", userService.findByLogin("Главный администратор").getId(), null, 0);
+            projectService.assignUserIdByName("Демонстрационный проект №2", userService.findByLogin("Главный администратор").getId(), null, 0);
+            projectService.assignUserIdByName("Демонстрационный проект №3", userService.findByLogin("Новый пользователь 1").getId(), null, 0);
+            taskService.assignUserIdByName("Демонстрационное задание №1", userService.findByLogin("Новый пользователь 1").getId(), null, 0);
+            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Главный администратор").getId(), null, 0);
+            taskService.assignUserIdByName("Демонстрационное задание №2", userService.findByLogin("Новый пользователь 1").getId(), null, 1);
+            taskService.assignUserIdByName("Демонстрационное задание №4", userService.findByLogin("Новый пользователь 1").getId(), null, 0);
         } catch (ProjectException | TaskException e) {
             logger.error(e);
         }
@@ -69,8 +69,8 @@ public class Application {
             publisher.runLoop(param);
         } catch (TaskException | ProjectException e) {
             System.out.println(e.getMessage());
-                System.out.println(BLOCK_SEPARATOR);
-                logger.error(e);
+            System.out.println(BLOCK_SEPARATOR);
+            logger.error(e);
         }
     }
 

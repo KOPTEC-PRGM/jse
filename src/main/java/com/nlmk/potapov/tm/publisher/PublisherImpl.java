@@ -65,4 +65,5 @@ public class PublisherImpl implements Publisher{
         result = notifyListener(command, userId, roleType);
         System.exit(result);
     }
+
 }
