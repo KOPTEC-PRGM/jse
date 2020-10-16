@@ -48,6 +48,7 @@ public final class TerminalConst {
     public static final String PROJECT_ASSIGN_BY_NAME_TO_USER_BY_ID = "project-assign-by-name-to-user-by-id";
     public static final String PROJECT_REMOVE_WITH_TASKS_BY_ID = "project-remove-with-tasks-by-id";
     public static final String PROJECT_SAVE = "project-save";
+    public static final String PROJECT_LOAD = "project-load";
 
     public static final String TASK_CREATE = "task-create";
     public static final String TASK_CLEAR = "task-clear";
@@ -65,6 +66,7 @@ public final class TerminalConst {
     public static final String TASK_ADD_TO_PROJECT_BY_IDS = "task-add-to-project-by-ids";
     public static final String TASK_REMOVE_FROM_PROJECT_BY_IDS = "task-remove-from-project-by-ids";
     public static final String TASK_SAVE = "task-save";
+    public static final String TASK_LOAD = "task-load";
 
     public static final String USER_CREATE = "user-create";
     public static final String USER_CLEAR = "user-clear";
@@ -82,5 +84,6 @@ public final class TerminalConst {
     public static final String USER_VIEW_CURRENT = "user-view-current";
     public static final String USER_UPDATE_CURRENT = "user-update-current";
     public static final String USER_SAVE = "user-save";
+    public static final String USER_LOAD = "user-load";
 
 }

@@ -2,6 +2,7 @@ package com.nlmk.potapov.tm.service;
 
 import com.nlmk.potapov.tm.entity.Task;
 import com.nlmk.potapov.tm.exception.TaskException;
+import com.nlmk.potapov.tm.repository.ProjectRepository;
 import com.nlmk.potapov.tm.repository.TaskRepository;
 import com.nlmk.potapov.tm.util.ServiceUtil;
 import org.apache.logging.log4j.LogManager;
@@ -163,6 +164,16 @@ public class TaskService {
     public void saveToXml(String filePath) {
         if (filePath.isEmpty()) filePath = "defaultTaskRepository.xml";
         taskRepository.saveToXml(filePath);
+    }
+
+    public void loadFromJson(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultTaskRepository.json";
+        taskRepository.loadFromJson(filePath);
+    }
+
+    public void loadFromXml(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultTaskRepository.xml";
+        taskRepository.loadFromXml(filePath);
     }
 
 }

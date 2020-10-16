@@ -148,4 +148,14 @@ public class UserService {
         userRepository.saveToXml(filePath);
     }
 
+    public void loadFromJson(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.json";
+        userRepository.loadFromJson(filePath);
+    }
+
+    public void loadFromXml(String filePath) {
+        if (filePath.isEmpty()) filePath = "defaultUserRepository.xml";
+        userRepository.loadFromXml(filePath);
+    }
+
 }

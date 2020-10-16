@@ -3,6 +3,7 @@ package com.nlmk.potapov.tm.repository;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,10 +20,8 @@ import java.util.Map;
 public abstract class AbstractRepository<T> {
 
     private static final Logger logger = LogManager.getLogger(AbstractRepository.class);
-
-    protected final List<T> entityList = new ArrayList<>();
-
-    protected final Map<String,List<T>> entityMap = new HashMap<>();
+    protected final Map<String, List<T>> entityMap = new HashMap<>();
+    protected List<T> entityList = new ArrayList<>();
 
     public int size() {
         return entityList.size();
@@ -54,7 +53,7 @@ public abstract class AbstractRepository<T> {
         if (valueList == null || valueList.isEmpty()) {
             valueList = new ArrayList<>();
             valueList.add(entity);
-            entityMap.put(name,valueList);
+            entityMap.put(name, valueList);
             return;
         }
         valueList.add(entity);
@@ -72,21 +71,50 @@ public abstract class AbstractRepository<T> {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
-            objectMapper.writeValue(new File(filePath),entityList);
+            objectMapper.writeValue(new File(filePath), entityList);
         } catch (IOException e) {
             logger.error("Ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
         }
-
     }
 
     public void saveToXml(final String filePath) {
         final XmlMapper xmlMapper = new XmlMapper();
         try {
-            xmlMapper.writeValue(new File(filePath),entityList);
+            xmlMapper.writeValue(new File(filePath), entityList);
         } catch (IOException e) {
             logger.error("Ошибка записи объекта {} в файл {} : {}", entityList, filePath, e.getMessage());
         }
+    }
 
+    protected void loadFromJson(final String filePath, Class<? extends T> clazz) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        try {
+            TypeFactory type = TypeFactory.defaultInstance();
+            List<T> loadList = objectMapper.readValue(new File(filePath), type.constructCollectionType(ArrayList.class, clazz));
+            entityList.clear();
+            entityMap.clear();
+            for (T entity : loadList) {
+                create(entity);
+            }
+        } catch (IOException e) {
+            logger.error("Ошибка чтения из файла {} : {}", filePath, e.getMessage());
+        }
+    }
+
+    protected void loadFromXml(final String filePath, Class<? extends T> clazz) {
+        final XmlMapper xmlMapper = new XmlMapper();
+        try {
+            TypeFactory type = TypeFactory.defaultInstance();
+            List<T> loadList = xmlMapper.readValue(new File(filePath), type.constructCollectionType(ArrayList.class, clazz));
+            entityList.clear();
+            entityMap.clear();
+            for (T entity : loadList) {
+                create(entity);
+            }
+        } catch (IOException e) {
+            logger.error("Ошибка чтения из файла {} : {}", filePath, e.getMessage());
+        }
     }
 
 }

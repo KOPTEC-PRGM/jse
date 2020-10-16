@@ -58,6 +58,8 @@ public class TaskListener implements Listener{
                 return removeTaskFromProjectByIds(userId, roleType);
             case TASK_SAVE:
                 return saveTasks(roleType);
+            case TASK_LOAD:
+                return loadTasks(roleType);
 
             default:
                 return 0;
@@ -180,9 +182,9 @@ public class TaskListener implements Listener{
         if (userId == null) taskList = null;
         else if (roleType.equals(RoleType.ADMIN)) taskList = taskService.findAll();
         else taskList = taskService.findAllByUserId(userId);
+        viewTaskList(taskList);
         System.out.println("[Готово]");
         System.out.println(BLOCK_SEPARATOR);
-        viewTaskList(taskList);
         return 0;
     }
 
@@ -349,29 +351,30 @@ public class TaskListener implements Listener{
             return -1;
         }
         System.out.println("[Сохранение репозитория задач]");
-        System.out.println("Выберите формат файла:");
-        System.out.println(INDENT+"1 - JSON");
-        System.out.println(INDENT+"2 - XML");
-        System.out.println("Формат файла:");
-        int i = getIndexFromScanner();
-        if (i == 0) {
-            System.out.println("Введите название JSON-файла:");
-            String filename = scanner.nextLine();
-            taskService.saveToJson(filename);
-        }
-        else if (i == 1) {
-            System.out.println("Введите название XML-файла:");
-            String filename = scanner.nextLine();
-            taskService.saveToXml(filename);
-        }
-        else{
-            System.out.println("Неверный формат файла");
+        if (persistRepository("save") == 0) {
+            System.out.println("[Готово. Задачи сохранены]");
             System.out.println(BLOCK_SEPARATOR);
             return 0;
         }
-        System.out.println("[Готово. Задачи сохранены]");
+        else
+            return -1;
+    }
+
+    public int loadTasks(final RoleType roleType) {
         System.out.println(BLOCK_SEPARATOR);
-        return 0;
+        if (!roleType.equals(RoleType.ADMIN)){
+            System.out.println("[Ошибка. Не достаточно привелегий для выполнения данной команды]");
+            System.out.println(BLOCK_SEPARATOR);
+            return -1;
+        }
+        System.out.println("[Загрузка репозитория задач]");
+        if (persistRepository("load") == 0) {
+            System.out.println("[Готово. Задачи загружены]");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        else
+            return -1;
     }
 
     private Long getIdFromScanner(){
@@ -392,6 +395,40 @@ public class TaskListener implements Listener{
             return -1;
         }
         return Integer.parseInt(scanner.nextLine()) -1;
+    }
+
+    private int persistRepository(final String method){
+        System.out.println("Выберите формат файла:");
+        System.out.println(INDENT+"1 - JSON");
+        System.out.println(INDENT+"2 - XML");
+        System.out.print("Формат файла: ");
+        int i = getIndexFromScanner();
+        if (i == 0) {
+            System.out.print("Введите название JSON-файла: ");
+            String filename = scanner.nextLine();
+            switch (method) {
+                case "save":
+                    taskService.saveToJson(filename);
+                case "load":
+                    taskService.loadFromJson(filename);
+            }
+        }
+        else if (i == 1) {
+            System.out.print("Введите название XML-файла: ");
+            String filename = scanner.nextLine();
+            switch (method) {
+                case "save":
+                    taskService.saveToXml(filename);
+                case "load":
+                    taskService.loadFromXml(filename);
+            }
+        }
+        else{
+            System.out.println("Неверный формат файла");
+            System.out.println(BLOCK_SEPARATOR);
+            return 0;
+        }
+        return 0;
     }
 
 }
